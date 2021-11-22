@@ -13,5 +13,6 @@ def data_import(file_name, separator=","):
     return data
 
 
+if __name__ == "__main__":
 print(data_import(DATA_FILE_PATH_ANSWER))
 print(data_import(DATA_FILE_PATH_QUESTION))
