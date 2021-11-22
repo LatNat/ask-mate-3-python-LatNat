@@ -1,7 +1,8 @@
 import csv
 import os
 
-DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'answer.csv'
+DATA_FILE_PATH_ANSWER = os.getenv('DATA_FILE_PATH_ANSWER') if 'DATA_FILE_PATH_ANSWER' in os.environ else 'answer.csv'
+DATA_FILE_PATH_QUESTION = os.getenv('DATA_FILE_PATH_QUESTION') if 'DATA_FILE_PATH_QUESTION' in os.environ else 'question.csv'
 # DATA_FILE_PATH = "sample_data/answer.csv"
 
 
@@ -12,4 +13,5 @@ def data_import(file_name, separator=","):
     return data
 
 
-print(data_import(DATA_FILE_PATH))
+print(data_import(DATA_FILE_PATH_ANSWER))
+print(data_import(DATA_FILE_PATH_QUESTION))
