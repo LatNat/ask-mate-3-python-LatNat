@@ -1,0 +1,9 @@
+server.py
+data_handler.py
+helper_functions.py ???
+
+templates for: - editing
+		- listing
+		- posting new question
+		- showing one question/ voting, answering, deleting? /
+		
