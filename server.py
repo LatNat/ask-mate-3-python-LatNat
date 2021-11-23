@@ -24,6 +24,13 @@ def display_question(question_id):
     return render_template("question.html", question=question, answers=relevant_answers)
 
 
+@app.route("/question/<question_id>/edit", methods=["GET", "POST"])
+def edit_question(question_id):
+    all_lines = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    line = next((q for q in all_lines if q["id"] == question_id), None)
+    return render_template("addquestion.html", data=line, edit="edit")
+
+
 @app.route("/addquestion", methods=["GET", "POST"])
 def add_question():
     if request.method == "GET":
