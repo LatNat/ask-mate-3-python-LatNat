@@ -22,5 +22,16 @@ def data_export(filename, dict_data, header):
             writer.writerow(data)
 
 
+def get_list_index(filename, id):
+    i = 0
+    with open(filename) as file:
+        lines = csv.DictReader(file)
+        for line in lines:
+            if line["id"] == id:
+                return i
+            i += 1
+    return -1
+
+
 if __name__ == "__main__":
     pass

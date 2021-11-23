@@ -71,5 +71,16 @@ def add_answer(question_id):
     return render_template("addanswer.html")
 
 
+@app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
+def update_answer(question_id, id):
+    if request.method == "POST":
+        answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+        index = data_handler.get_list_index(data_handler.DATA_FILE_PATH_ANSWER, id)
+        answers[index]["message"] = request.form["message"]
+        data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+        redirect(url_for(""))
+    return render_template("editanswer.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
