@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>AskMate | Main page</title>
 </head>
 <body>
+    <h1>Welcome to AskMate!</h1><br><br>
+    {% for question in data %}
+    <table width="50%">
+        <tr>
+            <th colspan="3">
+                {{ question["title"] }}
+            </th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                {{ question["message"] }}
+            </td>
+        </tr>
+        <tr>
+        <td>submitted: {{ question["submission_time"] | convert_timestamp }}</td>
+        <td>views: {{ question["view_number"] }} </td>
+        <td>votes: {{ question["vote_number"] }} </td>
+        </tr>
+    </table>
+    {% endfor %}
 
 </body>
 </html>

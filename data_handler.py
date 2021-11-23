@@ -7,7 +7,7 @@ DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","messag
 DATA_HEADER_QUESTION = ["id","submission_time","view_number","vote_number","title","message","image"]
 
 
-def data_import(file_name, separator=","):
+def data_import(file_name):
     with open(file_name) as file:
         lines = csv.DictReader(file)
         data = [x for x in lines]
