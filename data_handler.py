@@ -31,5 +31,8 @@ def get_list_index(dict_list, id):
     return -1
 
 
+def sort_data(data, key="submission_time", reverse=False):
+    return sorted(data, key=lambda x: x[key], reverse=reverse)
+
 if __name__ == "__main__":
     pass
