@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td rowspan="2" class="voting question">
-                <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</a></strong>
+                <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
             </td>
             <td colspan="2" class="question">
                 {{ question["message"] }}
@@ -53,7 +53,11 @@
     <table class="centered">
         <tr>
             <td rowspan="2" class="voting">
-                <strong>/\<br>{{ answer["vote_number"] }}<br>\/</strong>
+                <strong>
+                    <a href="{{ url_for('vote_up_answer', answer_id=answer['id']) }}">/\</a><br>
+                    {{ answer["vote_number"] }}<br>
+                    <a href="{{ url_for('vote_down_answer', answer_id=answer['id']) }}">\/</a>
+                </strong>
             </td>
             <td colspan="2">
                 {{ answer["message"] }}
