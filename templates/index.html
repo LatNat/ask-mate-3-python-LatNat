@@ -15,6 +15,26 @@
 <body>
     <div class="title"><h1>Welcome to AskMate!</h1></div>
     <div class = "title"><a href="/addquestion">Add new question</a> </div><br>
+    <form method="post">
+        <label for="sort_key">Sorted by:</label>
+        <select name="sort_key" onchange="this.form.submit()">
+            {% for key in data[0].keys() %}
+                {% if default_sort == key %}
+                    <option selected value={{ key }}>{{ key }}</option>
+                {% else %}
+                    <option value={{ key }}>{{ key }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        {% if checked %}
+            <input checked name="reverse" type="checkbox" onchange="this.form.submit()">
+        {% else %}
+            <input name="reverse" type="checkbox" onchange="this.form.submit()">
+        {% endif %}
+        <label for="reverse">Reversed</label>
+
+    </form>
     {% for question in data %}
     <table width="50%" class="centered">
         <tr>

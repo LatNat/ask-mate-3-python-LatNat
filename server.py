@@ -7,11 +7,18 @@ import time
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def list_index():
     data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    data = sorted(data, key=lambda x: x["submission_time"])
-    return render_template("index.html", data=data)
+    if request.method == "POST":
+        checked = False
+        if "reverse" in request.form.keys():
+            checked = True
+        data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=checked)
+        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
+    else:
+        data = data_handler.sort_data(data)
+        return render_template("index.html", data=data, default_sort="submission_time", checked=False)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
