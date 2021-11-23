@@ -15,8 +15,10 @@ def list_index():
 
 @app.route("/question/<question_id>")
 def display_question(question_id):
-    pass
-
+    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    question = next((q for q in all_questions if q["id"] == question_id), None)
+    question["view_number"] = int(question["view_number"]) + 1
+    return render_template("question.html", question=question)
 
 
 @app.template_filter("convert_timestamp")
