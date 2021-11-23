@@ -1,14 +1,23 @@
-id,submission_time,vote_number,question_id,message,image
-1,1493398154,9,1,You need to use brackets: my_list = [],
-2,1493088154,39,1,Look it up in the Python docs,
+
+id,submission_time,vote_number,question_id,message,image
+
+1,1493398154,9,1,You need to use brackets: my_list = [],
+
+2,1493088154,39,1,Look it up in the Python docs,
+
 3,1637685989,0,5,"            
 
-        dad",
+        dad",
+
 4,1637686015,0,5,"          qsww  
 
-        ",
+        ",
+
 5,1637686045,0,5,"          qsww  
 
-        ",
-6,1637686051,0,5,"          aaa  
-        ",
+        ",
+
+6,1637686051,0,5,"          aaa  
+
+        ",
+
