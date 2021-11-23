@@ -14,13 +14,14 @@ def list_index():
     return render_template("index.html", data=data)
 
 
-@app.route("/question/<question_id>")
+@app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question = next((q for q in all_questions if q["id"] == question_id), None)
     question_index = all_questions.index(question)
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    question["view_number"] = int(question["view_number"]) + 1
+    if 'view' not in request.args:
+        question["view_number"] = int(question["view_number"]) + 1
     relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
     relevant_answers = sorted(relevant_answers, key=lambda x: x["submission_time"])
     all_questions[question_index] = question
@@ -73,11 +74,18 @@ def vote_up_question(question_id):
     vote_number += 1
     all_questions[index]['vote_number'] = vote_number
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
-    return redirect(url_for('display_question', question_id=question_id))
+    return redirect(url_for('list_index'))
 
 
 @app.route('/question/<question_id>/vote_down')
-
+def vote_down_question(question_id):
+    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    index = data_handler.get_list_index(all_questions, question_id)
+    vote_number = int(all_questions[index]['vote_number'])
+    vote_number -= 1
+    all_questions[index]['vote_number'] = vote_number
+    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    return redirect(url_for('list_index'))
 
 
 @app.route('/answer/<answer_id>/vote_up')
@@ -89,7 +97,7 @@ def vote_up_answer(answer_id):
     answers[index]['vote_number'] = vote_number
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-    return redirect(url_for('display_question', question_id=question_id))
+    return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
 @app.route('/answer/<answer_id>/vote_down')
@@ -104,7 +112,7 @@ def vote_down_answer(answer_id):
         pass
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-    return redirect(url_for('display_question', question_id=question_id))
+    return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
 @app.template_filter("convert_timestamp")
