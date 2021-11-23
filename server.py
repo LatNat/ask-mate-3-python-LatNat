@@ -130,14 +130,17 @@ def convert_timestamp(timestamp):
 @app.route("/answer/<question_id>", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == "POST":
+        new_answer={}
         answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-        request.form["id"] = str(max([int(row["id"]) for row in answers])+1)
-        request.form["submission_time"] = str(int(time.time()))
-        request.form["vote_number"] = "0"
-        request.form["question_id"] = question_id
-        answers.append(request.form)
+        new_answer["id"] = str(max([int(row["id"]) for row in answers])+1)
+        new_answer["submission_time"] = str(int(time.time()))
+        new_answer["vote_number"] = "0"
+        new_answer["question_id"] = question_id
+        new_answer["message"] = request.form["answer_message"]
+        new_answer["image"] = ""
+        answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        redirect(url_for("display_question", question_id=question_id))
+        return redirect(url_for("display_question", question_id=question_id))
     return render_template("addanswer.html")
 
 
@@ -148,7 +151,7 @@ def update_answer(question_id, id):
     if request.method == "POST":
         answers[index]["message"] = request.form["message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        redirect(url_for("display_question", question_id=question_id))
+        return redirect(url_for("display_question", question_id=question_id))
     return render_template("editanswer.html", message=answers[index]["message"])
 
 
@@ -158,7 +161,7 @@ def delete_answer(question_id, id):
     index = data_handler.get_list_index(answers, id)
     del answers[id]
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-    redirect(url_for("display_question", question_id=question_id))
+    return redirect(url_for("display_question", question_id=question_id))
 
 
 if __name__ == "__main__":
