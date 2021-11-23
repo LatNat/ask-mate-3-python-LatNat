@@ -35,7 +35,6 @@ def add_question():
             pass
             # uploaded = request.files["file"]
             # uploaded.save("/images")
-
         new_question = {"id": new_id,
                         "submission_time": int((datetime.now()).timestamp()),
                         "view_number": 0,
