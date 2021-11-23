@@ -24,7 +24,7 @@ def display_question(question_id):
     return render_template("question.html", question=question, answers=relevant_answers)
 
 
-@app.route("/addquestion")
+@app.route("/addquestion", methods=['GET', 'POST'])
 def add_question():
     if request.method == "GET":
         return render_template("addquestion.html")
@@ -42,7 +42,7 @@ def add_question():
                         "message": (request.form["text"]),
                         "image": (request.form["image"])}
         data.append(new_question)
-        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
+        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
 
 
