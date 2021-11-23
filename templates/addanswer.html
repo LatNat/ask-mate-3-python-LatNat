@@ -12,9 +12,7 @@
 
     <form method="post">
         <label for="answer_message">Your answer:</label><br>
-        <textarea name="answer_message" required="required">
-            {% block answer_message %}{% endblock %}
-        </textarea><br><br>
+        <textarea name="answer_message" required="required">{% block answer_message %}{% endblock %}</textarea><br><br>
 
         <label for="image">Add image</label>
         <input type="file" name="image" accept="image/gif, image/jpeg, image/png"><br><br>
