@@ -29,16 +29,13 @@
 <div>
     <table class="centered">
         <tr>
-            <td colspan="3" style="text-align: right"><a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a></td>
-        </tr>
-        <tr>
             <td colspan="3" class="question">
                 <h3>{{ question["title"] }}</h3>
             </td>
         </tr>
         <tr>
             <td rowspan="2" class="voting question">
-                <strong>/\<br>{{ question["vote_number"] }}<br>\/</strong>
+                <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</a></strong>
             </td>
             <td colspan="2" class="question">
                 {{ question["message"] }}
@@ -47,6 +44,7 @@
         <tr>
             <td>submitted: {{ question["submission_time"] | convert_timestamp }}</td>
             <td>views: {{ question["view_number"] }} </td>
+            <td colspan="3" style="text-align: right"><a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a></td>
         </tr>
     </table>
 </div>
