@@ -13,6 +13,11 @@ def list_index():
     return render_template("index.html", data=data)
 
 
+@app.route("/addquestion")
+def add_question():
+    return render_template("addquestion.html")
+
+
 @app.template_filter("convert_timestamp")
 def convert_timestamp(timestamp):
     return datetime.fromtimestamp(int(timestamp))
