@@ -51,7 +51,7 @@ def add_question():
         new_id = int(data[-1]["id"])+1
         if request.form['file']:
             pass
-            # uploaded = request.files["file"]
+            # uploaded = request.fil/answer/<answer_id>/vote_up es["file"]
             # uploaded.save("/images")
         new_question = {"id": new_id,
                         "submission_time": int((datetime.now()).timestamp()),
@@ -65,14 +65,46 @@ def add_question():
         return redirect(url_for("list_index"))
 
 
+@app.route('/question/<question_id>/vote_up')
+def vote_up_question(question_id):
+    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    index = data_handler.get_list_index(all_questions, question_id)
+    vote_number = int(all_questions[index]['vote_number'])
+    vote_number += 1
+    all_questions[index]['vote_number'] = vote_number
+    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/question/<question_id>/vote_down')
+
+
+
 @app.route('/answer/<answer_id>/vote_up')
-def vote_up(answer_id):
-    pass
+def vote_up_answer(answer_id):
+    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    index = data_handler.get_list_index(answers, answer_id)
+    vote_number = int(answers[index]['vote_number'])
+    vote_number += 1
+    answers[index]['vote_number'] = vote_number
+    question_id = answers[index]['question_id']
+    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    return redirect(url_for('display_question', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote_down')
-def vote_down(answer_id):
-    pass
+def vote_down_answer(answer_id):
+    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    index = data_handler.get_list_index(answers, answer_id)
+    vote_number = int(answers[index]['vote_number'])
+    if vote_number > 0:
+        vote_number -= 1
+        answers[index]['vote_number'] = vote_number
+    else:
+        pass
+    question_id = answers[index]['question_id']
+    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    return redirect(url_for('display_question', question_id=question_id))
 
 
 @app.template_filter("convert_timestamp")
@@ -96,13 +128,22 @@ def add_answer(question_id):
 
 @app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
 def update_answer(question_id, id):
+    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    index = data_handler.get_list_index(answers, id)
     if request.method == "POST":
-        answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-        index = data_handler.get_list_index(answers, id)
         answers[index]["message"] = request.form["message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         redirect(url_for("display_question", question_id=question_id))
-    return render_template("editanswer.html")
+    return render_template("editanswer.html", message=answers[index]["message"])
+
+
+@app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
+def delete_answer(question_id, id):
+    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    index = data_handler.get_list_index(answers, id)
+    del answers[id]
+    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    redirect(url_for("display_question", question_id=question_id))
 
 
 if __name__ == "__main__":
