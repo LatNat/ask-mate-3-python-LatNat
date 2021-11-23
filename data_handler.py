@@ -23,5 +23,4 @@ def data_export(filename, dict_data, header):
 
 
 if __name__ == "__main__":
-print(data_import(DATA_FILE_PATH_ANSWER))
-print(data_import(DATA_FILE_PATH_QUESTION))
+    pass
