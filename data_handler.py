@@ -3,8 +3,8 @@ import os
 
 DATA_FILE_PATH_ANSWER = os.getenv('DATA_FILE_PATH_ANSWER') if 'DATA_FILE_PATH_ANSWER' in os.environ else 'answer.csv'
 DATA_FILE_PATH_QUESTION = os.getenv('DATA_FILE_PATH_QUESTION') if 'DATA_FILE_PATH_QUESTION' in os.environ else 'question.csv'
-DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
-DATA_HEADER_QUESTION = ["id","submission_time","view_number","vote_number","title","message","image"]
+DATA_HEADER_ANSWER = ["id", "submission_time", "vote_number", "question_id", "message", "image"]
+DATA_HEADER_QUESTION = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
 
 
 def data_import(file_name):

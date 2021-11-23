@@ -8,7 +8,7 @@ templates for: - editing
 		- showing one question/ voting, answering, deleting? /
 		
 		
-index.html (listing goes here, sorting by id) voting for questions
+index.html (listing goes here, sorting by id)
 question.html (template for each separate question) + voting (question, answers)
 add_question (form template) + add image + timestamp problem    /edit question -  / delete(?)
 add answer (new form template) + add image + timestamp problem   /edit answer - / delete 
