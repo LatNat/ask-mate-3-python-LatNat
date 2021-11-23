@@ -18,9 +18,13 @@ def list_index():
 def display_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question = next((q for q in all_questions if q["id"] == question_id), None)
+    question_index = all_questions.index(question)
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    relevant_answers = [a for a in all_answers if a["question_id"] == question_id]
     question["view_number"] = int(question["view_number"]) + 1
+    relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
+    relevant_answers = sorted(relevant_answers, key=lambda x: x["submission_time"])
+    all_questions[question_index] = question
+    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return render_template("question.html", question=question, answers=relevant_answers)
 
 
@@ -61,6 +65,16 @@ def add_question():
         return redirect(url_for("list_index"))
 
 
+@app.route('/answer/<answer_id>/vote_up')
+def vote_up(answer_id):
+    pass
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def vote_down(answer_id):
+    pass
+
+
 @app.template_filter("convert_timestamp")
 def convert_timestamp(timestamp):
     return datetime.fromtimestamp(int(timestamp))
@@ -76,8 +90,19 @@ def add_answer(question_id):
         request.form["question_id"] = question_id
         answers.append(request.form)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        redirect(url_for(""))
+        redirect(url_for("display_question", question_id=question_id))
     return render_template("addanswer.html")
+
+
+@app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
+def update_answer(question_id, id):
+    if request.method == "POST":
+        answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+        index = data_handler.get_list_index(answers, id)
+        answers[index]["message"] = request.form["message"]
+        data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+        redirect(url_for("display_question", question_id=question_id))
+    return render_template("editanswer.html")
 
 
 if __name__ == "__main__":
