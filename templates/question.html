@@ -9,7 +9,7 @@
         .voting {
             text-align: center;
             vertical-align: top;
-            width: 30px;
+            width: 40px;
         }
         .answers {
             margin-top: 50px;
@@ -21,6 +21,9 @@
             position: relative;
             left: 40px;
         }
+        .small_text {
+            font-size: 12px;
+        }
     </style>
     <meta charset="UTF-8">
     <title>AskMate | {{ question['title'] }}</title>
@@ -29,8 +32,14 @@
 <div>
     <table class="centered">
         <tr>
-            <td colspan="3" class="question">
+            <td colspan="2" class="question">
                 <h3>{{ question["title"] }}</h3>
+            </td>
+            <td style="text-align: right">
+                <a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a>
+            </td>
+            <td>
+
             </td>
         </tr>
         <tr>
@@ -43,8 +52,7 @@
         </tr>
         <tr>
             <td>submitted: {{ question["submission_time"] | convert_timestamp }}</td>
-            <td>views: {{ question["view_number"] }} </td>
-            <td colspan="3" style="text-align: right"><a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a></td>
+            <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
     </table>
 </div>
@@ -63,7 +71,7 @@
                 {{ answer["message"] }}
             </td>
         </tr>
-        <tr>
+        <tr class="small_text">
             <td>submitted: {{ answer["submission_time"] | convert_timestamp }}</td>
             <td>Delete answer</td>
         </tr>
