@@ -23,7 +23,7 @@
 
     </form>
     {% for question in data %}
-    <table width="50%" class="centered">
+    <table class="centered">
         <tr>
             <th colspan="3">
                 <a href="{{ url_for('display_question', question_id=question["id"]) }}"> {{ question["title"] }}</a>
