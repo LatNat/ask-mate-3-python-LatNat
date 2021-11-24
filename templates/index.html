@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block content %}
     <div class="title"><h1>Welcome to AskMate!</h1></div>
     <div class = "title"><a href="/addquestion" class="myButton">Add new question</a> </div><br>
@@ -26,7 +27,9 @@
     <table class="centered">
         <tr>
             <td rowspan="2" class="voting question">
-                <br><strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
+                <strong><br><a href="{{ url_for('vote_up_question', question_id=question['id']) }}">/\</a>
+                    <br>{{ question["vote_number"] }}<br>
+                    <a href="{{ url_for('vote_down_question', question_id=question['id']) }}">\/</a></strong>
             </td>
             <td colspan="3">
                 <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
@@ -34,7 +37,7 @@
                 {{ question["message"] }}
             </td>
         </tr>
-        <tr class="separator left_text">
+        <tr class="separator left_text stats">
         <td class="submit_time">submitted: {{ question["submission_time"] | convert_timestamp }}</td>
         <td>views: {{ question["view_number"] }} </td>
         <td>votes: {{ question["vote_number"] }} </td>

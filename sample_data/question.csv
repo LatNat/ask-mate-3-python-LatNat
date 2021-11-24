@@ -1,5 +1,5 @@
 id,submission_time,view_number,vote_number,title,message,image
-1,1493368154,44,7,How to make lists in Python?,"I am totally new to this, any hints?",
+1,1493368154,50,7,How to make lists in Python?,"I am totally new to this, any hints?",
 2,1493068124,20,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
@@ -9,14 +9,14 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)",image1.png
-3,1493015432,1373,57,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
+3,1493015432,1381,59,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
 
 
 This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
-4,1493015432,18,0,das ist,das ist gut,
+4,1493015432,20,3,das ist,das ist gut,
 7,1637743025,18,0,ggg,hhh,
 8,1637750954,0,0,asd,dd,images/Screenshot_from_2021-11-23_13-16-44.png
-9,1637751011,8,0,Long text for test purposes,"What is Lorem Ipsum?
+9,1637751011,8,2,Long text for test purposes,"What is Lorem Ipsum?
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 Why do we use it?
