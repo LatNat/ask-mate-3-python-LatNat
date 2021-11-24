@@ -23,7 +23,7 @@
     </form>
     </div>
     {% for question in data %}
-    <table class="centered">
+    <table class="centered table_background">
         <tr>
             <td rowspan="2" class="voting question">
                 <strong><br><a href="{{ url_for('vote_up_question', question_id=question['id']) }}">/\</a>
