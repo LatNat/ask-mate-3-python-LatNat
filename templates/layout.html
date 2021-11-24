@@ -8,15 +8,13 @@
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
 </head>
 {% endblock %}
-<body>
 {% block title_header %}
     <div class="header"><h1>Welcome to AskMate!</h1><br><h5 class="stats">"Don't lose faith, use AskMate!"</h5>
     <br><br><a href="/addquestion" class="myButton">Add new question</a>
         <a href="{{ url_for('list_index') }}" class="myButton">Back to main page</a></div>
 {% endblock %}
 
-<div class="top-separator">{% block content %}{% endblock %}</div>
+<div class="top-separator">{% block content %}<body></body>{% endblock %}</div>
 {% block footer %}
 {% endblock %}
-</body>
 </html>

@@ -33,9 +33,9 @@
     text-align: left;
 }
 
-table th td {
-    border: 1px solid black;
-}
+/*.table_background{*/
+/*    background:radial-gradient(aliceblue 5%, white 100%);*/
+/*}*/
 
 .submit_time {
     width: 65%;
@@ -47,24 +47,28 @@ table th td {
 }
 
 .myButton {
-	box-shadow:inset 0 1px 0 0 #54a3f7;
-	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+	/*box-shadow:inset 0 1px 0 0 #54a3f7;*/
+	background:linear-gradient(to bottom, white 2%, powderblue 100%);
 	border-radius:3px;
-	border:1px solid #124d77;
+	border:1px solid lightcyan;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color:slategray;
 	font-family:Arial,monospace;
 	font-size:13px;
 	padding:6px 24px;
 	text-decoration:none;
-	text-shadow:0 1px 0 #154682;
+	text-shadow:0 1px 0 white;
 }
 
 .myButton:hover {
-	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background:linear-gradient(to bottom, lightcyan 5%, white 100%);
+    color: lightgray;
 }
-
+.myButton:focus {
+    background:linear-gradient(to bottom, skyblue 5%, white 100%);
+    color: dimgray;
+}
 .myButton:active {
     position: relative;
     top: 1px;
@@ -79,8 +83,8 @@ table th td {
 .header {
     width: 100vw;
     padding: 5% 10% 1em 10%;
-    background:linear-gradient(to bottom, darkslateblue 5%, white 100%);
-    color: white;
+    background:linear-gradient(to bottom, lightblue 5%, white 100%);
+    color: slategray;
 }
 
 .top-separator {
@@ -88,7 +92,8 @@ table th td {
 }
 
 body {
+    min-height: 100vh;
     padding: 0;
     margin: 0;
-    background-color: white;
+    background:linear-gradient(to bottom, white 50%, lightblue 100%);
 }

@@ -32,7 +32,12 @@ def get_list_index(dict_list, id):
 
 
 def sort_data(data, key="submission_time", reverse=False):
-    return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
+    if not data:
+        return data
+    elif data[0][key].isnumeric():
+        return sorted(data, key=lambda x: int(x[key]), reverse=reverse)
+    else:
+        return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
 
 
 if __name__ == "__main__":

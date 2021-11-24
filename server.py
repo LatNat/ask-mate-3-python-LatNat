@@ -64,10 +64,11 @@ def add_question():
         data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
         new_id = int(data[-1]["id"])+1
         filename = ""
-        if "file" in request.files:
+        if request.files:
             file = request.files["file"]
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            if filename != "":
+                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
                         "view_number": 0, "vote_number": 0,
                         "title": (request.form["title"]), "message": (request.form["message"]),
