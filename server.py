@@ -144,7 +144,7 @@ def add_answer(question_id):
         new_answer["image"] = ""
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        return redirect(url_for("display_question", question_id=question_id))
+        return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("addanswer.html")
 
 
@@ -153,24 +153,31 @@ def update_answer(question_id, id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, id)
     if request.method == "POST":
-        answers[index]["message"] = request.form["message"]
+        answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        return redirect(url_for("display_question", question_id=question_id))
+        return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("editanswer.html", message=answers[index]["message"])
 
 
-@app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
+@app.route("/answer/delete/<question_id>/<id>", methods=["GET", "POST"])
 def delete_answer(question_id, id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, id)
-    del answers[id]
+    del answers[index]
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-    return redirect(url_for("display_question", question_id=question_id))
+    return redirect(url_for("display_question", question_id=question_id, view="f"))
 
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
-    pass
+    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    question_index = data_handler.get_list_index(all_questions, question_id)
+    del all_questions[question_index]
+    all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
+    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, to_export, data_handler.DATA_HEADER_ANSWER)
+    return redirect(url_for("list_index"))
 
 
 if __name__ == "__main__":
