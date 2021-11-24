@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>AskMate | {{ "Edit Question" if edit else "New Question" }}</title>
-</head>
+{% extends "layout.html" %}
+{% block title %}{{ " | Edit Question" if edit else " | New Question" }}{% endblock %}
+{% block content %}
     <body>
         <h3>What is your question?</h3><br>
     <form action="{{ url_for("add_question") if not edit else url_for("edit_question",question_id=data['id'])  }}" method="post" enctype="multipart/form-data">
@@ -20,4 +17,4 @@
         <button type="submit">Send question</button>
     </form>
     </body>
-</html>
+{% endblock %}
