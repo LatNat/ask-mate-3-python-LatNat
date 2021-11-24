@@ -1,34 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
-        .centered {
-            margin: auto;
-            width: 50%;
-        }
-        .voting {
-            text-align: center;
-            vertical-align: top;
-            width: 40px;
-        }
-        .answers {
-            margin-top: 50px;
-        }
-        .question {
-            font-size: 25px;
-        }
-        #answer {
-            position: relative;
-            left: 40px;
-        }
-        .small_text {
-            font-size: 12px;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <title>AskMate | {{ question['title'] }}</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block title %} | {{ question['title'] }}{% endblock %}
+
+{% block content %}
 <div>
     <table class="centered">
         <tr>
@@ -36,7 +10,8 @@
                 <h3>{{ question["title"] }}</h3>
             </td>
             <td style="text-align: right">
-                <a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a>
+                <a href="{{ url_for('edit_question', question_id=question['id']) }}">Edit question</a><br>
+                <a href="{{ url_for('delete_question', question_id=question['id']) }}">Delete question</a>
             </td>
             <td>
 
@@ -46,7 +21,7 @@
             <td rowspan="2" class="voting question">
                 <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
             </td>
-            <td colspan="2" class="question">
+            <td colspan="3" class="question">
                 {{ question["message"] }}
             </td>
         </tr>
@@ -73,7 +48,8 @@
         </tr>
         <tr class="small_text">
             <td>submitted: {{ answer["submission_time"] | convert_timestamp }}</td>
-            <td>Delete answer</td>
+            <td><a href="{{ url_for('update_answer', question_id=answer['question_id'], id=answer['id']) }}">Edit Answer</a></td>
+            <td><a href="{{ url_for('delete_answer', question_id=answer['question_id'], id=answer['id']) }}">Delete Answer</a></td>
         </tr>
     </table>
     {% endfor %}
@@ -84,5 +60,4 @@
 <div>
     <a href="{{ url_for('list_index') }}">Back to main page</a>
 </div>
-</body>
-</html>
+{% endblock %}

@@ -30,7 +30,7 @@ def display_question(question_id):
     if 'view' not in request.args:
         question["view_number"] = int(question["view_number"]) + 1
     relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
-    relevant_answers = sorted(relevant_answers, key=lambda x: x["vote_number"], reverse=True)
+    relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
     all_questions[question_index] = question
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return render_template("question.html", question=question, answers=relevant_answers)
@@ -162,6 +162,11 @@ def delete_answer(question_id, id):
     del answers[id]
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id))
+
+
+@app.route("/question/<question_id>/delete")
+def delete_question(question_id):
+    pass
 
 
 if __name__ == "__main__":

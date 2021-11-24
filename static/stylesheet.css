@@ -1,0 +1,22 @@
+.centered {
+    margin: auto;
+    width: 50%;
+}
+.voting {
+    text-align: center;
+    vertical-align: top;
+    width: 40px;
+}
+.answers {
+    margin-top: 50px;
+}
+.question {
+    font-size: 25px;
+}
+#answer {
+    position: relative;
+    left: 40px;
+}
+.small_text {
+    font-size: 12px;
+}
