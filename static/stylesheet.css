@@ -74,7 +74,7 @@ table th td {
 }
 
 .header {
-    width: 100%;
+    width: 100vw;
     padding: 5% 10% 1em 10%;
     background:linear-gradient(to bottom, black 5%, white 100%);
     color: white;
