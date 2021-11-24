@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "layout.html" %}
+{% block title%} | Post answer{% endblock %}
+{% block buttons %}
+<a href="{{ url_for('display_question', question_id=question_id) }}" id="myButton">Back to question</a>
+{% endblock %}
+{% block content %}
+<div class="centered">
+<h1>Post your answer</h1>
+<form method="post">
+    <label for="answer_message">Your answer:</label><br>
+    <textarea name="answer_message" required="required">{% block answer_message %}{% endblock %}</textarea><br><br>
 
-    <title>{% block title%}post answer{% endblock %}</title>
-</head>
-<body>
-    <h1>{% block header %}Post your answer{% endblock %}</h1>
+    <label for="image">Add image</label>
+    <input type="file" name="image" accept="image/gif, image/jpeg, image/png"><br><br>
 
-    <form method="post">
-        <label for="answer_message">Your answer:</label><br>
-        <textarea name="answer_message" required="required">{% block answer_message %}{% endblock %}</textarea><br><br>
-
-        <label for="image">Add image</label>
-        <input type="file" name="image" accept="image/gif, image/jpeg, image/png"><br><br>
-
-        <button type="submit" name="post answer">Post answer</button>
-    </form>
-</body>
-</html>
+    <button type="submit" name="post answer">Post answer</button>
+</form>
+</div>
+{% endblock %}

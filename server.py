@@ -146,7 +146,7 @@ def add_answer(question_id):
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
-    return render_template("addanswer.html")
+    return render_template("addanswer.html", question_id=question_id)
 
 
 @app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
@@ -157,7 +157,7 @@ def update_answer(question_id, id):
         answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
-    return render_template("editanswer.html", message=answers[index]["message"])
+    return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
 
 
 @app.route("/answer/delete/<question_id>/<id>", methods=["GET", "POST"])
