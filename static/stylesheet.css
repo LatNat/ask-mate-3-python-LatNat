@@ -47,3 +47,7 @@ table th td {
     font-size: 15px;
     font-style: oblique;
 }
+
+.header {
+    padding: 5% 10% 5% 10%;
+}
