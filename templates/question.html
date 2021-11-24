@@ -22,7 +22,8 @@
                 <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
             </td>
             <td colspan="3" class="question">
-                {{ question["message"] }}
+                {{ question["message"] }} <br><br>
+                <img src="{{ url_for('static', filename=question["image"]) }}" alt="" width="500">
             </td>
         </tr>
         <tr>
