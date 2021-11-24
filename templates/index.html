@@ -23,19 +23,19 @@
 
     </form>
     {% for question in data %}
-    <table width="50%" class="centered">
+    <table class="centered">
         <tr>
             <td rowspan="2" class="voting question">
                 <br><strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
             </td>
-            <td colspan="2">
+            <td colspan="3">
                 <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
                     {{ question["title"] }}</a></h3>
                 {{ question["message"] }}
             </td>
         </tr>
-        <tr>
-        <td>submitted: {{ question["submission_time"] | convert_timestamp }}</td>
+        <tr class="separator left_text">
+        <td class="submit_time">submitted: {{ question["submission_time"] | convert_timestamp }}</td>
         <td>views: {{ question["view_number"] }} </td>
         <td>votes: {{ question["vote_number"] }} </td>
         </tr>

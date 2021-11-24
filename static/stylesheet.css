@@ -28,3 +28,16 @@
 .left_text {
     text-align: left;
 }
+
+table th td {
+    border: 1px solid black;
+}
+
+.submit_time{
+    width: 65%;
+}
+
+.separator{
+    border-width: 50px 0 0 0;
+    font-size: 14px;
+}
