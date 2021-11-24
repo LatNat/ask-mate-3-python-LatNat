@@ -6,7 +6,7 @@
 {% block content %}
 <div class="centered">
 <h1>Post your answer</h1>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <label for="answer_message">Your answer:</label><br>
     <textarea name="answer_message" required="required">{% block answer_message %}{% endblock %}</textarea><br><br>
 
