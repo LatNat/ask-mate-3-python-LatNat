@@ -68,12 +68,9 @@ def add_question():
             file = request.files["file"]
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        new_question = {"id": new_id,
-                        "submission_time": int((datetime.now()).timestamp()),
-                        "view_number": 0,
-                        "vote_number": 0,
-                        "title": (request.form["title"]),
-                        "message": (request.form["message"]),
+        new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
+                        "view_number": 0, "vote_number": 0,
+                        "title": (request.form["title"]), "message": (request.form["message"]),
                         "image": (f"{UPLOAD_FOLDER}/{filename}" if filename != "" else "")}
         data.append(new_question)
         data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
