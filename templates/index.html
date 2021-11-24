@@ -52,6 +52,13 @@
         <td>views: {{ question["view_number"] }} </td>
         <td>votes: {{ question["vote_number"] }} </td>
         </tr>
+    <tr>
+        <td>
+            <picture>
+                <img src="{{ question['image'] }}" alt="missing pic!" style="width:auto;">
+            </picture>
+        </td>
+    </tr>
     </table><br>
     {% endfor %}
 
