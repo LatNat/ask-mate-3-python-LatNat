@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <title>AskMate{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/stylesheet.css">
+    <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
 </head>
 {% endblock %}
 {% block title_header %}
-    <div class="header"><h1>Welcome to AskMate!</h1><br><h5 class="stats">"Don't lose faith, use AskMate!"</h5></div>
+    <div class="header" style="background-color: orange"><h1>Welcome to AskMate!</h1><br><h5 class="stats">"Don't lose faith, use AskMate!"</h5>
+    <br><br><a href="/addquestion" class="myButton">Add new question</a></div>
+
 {% endblock %}
 {% block content %}
 <body>
