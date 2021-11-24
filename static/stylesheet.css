@@ -58,19 +58,27 @@ table th td {
 	text-decoration:none;
 	text-shadow:0 1px 0 #154682;
 }
+
 .myButton:hover {
 	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
 	background-color:#0061a7;
 }
+
 .myButton:active {
     position: relative;
     top: 1px;
 }
+
 .stats {
+    padding-top: 1em;
     font-size: 15px;
     font-style: oblique;
 }
 
 .header {
-    padding: 5% 10% 5% 10%;
+    padding: 5% 10% 1em 10%;
+}
+
+.top-separator {
+    padding-top: 50px;
 }
