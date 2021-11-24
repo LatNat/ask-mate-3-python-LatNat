@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AskMate | Main page</title>
-    <style>
-        .title {
-            text-align: center;
-        }
-        .centered {
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block content %}
     <div class="title"><h1>Welcome to AskMate!</h1></div>
     <div class = "title"><a href="/addquestion">Add new question</a> </div><br>
     <form method="post">
@@ -43,7 +30,10 @@
             </th>
         </tr>
         <tr>
-            <td colspan="3">
+            <td rowspan="2" class="voting question">
+                <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
+            </td>
+            <td colspan="2">
                 {{ question["message"] }}
             </td>
         </tr>
@@ -52,13 +42,6 @@
         <td>views: {{ question["view_number"] }} </td>
         <td>votes: {{ question["vote_number"] }} </td>
         </tr>
-    <tr>
-        <td>
-            <img src="{{ url_for('static', filename='images/image1.png') }}" alt="missing pic!" height="500">
-        </td>
-    </tr>
     </table><br>
     {% endfor %}
-
-</body>
-</html>
+{% endblock %}
