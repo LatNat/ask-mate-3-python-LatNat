@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 .centered {
     margin: auto;
     width: 50%;
@@ -76,7 +79,7 @@ table th td {
 .header {
     width: 100vw;
     padding: 5% 10% 1em 10%;
-    background:linear-gradient(to bottom, black 5%, white 100%);
+    background:linear-gradient(to bottom, darkslateblue 5%, white 100%);
     color: white;
 }
 
@@ -85,5 +88,7 @@ table th td {
 }
 
 body {
+    padding: 0;
+    margin: 0;
     background-color: white;
 }
