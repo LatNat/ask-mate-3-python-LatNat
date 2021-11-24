@@ -23,7 +23,8 @@ def list_index():
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     else:
         data = data_handler.sort_data(data)
-        return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=dirname)
+        path = os.path.join(app.config['UPLOAD_FOLDER'])
+        return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
