@@ -4,8 +4,12 @@ import data_handler
 from datetime import datetime
 import time
 import os
+from werkzeug.utils import secure_filename
 
+dirname = os.path.dirname(__file__)
+UPLOAD_FOLDER = f"{dirname}/images"
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -59,19 +63,17 @@ def add_question():
         data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
         new_id = int(data[-1]["id"])+1
         filename = ""
-        if request.form['file']:
-            # filename = request.form["file"]
-            # file = request.file["file"]
-            # file.save(os.path.join(app.config["/images/"], filename))
-            # return redirect(url_for('download_file', name=filename))
-            pass
+        if "file" in request.files:
+            file = request.files["file"]
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         new_question = {"id": new_id,
                         "submission_time": int((datetime.now()).timestamp()),
                         "view_number": 0,
                         "vote_number": 0,
                         "title": (request.form["title"]),
                         "message": (request.form["message"]),
-                        "image": (f"/images/{filename}" if filename != "" else "")}
+                        "image": (f"{UPLOAD_FOLDER}/{filename}" if filename != "" else "")}
         data.append(new_question)
         data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
