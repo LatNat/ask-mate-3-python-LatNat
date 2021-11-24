@@ -7,7 +7,7 @@ import os
 from werkzeug.utils import secure_filename
 
 dirname = os.path.dirname(__file__)
-UPLOAD_FOLDER = f"{dirname}/images"
+UPLOAD_FOLDER = f"{dirname}/static/images"
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -49,10 +49,10 @@ def edit_question(question_id):
         line = next((q for q in all_lines if q["id"] == question_id), None)
         return render_template("addquestion.html", data=line, edit="edit")
     if request.method == "POST":
-        line_index = data_handler.get_list_index(data_handler.DATA_FILE_PATH_QUESTION, question_id)
+        line_index = data_handler.get_list_index(all_lines, question_id)
         all_lines[line_index]["message"] = (request.form["message"])
         all_lines[line_index]["title"] = (request.form["title"])
-        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION,all_lines,data_handler.DATA_HEADER_QUESTION)
+        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_lines, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
 
 
@@ -71,7 +71,7 @@ def add_question():
         new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
                         "view_number": 0, "vote_number": 0,
                         "title": (request.form["title"]), "message": (request.form["message"]),
-                        "image": (f"{UPLOAD_FOLDER}/{filename}" if filename != "" else "")}
+                        "image": (f"images/{filename}" if filename != "" else "")}
         data.append(new_question)
         data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
