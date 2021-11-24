@@ -19,15 +19,17 @@
         </tr>
         <tr>
             <td rowspan="2" class="voting question">
-                <strong><a href="">/\</a><br>{{ question["vote_number"] }}<br><a href="">\/</strong>
+                <strong><a href="{{ url_for('vote_up_question', question_id=question['id']) }}">/\</a>
+                    <br>{{ question["vote_number"] }}<br>
+                    <a href="{{ url_for('vote_down_question', question_id=question['id']) }}">\/</strong>
             </td>
             <td colspan="3" class="question">
                 {{ question["message"] }} <br><br>
                 <img src="{{ url_for('static', filename=question["image"]) }}" alt="" width="500">
             </td>
         </tr>
-        <tr>
-            <td>submitted: {{ question["submission_time"] | convert_timestamp }}</td>
+        <tr class="stats">
+            <td class="submit_time">submitted: {{ question["submission_time"] | convert_timestamp }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
     </table>
