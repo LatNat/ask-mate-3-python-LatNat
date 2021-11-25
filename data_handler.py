@@ -41,5 +41,14 @@ def sort_data(data, key="submission_time", reverse=False):
         return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
 
 
+def voting(database, data_index, vote):
+    vote_number = int(database[data_index]['vote_number'])
+    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
+    database[data_index]['vote_number'] = vote_number
+    return database
+    pass
+
+
+
 if __name__ == "__main__":
     pass

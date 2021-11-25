@@ -81,9 +81,7 @@ def add_question():
 def vote_question(question_id, vote):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     index = data_handler.get_list_index(all_questions, question_id)
-    vote_number = int(all_questions[index]['vote_number'])
-    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
-    all_questions[index]['vote_number'] = vote_number
+    all_questions = data_handler.voting(all_questions, index, vote)
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return redirect(url_for('list_index'))
 
@@ -92,9 +90,7 @@ def vote_question(question_id, vote):
 def vote_answer(answer_id, vote):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, answer_id)
-    vote_number = int(answers[index]['vote_number'])
-    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
-    answers[index]['vote_number'] = vote_number
+    answers = data_handler.voting(answers, index, vote)
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for('display_question', question_id=question_id, view='f'))
