@@ -120,14 +120,11 @@ def add_answer(question_id):
             filename = secure_filename(file.filename)
             if filename != "":
                 file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        new_answer={}
         answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-        new_answer["id"] = str(max([int(row["id"]) for row in answers])+1)
-        new_answer["submission_time"] = str(int(time.time()))
-        new_answer["vote_number"] = "0"
-        new_answer["question_id"] = question_id
-        new_answer["message"] = request.form["answer_message"]
-        new_answer["image"] = (filename if filename != "" else "")
+        new_answer = {"id": str(max([int(row["id"]) for row in answers])+1), "submission_time": str(int(time.time())),
+                      "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"],
+                      "image": (filename if filename != "" else "")}
+
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
