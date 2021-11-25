@@ -50,7 +50,8 @@
             </strong>
         </td>
         <td colspan="3">
-            <p class="linebreak">{{ answer["message"] }}</p>
+            <p class="linebreak">{{ answer["message"] }}</p><br>
+            <img src="{{ url_for("static", filename="images/"+answer["image"]) }}" alt="" width="500">
         </td>
     </tr>
     <tr class="left_text stats">
