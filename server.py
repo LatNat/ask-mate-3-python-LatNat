@@ -18,7 +18,7 @@ def list_index():
         checked = False
         if "reverse" in request.form.keys():
             checked = True
-        data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=checked)
+        data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=not checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     else:
         data = data_handler.sort_data(data)
@@ -161,13 +161,20 @@ def delete_question(question_id):
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, to_export, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("list_index"))
 
-@app.route("/result")
+@app.route("/result", methods=["GET","POST"])
 def search():
     all_question = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     search_term = request.args["search"].upper()
     relevant_questions = [q for q in all_question if search_term in q["title"].upper() or search_term in q["message"].upper()]
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    return render_template("index.html", data=relevant_questions, default_sort="submission_time", checked=False, path=path)
+    relevant_questions = data_handler.sort_data(relevant_questions, key="vote_number", reverse=True)
+    if request.method == "POST":
+        checked = False
+        if "reverse" in request.form.keys():
+            checked = True
+        data = data_handler.sort_data(relevant_questions, key=request.form["sort_key"], reverse=checked)
+        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
+    return render_template("index.html", data=relevant_questions, default_sort="vote_number", checked=False, path=path)
 
 if __name__ == "__main__":
     app.run(debug=True)

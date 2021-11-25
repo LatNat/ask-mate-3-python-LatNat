@@ -104,6 +104,8 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     padding: 0;
     margin: 0;
@@ -139,6 +141,7 @@ a:visited {
 }
 
 #footer {
+    margin-top: auto;
     height: 130px;
     padding: 3em 0 0 5em;
 }
