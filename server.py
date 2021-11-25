@@ -116,11 +116,8 @@ def vote_down_answer(answer_id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, answer_id)
     vote_number = int(answers[index]['vote_number'])
-    if vote_number > 0:
-        vote_number -= 1
-        answers[index]['vote_number'] = vote_number
-    else:
-        pass
+    vote_number -= 1
+    answers[index]['vote_number'] = vote_number
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for('display_question', question_id=question_id, view='f'))
