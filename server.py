@@ -77,46 +77,29 @@ def add_question():
         return redirect(url_for("list_index"))
 
 
-@app.route('/question/<question_id>/vote_up')
-def vote_up_question(question_id):
+@app.route('/question/<question_id>/<vote>')
+def vote_question(question_id, vote):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     index = data_handler.get_list_index(all_questions, question_id)
     vote_number = int(all_questions[index]['vote_number'])
-    vote_number += 1
+    if vote == 'up':
+        vote_number += 1
+    elif vote == 'down':
+        vote_number -= 1
     all_questions[index]['vote_number'] = vote_number
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return redirect(url_for('list_index'))
 
 
-@app.route('/question/<question_id>/vote_down')
-def vote_down_question(question_id):
-    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    index = data_handler.get_list_index(all_questions, question_id)
-    vote_number = int(all_questions[index]['vote_number'])
-    vote_number -= 1
-    all_questions[index]['vote_number'] = vote_number
-    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
-    return redirect(url_for('list_index'))
-
-
-@app.route('/answer/<answer_id>/vote_up')
-def vote_up_answer(answer_id):
+@app.route('/answer/<answer_id>/<vote>')
+def vote_answer(answer_id, vote):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, answer_id)
     vote_number = int(answers[index]['vote_number'])
-    vote_number += 1
-    answers[index]['vote_number'] = vote_number
-    question_id = answers[index]['question_id']
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-    return redirect(url_for('display_question', question_id=question_id, view='f'))
-
-
-@app.route('/answer/<answer_id>/vote_down')
-def vote_down_answer(answer_id):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    vote_number = int(answers[index]['vote_number'])
-    vote_number -= 1
+    if vote == 'up':
+        vote_number += 1
+    elif vote == 'down':
+        vote_number -= 1
     answers[index]['vote_number'] = vote_number
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
