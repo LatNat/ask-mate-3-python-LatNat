@@ -1,5 +1,6 @@
 import csv
 import os
+import codecs
 
 DATA_FILE_PATH_ANSWER = os.getenv('DATA_FILE_PATH_ANSWER') if 'DATA_FILE_PATH_ANSWER' in os.environ else 'answer.csv'
 DATA_FILE_PATH_QUESTION = os.getenv('DATA_FILE_PATH_QUESTION') if 'DATA_FILE_PATH_QUESTION' in os.environ else 'question.csv'
@@ -8,14 +9,14 @@ DATA_HEADER_QUESTION = ["id", "submission_time", "view_number", "vote_number", "
 
 
 def data_import(file_name):
-    with open(file_name) as file:
+    with open(file_name, encoding='utf-8') as file:
         lines = csv.DictReader(file)
         data = [x for x in lines]
     return data
 
 
 def data_export(filename, dict_data, header):
-    with open(filename, "w") as csvfile:
+    with open(filename, "w", encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
         writer.writeheader()
         for data in dict_data:
