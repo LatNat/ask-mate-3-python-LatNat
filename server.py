@@ -124,7 +124,6 @@ def add_answer(question_id):
         new_answer = {"id": str(max([int(row["id"]) for row in answers])+1), "submission_time": str(int(time.time())),
                       "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"],
                       "image": (filename if filename != "" else "")}
-
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
@@ -161,10 +160,8 @@ def delete_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question_index = data_handler.get_list_index(all_questions, question_id)
     if all_questions[question_index]["image"] != "":
-        try:
-            os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
-        except FileNotFoundError:
-            pass
+        try: os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
+        except FileNotFoundError: pass
     del all_questions[question_index]
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
