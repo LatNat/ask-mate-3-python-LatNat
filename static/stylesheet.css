@@ -40,12 +40,19 @@
     text-align: left;
 }
 
+.right_text {
+    text-align: right;
+}
 /*.table_background{*/
 /*    background:radial-gradient(aliceblue 5%, white 100%);*/
 /*}*/
 
 .submit_time {
-    width: 65%;
+    width: 70%;
+}
+
+.stat-box {
+    width: 7%;
 }
 
 .separator{
@@ -82,6 +89,7 @@
 }
 
 .stats {
+    font-weight: bold;
     padding-top: 1em;
     font-size: 15px;
     font-style: oblique;

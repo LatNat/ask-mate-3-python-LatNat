@@ -49,6 +49,5 @@ def voting(database, data_index, vote):
     pass
 
 
-
 if __name__ == "__main__":
     pass
