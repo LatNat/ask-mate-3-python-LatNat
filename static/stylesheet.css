@@ -68,15 +68,15 @@
 	text-shadow:0 1px 0 white;
 }
 
-.myButton:hover {
+#myButton:hover {
 	background:linear-gradient(to bottom, lightcyan 5%, white 100%);
     color: lightgray;
 }
-.myButton:focus {
+#myButton:focus {
     background:linear-gradient(to bottom, skyblue 5%, white 100%);
     color: dimgray;
 }
-.myButton:active {
+#myButton:active {
     position: relative;
     top: 1px;
 }
@@ -89,7 +89,7 @@
 }
 
 .header {
-    width: 100vw;
+    width: auto;
     padding: 5% 10% 1em 10%;
     background:linear-gradient(to bottom, lightblue 5%, white 100%);
     color: slategray;
@@ -132,4 +132,9 @@ a:visited {
 
 .linebreak {
     white-space: pre-line;
+}
+
+#footer {
+    height: 130px;
+    padding: 3em 0 0 5em;
 }
