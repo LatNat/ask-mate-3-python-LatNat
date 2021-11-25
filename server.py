@@ -141,7 +141,7 @@ def update_answer(question_id, id):
     if request.method == "POST":
         answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        return redirect(url_for("display_question", question_id=question_id, view="f"))
+        return redirect(url_for("display_question", question_id=question_id, view="f"))max
     return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
 
 
