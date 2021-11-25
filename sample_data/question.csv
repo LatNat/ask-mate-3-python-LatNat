@@ -15,7 +15,7 @@ app.js (bundled file with webpack, including jquery)",image1.png
 This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
 4,1493015432,25,5,This site is shit,"Honestly, it's so pale and clean, i need to puke",
 7,1637743025,19,1,SPONGEBOB ME BOY,I LOVE MONEY GAHGAHGAHGAH,
-8,1637750954,4,0,A nice poem,"We're no strangers to love
+8,1637750954,5,0,A nice poem,"We're no strangers to love
 You know the rules and so do I
 A full commitment's what I'm thinking of
 You wouldn't get this from any other guy
@@ -31,7 +31,7 @@ We've known each other for so long
 Your heart's been aching, but you're too shy to say it
 Inside, we both know what's been going on
 We know the game, and we're gonna play it",images/Screenshot_from_2021-11-23_13-16-44.png
-9,1637751011,12,2,Long text for test purposes,"What is Lorem Ipsum?
+9,1637751011,13,2,Long text for test purposes,"What is Lorem Ipsum?
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 Why do we use it?
@@ -59,3 +59,4 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 ⠀⠀⠀⠀⠀⡼⢁⡟⣫⣶⣍⡙⠛⠛⠛⠛⠛⣽⡖⣉⣠⣶⣶⣌⠛⢿⣿⣿⣿⣿
 ⠀⠀⠀⢀⠔⢡⢎⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠹⣿⣿⣿
 ⠀⢠⠖⢁⣴⡿⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢹⣿⣿",
+13,1637830583,4,0,Test,Test,images/28381355_89f51d541bb22b00f1b7ae552aa23ad6_wm.jpg
