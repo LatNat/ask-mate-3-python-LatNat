@@ -22,9 +22,9 @@
         <tr>
             <td rowspan="2" class="voting question">
                 <strong>
-                    <a href="{{ url_for('vote_up_question', question_id=question['id']) }}">/\</a>
+                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">/\</a>
                     <br>{{ question["vote_number"] }}<br>
-                    <a href="{{ url_for('vote_down_question', question_id=question['id']) }}">\/</a>
+                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">\/</a>
                 </strong>
             </td>
             <td colspan="3" class="question">
@@ -44,9 +44,9 @@
     <tr>
         <td rowspan="2" class="voting">
             <strong>
-                <a href="{{ url_for('vote_up_answer', answer_id=answer['id']) }}">/\</a><br>
+                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">/\</a><br>
                 {{ answer["vote_number"] }}<br>
-                <a href="{{ url_for('vote_down_answer', answer_id=answer['id']) }}">\/</a>
+                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">\/</a>
             </strong>
         </td>
         <td colspan="3">
