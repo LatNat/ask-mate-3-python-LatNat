@@ -68,15 +68,15 @@
 	text-shadow:0 1px 0 white;
 }
 
-.myButton:hover {
+#myButton:hover {
 	background:linear-gradient(to bottom, lightcyan 5%, white 100%);
     color: lightgray;
 }
-.myButton:focus {
+#myButton:focus {
     background:linear-gradient(to bottom, skyblue 5%, white 100%);
     color: dimgray;
 }
-.myButton:active {
+#myButton:active {
     position: relative;
     top: 1px;
 }
