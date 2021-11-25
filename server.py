@@ -82,10 +82,7 @@ def vote_question(question_id, vote):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     index = data_handler.get_list_index(all_questions, question_id)
     vote_number = int(all_questions[index]['vote_number'])
-    if vote == 'up':
-        vote_number += 1
-    elif vote == 'down':
-        vote_number -= 1
+    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
     all_questions[index]['vote_number'] = vote_number
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return redirect(url_for('list_index'))
@@ -96,10 +93,7 @@ def vote_answer(answer_id, vote):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, answer_id)
     vote_number = int(answers[index]['vote_number'])
-    if vote == 'up':
-        vote_number += 1
-    elif vote == 'down':
-        vote_number -= 1
+    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
     answers[index]['vote_number'] = vote_number
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
@@ -124,7 +118,6 @@ def add_answer(question_id):
         new_answer = {"id": str(max([int(row["id"]) for row in answers])+1), "submission_time": str(int(time.time())),
                       "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"],
                       "image": (filename if filename != "" else "")}
-
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
@@ -138,7 +131,7 @@ def update_answer(question_id, id):
     if request.method == "POST":
         answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
-        return redirect(url_for("display_question", question_id=question_id, view="f"))max
+        return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
 
 
