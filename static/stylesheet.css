@@ -1,26 +1,33 @@
 * {
     box-sizing: border-box;
 }
+
 .centered {
     margin: auto;
     width: 50%;
 }
+
 .voting {
     text-align: center;
     vertical-align: top;
-    width: 40px;
+    width: 50px;
     font-weight: bold;
+    margin-right: 100px;
 }
+
 .answers {
     margin-top: 50px;
 }
+
 .question {
     font-size: 25px;
 }
+
 #answer {
     position: relative;
     left: 40px;
 }
+
 .small_text {
     font-size: 12px;
 }
@@ -46,7 +53,7 @@
     font-size: 14px;
 }
 
-.myButton {
+#myButton {
 	/*box-shadow:inset 0 1px 0 0 #54a3f7;*/
 	background:linear-gradient(to bottom, white 2%, powderblue 100%);
 	border-radius:3px;
@@ -78,6 +85,7 @@
     padding-top: 1em;
     font-size: 15px;
     font-style: oblique;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 }
 
 .header {
@@ -96,4 +104,28 @@ body {
     padding: 0;
     margin: 0;
     background:linear-gradient(to bottom, white 50%, lightblue 100%);
+}
+
+textarea {
+    width: 40em;
+    height: 16em;
+}
+
+.edit-delete {
+    width: 15%;
+}
+
+a:link {
+  color: cornflowerblue;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+    color: cornflowerblue;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+#upvote {
+    color: black;
 }

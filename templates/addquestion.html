@@ -1,23 +1,28 @@
 {% extends "layout.html" %}
 {% block title %}{{ " | Edit Question" if edit else " | New Question" }}{% endblock %}
+{% block buttons %}
+{% if edit %}
+    <a href="{{ url_for('display_question', question_id=data['id']) }}" id="myButton">Back to question</a>
+{% endif %}
+{% endblock %}
 {% block content %}
-    <body>
-    <div style="padding-left: 10%">
-        <h3>What is your question?</h3><br>
-        <form action="{{ url_for("add_question") if not edit else url_for("edit_question",question_id=data['id'])  }}" method="post" enctype="multipart/form-data">
-            <label for="title">Title:</label><br>
-            <input id="title" name="title" value="{{ data["title"] if edit else "" }}"><br><br>
-            <label for="text">Please describe your problem:</label><br>
-            <textarea id="text" name="message">{{ data["message"] if edit else "" }}</textarea><br><br>
-            {% if not edit %}
-                <label for="image">Add image:</label><br>
-                <input type="file" accept="image/*" id="image" name="file"><br><br>
-            {% else %}
-                <input type="hidden" name="file" value="">
-            {% endif %}
-            <button type="submit" class="myButton">Send question</button>
-        </form>
-    </div>
-    </body>
-
+<body>
+<div class="centered">
+    <h3>What is your question?</h3><br>
+    <form action="{{ url_for("add_question") if not edit else url_for("edit_question",question_id=data['id'])  }}" method="post" enctype="multipart/form-data">
+        <label for="title">Title:</label><br>
+        <input id="title" name="title" value="{{ data["title"] if edit else "" }}"><br><br>
+        <label for="text">Please describe your problem:</label><br>
+        <textarea id="text" name="message">{{ data["message"] if edit else "" }}</textarea><br><br>
+        {% if not edit %}
+            <label for="image">Add image:</label><br>
+            <input type="file" accept="image/*" id="image" name="file"><br><br>
+        {% else %}
+            <input type="hidden" name="file" value="">
+        {% endif %}
+        <button type="submit" class="myButton">Send question</button>
+    </form>
+</div>
+</body>
+>>>>>>> 2698ed8cb86b15a216cf92b5fc339aaae3385c80
 {% endblock %}

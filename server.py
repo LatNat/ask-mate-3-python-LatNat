@@ -7,7 +7,7 @@ import os
 from werkzeug.utils import secure_filename
 
 dirname = os.path.dirname(__file__)
-UPLOAD_FOLDER = f"{dirname}/static/images"
+UPLOAD_FOLDER = os.path.join(dirname, "static", "images")
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -135,6 +135,12 @@ def convert_timestamp(timestamp):
 @app.route("/answer/<question_id>", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == "POST":
+        filename = ""
+        if request.files:
+            file = request.files["image"]
+            filename = secure_filename(file.filename)
+            if filename != "":
+                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         new_answer={}
         answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
         new_answer["id"] = str(max([int(row["id"]) for row in answers])+1)
@@ -142,11 +148,11 @@ def add_answer(question_id):
         new_answer["vote_number"] = "0"
         new_answer["question_id"] = question_id
         new_answer["message"] = request.form["answer_message"]
-        new_answer["image"] = ""
+        new_answer["image"] = (filename if filename != "" else "")
         answers.append(new_answer)
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
-    return render_template("addanswer.html")
+    return render_template("addanswer.html", question_id=question_id)
 
 
 @app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
@@ -157,13 +163,15 @@ def update_answer(question_id, id):
         answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
-    return render_template("editanswer.html", message=answers[index]["message"])
+    return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
 
 
 @app.route("/answer/delete/<question_id>/<id>", methods=["GET", "POST"])
 def delete_answer(question_id, id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, id)
+    if not answers[index]["message"]:
+        os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
     del answers[index]
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id, view="f"))

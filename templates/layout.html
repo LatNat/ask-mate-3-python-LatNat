@@ -10,8 +10,11 @@
 {% endblock %}
 {% block title_header %}
     <div class="header"><h1>Welcome to AskMate!</h1><br><h5 class="stats">"Don't lose faith, use AskMate!"</h5>
-    <br><br><a href="/addquestion" class="myButton">Add new question</a>
-        <a href="{{ url_for('list_index') }}" class="myButton">Back to main page</a></div>
+    <br><br>
+    <a href="{{ url_for('list_index') }}" id="myButton">Back to main page</a>
+        {% block buttons %}
+        {% endblock %}
+    </div>
 {% endblock %}
 
 <div class="top-separator">{% block content %}<body></body>{% endblock %}</div>

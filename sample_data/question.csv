@@ -1,6 +1,8 @@
 id,submission_time,view_number,vote_number,title,message,image
-1,1493368154,51,7,How to make lists in Python?,"I am totally new to this, any hints?",
-2,1493068124,21,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
+
+1,1493368154,52,7,How to make lists in Python?,"I am totally new to this, any hints?",
+
+2,1493068124,22,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -9,13 +11,17 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)",image1.png
-3,1493015432,1392,60,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
+
+3,1493015432,1394,59,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
 
 
 This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
-4,1493015432,24,3,This site is shit,"Honestly, it's so pale and clean, i need to puke",
+
+4,1493015432,24,5,This site is shit,"Honestly, it's so pale and clean, i need to puke",
+
 7,1637743025,19,1,SPONGEBOB ME BOY,I LOVE MONEY GAHGAHGAHGAH,
-8,1637750954,2,0,A nice poem,"We're no strangers to love
+
+8,1637750954,3,0,A nice poem,"We're no strangers to love
 You know the rules and so do I
 A full commitment's what I'm thinking of
 You wouldn't get this from any other guy
@@ -31,7 +37,8 @@ We've known each other for so long
 Your heart's been aching, but you're too shy to say it
 Inside, we both know what's been going on
 We know the game, and we're gonna play it",images/Screenshot_from_2021-11-23_13-16-44.png
-9,1637751011,9,2,Long text for test purposes,"What is Lorem Ipsum?
+
+9,1637751011,10,2,Long text for test purposes,"What is Lorem Ipsum?
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 Why do we use it?
@@ -42,4 +49,8 @@ Where does it come from?
 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of ""de Finibus Bonorum et Malorum"" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, ""Lorem ipsum dolor sit amet.."", comes from a line in section 1.10.32.
 
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from ""de Finibus Bonorum et Malorum"" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",images/Screenshot_from_2021-11-23_13-18-17.png
-10,0,8,69,OLVASS EL!,"FIGYELEM! megoldottam színátmenettel a hátteret, szerintem egész menő lett, így nem kell széttagolni a cuccot :D",images/download.jpeg
+
+10,0,48,69,OLVASS EL!,"FIGYELEM! megoldottam színátmenettel a hátteret, szerintem egész menő lett, így nem kell széttagolni a cuccot :D",images/download.jpeg
+
+11,1,3,68,Gombok,"Raktam mindenhova gombokat, meg egységesítettem a kinézetet mindenhol, minimál efforttal.",
+
