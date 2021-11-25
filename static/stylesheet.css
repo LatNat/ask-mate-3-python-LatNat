@@ -89,7 +89,7 @@
 }
 
 .header {
-    width: 100vw;
+    width: auto;
     padding: 5% 10% 1em 10%;
     background:linear-gradient(to bottom, lightblue 5%, white 100%);
     color: slategray;
