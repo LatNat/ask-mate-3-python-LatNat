@@ -133,3 +133,8 @@ a:visited {
 .linebreak {
     white-space: pre-line;
 }
+
+#footer {
+    height: 130px;
+    padding: 3em 0 0 5em;
+}
