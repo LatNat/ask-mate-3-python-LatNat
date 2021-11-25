@@ -71,7 +71,7 @@ def add_question():
         new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
                         "view_number": 0, "vote_number": 0,
                         "title": (request.form["title"]), "message": (request.form["message"]),
-                        "image": (filename if filename != "" else "")}
+                        "image": (f"images/{filename}" if filename != "" else "")}
         data.append(new_question)
         data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
@@ -170,7 +170,10 @@ def delete_answer(question_id, id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, id)
     if answers[index]["image"] != "":
-        os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
+        try:
+            os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"][7:]))
+        except FileNotFoundError:
+            pass
     del answers[index]
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id, view="f"))
@@ -181,7 +184,10 @@ def delete_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question_index = data_handler.get_list_index(all_questions, question_id)
     if all_questions[question_index]["image"] != "":
-        os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
+        try:
+            os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"][7:]))
+        except FileNotFoundError:
+            pass
     del all_questions[question_index]
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))

@@ -15,7 +15,7 @@ app.js (bundled file with webpack, including jquery)",image1.png
 This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
 4,1493015432,25,5,This site is shit,"Honestly, it's so pale and clean, i need to puke",
 7,1637743025,19,1,SPONGEBOB ME BOY,I LOVE MONEY GAHGAHGAHGAH,
-8,1637750954,5,0,A nice poem,"We're no strangers to love
+8,1637750954,5,-10,A nice poem,"We're no strangers to love
 You know the rules and so do I
 A full commitment's what I'm thinking of
 You wouldn't get this from any other guy
@@ -42,7 +42,7 @@ Where does it come from?
 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of ""de Finibus Bonorum et Malorum"" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, ""Lorem ipsum dolor sit amet.."", comes from a line in section 1.10.32.
 
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from ""de Finibus Bonorum et Malorum"" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",images/Screenshot_from_2021-11-23_13-18-17.png
-10,0,55,69,OLVASS EL!,"FIGYELEM! megoldottam színátmenettel a hátteret, szerintem egész menő lett, így nem kell széttagolni a cuccot :D",images/download.jpeg
+10,0,56,69,OLVASS EL!,"FIGYELEM! megoldottam színátmenettel a hátteret, szerintem egész menő lett, így nem kell széttagolni a cuccot :D",images/download.jpeg
 11,1,3,68,Gombok,"Raktam mindenhova gombokat, meg egységesítettem a kinézetet mindenhol, minimál efforttal.",
 12,1637829910,2,0,Nice,"⠀⠀⠀⠀⠀⣴⠉⡙⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠤⣚⡯⠴⢬⣱⡀⠀
 ⠀⠀⠀⠀⢰⡇⣷⡌⢲⣄⡑⢢⡀⠀⠀⠀⠀⠀⢠⠾⢋⠔⣨⣴⣿⣷⡌⠇⡇⠀
@@ -59,4 +59,3 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 ⠀⠀⠀⠀⠀⡼⢁⡟⣫⣶⣍⡙⠛⠛⠛⠛⠛⣽⡖⣉⣠⣶⣶⣌⠛⢿⣿⣿⣿⣿
 ⠀⠀⠀⢀⠔⢡⢎⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠹⣿⣿⣿
 ⠀⢠⠖⢁⣴⡿⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢹⣿⣿",
-13,1637830583,4,0,Test,Test,images/28381355_89f51d541bb22b00f1b7ae552aa23ad6_wm.jpg
