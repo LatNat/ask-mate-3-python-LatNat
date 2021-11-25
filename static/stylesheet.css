@@ -129,3 +129,7 @@ a:visited {
 #upvote {
     color: black;
 }
+
+.linebreak {
+    white-space: pre-line;
+}
