@@ -43,9 +43,6 @@
 .right_text {
     text-align: right;
 }
-/*.table_background{*/
-/*    background:radial-gradient(aliceblue 5%, white 100%);*/
-/*}*/
 
 .submit_time {
     width: 70%;
@@ -145,4 +142,14 @@ a:visited {
 #footer {
     height: 130px;
     padding: 3em 0 0 5em;
+}
+
+.nav_bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search{
+    align-self: flex-end;
 }

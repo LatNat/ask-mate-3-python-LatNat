@@ -161,6 +161,13 @@ def delete_question(question_id):
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, to_export, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("list_index"))
 
+@app.route("/result")
+def search():
+    all_question = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    search_term = request.args["search"].upper()
+    relevant_questions = [q for q in all_question if search_term in q["title"].upper() or search_term in q["message"].upper()]
+    path = os.path.join(app.config['UPLOAD_FOLDER'])
+    return render_template("index.html", data=relevant_questions, default_sort="submission_time", checked=False, path=path)
 
 if __name__ == "__main__":
     app.run(debug=True)
