@@ -150,10 +150,8 @@ def delete_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question_index = data_handler.get_list_index(all_questions, question_id)
     if all_questions[question_index]["image"] != "":
-        try:
-            os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
-        except FileNotFoundError:
-            pass
+        try: os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
+        except FileNotFoundError: pass
     del all_questions[question_index]
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
