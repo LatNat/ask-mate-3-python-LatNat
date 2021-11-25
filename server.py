@@ -81,9 +81,7 @@ def add_question():
 def vote_question(question_id, vote):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     index = data_handler.get_list_index(all_questions, question_id)
-    vote_number = int(all_questions[index]['vote_number'])
-    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
-    all_questions[index]['vote_number'] = vote_number
+    all_questions = data_handler.voting(all_questions, index, vote)
     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return redirect(url_for('list_index'))
 
@@ -92,9 +90,7 @@ def vote_question(question_id, vote):
 def vote_answer(answer_id, vote):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     index = data_handler.get_list_index(answers, answer_id)
-    vote_number = int(answers[index]['vote_number'])
-    vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
-    answers[index]['vote_number'] = vote_number
+    answers = data_handler.voting(answers, index, vote)
     question_id = answers[index]['question_id']
     data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for('display_question', question_id=question_id, view='f'))
@@ -124,10 +120,10 @@ def add_answer(question_id):
     return render_template("addanswer.html", question_id=question_id)
 
 
-@app.route("/answer/<question_id>/<id>", methods=["GET", "POST"])
-def update_answer(question_id, id):
+@app.route("/answer/<question_id>/<answer_id>", methods=["GET", "POST"])
+def update_answer(question_id, answer_id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, id)
+    index = data_handler.get_list_index(answers, answer_id)
     if request.method == "POST":
         answers[index]["message"] = request.form["answer_message"]
         data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
@@ -135,10 +131,10 @@ def update_answer(question_id, id):
     return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
 
 
-@app.route("/answer/delete/<question_id>/<id>", methods=["GET", "POST"])
-def delete_answer(question_id, id):
+@app.route("/answer/delete/<question_id>/<answer_id>", methods=["GET", "POST"])
+def delete_answer(question_id, answer_id):
     answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, id)
+    index = data_handler.get_list_index(answers, answer_id)
     if answers[index]["image"] != "":
         try:
             os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
@@ -154,8 +150,10 @@ def delete_question(question_id):
     all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     question_index = data_handler.get_list_index(all_questions, question_id)
     if all_questions[question_index]["image"] != "":
-        try: os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
-        except FileNotFoundError: pass
+        try:
+            os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
+        except FileNotFoundError:
+            pass
     del all_questions[question_index]
     all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
