@@ -46,13 +46,11 @@ def voting(database, data_index, vote):
     vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
     database[data_index]['vote_number'] = vote_number
     return database
-    pass
 
 
 def delete_pictures(question_id, folder):
     all_answers = data_import(DATA_FILE_PATH_ANSWER)
     to_delete = list(filter(lambda x: x['question_id'] == question_id, all_answers))
-    print(to_delete)
     files = [f['image'] for f in to_delete]
     for file in files:
         try:
