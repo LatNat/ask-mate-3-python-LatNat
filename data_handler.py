@@ -49,5 +49,17 @@ def voting(database, data_index, vote):
     pass
 
 
+def delete_pictures(question_id, folder):
+    all_answers = data_import(DATA_FILE_PATH_ANSWER)
+    to_delete = list(filter(lambda x: x['question_id'] == question_id, all_answers))
+    print(to_delete)
+    files = [f['image'] for f in to_delete]
+    for file in files:
+        try:
+            os.remove(os.path.join(folder, file))
+        except FileNotFoundError:
+            pass
+
+
 if __name__ == "__main__":
     pass
