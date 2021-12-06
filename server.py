@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import data_handler
-from datetime import datetime
+import datetime as dt
 import time
 import os
 from werkzeug.utils import secure_filename
@@ -36,16 +36,10 @@ def list_index():
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
+    if 'view' not in request.args:
+        data_handler.increment_views(question_id)
     question = data_handler.get_question_by_id(question_id)
     relevant_answers = data_handler.get_answers_by_question_id(question_id)
-    # question = next((q for q in all_questions if q["id"] == question_id), None)
-    # question_index = all_questions.index(question)
-    # if 'view' not in request.args:
-    #     question["view_number"] = int(question["view_number"]) + 1
-    # relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
-    # relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
-    # all_questions[question_index] = question
-    # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return render_template("question.html", question=question, answers=relevant_answers)
 
 
@@ -94,13 +88,13 @@ def add_question():
         return redirect(url_for("list_index"))
 
 
-@app.route('/question/<question_id>/<vote>')
+@app.route('/question/vote/<question_id>/<vote>')
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
     return redirect(url_for('list_index'))
 
 
-@app.route('/answer/<answer_id>/<vote>')
+@app.route('/answer/vote/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
     data_handler.vote_for_answer(answer_id, vote)
     question_id = data_handler.get_related_question(answer_id)['question_id']
@@ -114,40 +108,37 @@ def add_answer(question_id):
         if request.files:
             file = request.files["image"]
             filename = secure_filename(file.filename)
-            if filename != "":
-                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-        new_answer = {"id": str(max([int(row["id"]) for row in answers])+1), "submission_time": str(int(time.time())),
+        if filename != "":
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        new_answer = {"submission_time": data_handler.round_seconds(dt.datetime.now()),
                       "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"],
                       "image": (filename if filename != "" else "")}
-        answers.append(new_answer)
-        data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+        data_handler.add_answer(new_answer)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("addanswer.html", question_id=question_id)
 
 
 @app.route("/answer/<question_id>/<answer_id>", methods=["GET", "POST"])
 def update_answer(question_id, answer_id):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
+    old_message = data_handler.get_answer_message(answer_id)['message']
     if request.method == "POST":
-        answers[index]["message"] = request.form["answer_message"]
-        data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+        data_handler.update_answer(request.form["answer_message"], answer_id)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
-    return render_template("editanswer.html", message=answers[index]["message"], question_id=question_id)
+    return render_template("editanswer.html", message=old_message, question_id=question_id)
 
 
 @app.route("/answer/delete/<question_id>/<answer_id>", methods=["GET", "POST"])
 def delete_answer(question_id, answer_id):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    if answers[index]["image"] != "":
-        try:
-            os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
-        except FileNotFoundError:
-            pass
-    del answers[index]
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    data_handler.delete_answer(answer_id)
+    # answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    # index = data_handler.get_list_index(answers, answer_id)
+    # if answers[index]["image"] != "":
+    #     try:
+    #         os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
+    #     except FileNotFoundError:
+    #         pass
+    # del answers[index]
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id, view="f"))
 
 

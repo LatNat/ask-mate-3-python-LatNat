@@ -95,6 +95,42 @@ def delete_relevant_answers(cursor, question_id):
 
 
 @database_common.connection_handler
+def add_answer(cursor, answer_dict):
+    placeholder = ', '.join(['%s'] * len(answer_dict))
+    columns = ', '.join(answer_dict.keys())
+    query = '''
+        INSERT INTO answer (%s)
+        VALUES (%s)''' % (columns, placeholder)
+    cursor.execute(query, list(answer_dict.values()))
+
+
+@database_common.connection_handler
+def update_answer(cursor, new_message, answer_id):
+    query = '''
+        UPDATE answer
+        SET message = %s
+        WHERE id = %s'''
+    cursor.execute(query, (new_message, answer_id))
+
+
+@database_common.connection_handler
+def get_answer_message(cursor, answer_id):
+    query = '''
+        SELECT message FROM answer
+        WHERE id = %s'''
+    cursor.execute(query, answer_id)
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = '''
+        DELETE FROM answer
+        WHERE id = %s'''
+    cursor.execute(query, answer_id)
+
+
+@database_common.connection_handler
 def vote_for_answer(cursor, answer_id, vote):
     vote_change = 1 if vote == 'up' else -1
     query = '''
@@ -122,6 +158,23 @@ def get_related_question(cursor, answer_id):
         WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = '''
+        DELETE FROM answer
+        WHERE id = %s;'''
+    cursor.execute(query, (answer_id, ))
+
+
+@database_common.connection_handler
+def increment_views(cursor, question_id):
+    query = '''
+        UPDATE question
+        SET view_number = view_number + 1
+        WHERE id = %s;'''
+    cursor.execute(query, (question_id, ))
 
 
 def delete_pictures(question_id, folder):
