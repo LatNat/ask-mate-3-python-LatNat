@@ -1,7 +1,14 @@
 import csv
 import os
 import database_common
-from datetime import datetime
+import datetime as dt
+
+
+def round_seconds(obj: dt.datetime) -> dt.datetime:
+    if obj.microsecond >= 500_000:
+        obj += dt.timedelta(seconds=1)
+    return obj.replace(microsecond=0)
+
 
 @database_common.connection_handler
 def import_all_questions(cursor):
@@ -13,16 +20,19 @@ def import_all_questions(cursor):
 
 
 @database_common.connection_handler
-<<<<<<< HEAD
 def get_question_by_id(cursor, question_id):
     query = '''
         SELECT * FROM question
         WHERE id = %s'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
-=======
+
+
+@database_common.connection_handler
 def add_question(cursor, data):
-    timestamp = datetime.now()
+    timestamp = round_seconds(dt.datetime.now())
+    if "image" not in data.keys():
+        data["image"] = ""
     query = '''
             INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
             VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s)
@@ -34,9 +44,9 @@ def add_question(cursor, data):
         "title": data["title"],
         "message": data["message"],
         "image": data["image"]})
->>>>>>> 354c8eb157612bb7bccd5e47d5b12aead6b45434
 
 
+@database_common.connection_handler
 def data_export(filename, dict_data, header):
     with open(filename, "w", encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
