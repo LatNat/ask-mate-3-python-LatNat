@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import data_handler
 import datetime as dt
-import time
 import os
 from werkzeug.utils import secure_filename
 
