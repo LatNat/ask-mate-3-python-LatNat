@@ -98,11 +98,8 @@ def vote_question(question_id, vote):
 
 @app.route('/answer/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    answers = data_handler.voting(answers, index, vote)
-    question_id = answers[index]['question_id']
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    data_handler.voting(answer_id, vote)
+    question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
@@ -152,6 +149,8 @@ def delete_answer(question_id, answer_id):
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
+    data_handler.delete_question(question_id)
+    data_handler.delete_relevant_answers(question_id)
     # all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     # question_index = data_handler.get_list_index(all_questions, question_id)
     # if all_questions[question_index]["image"] != "":
