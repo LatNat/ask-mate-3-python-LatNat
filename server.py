@@ -91,11 +91,8 @@ def vote_question(question_id, vote):
 
 @app.route('/answer/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    answers = data_handler.voting(answers, index, vote)
-    question_id = answers[index]['question_id']
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    data_handler.voting(answer_id, vote)
+    question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
