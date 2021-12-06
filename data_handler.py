@@ -70,7 +70,7 @@ def update_question(cursor, question_data):
     query = '''
             UPDATE question
             SET title = %(title)s, message = %(message)s
-            WHERE id = %(id)s'''
+            WHERE id = %(id)s;'''
     cursor.execute(query, {"title": question_data["title"],
                            "message": question_data["message"],
                            "id": question_data["id"]})
@@ -99,7 +99,7 @@ def add_answer(cursor, answer_dict):
     columns = ', '.join(answer_dict.keys())
     query = '''
         INSERT INTO answer (%s)
-        VALUES (%s)''' % (columns, placeholder)
+        VALUES (%s);''' % (columns, placeholder)
     cursor.execute(query, list(answer_dict.values()))
 
 
@@ -109,8 +109,7 @@ def vote_for_answer(cursor, answer_id, vote):
     query = '''
         UPDATE answer
         SET vote_number = vote_number + CAST(%s AS int)
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (vote_change, answer_id))
 
 
@@ -120,8 +119,7 @@ def vote_for_question(cursor, question_id, vote):
     query = '''
         UPDATE question
         SET vote_number = vote_number + CAST(%s AS int)
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (vote_change, question_id))
 
 
@@ -130,8 +128,7 @@ def get_related_question(cursor, answer_id):
     query = '''
         SELECT question_id
         FROM answer
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
 
@@ -140,8 +137,7 @@ def get_related_question(cursor, answer_id):
 def delete_answer(cursor, answer_id):
     query = '''
         DELETE FROM answer
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
 
 
@@ -150,8 +146,7 @@ def increment_views(cursor, question_id):
     query = '''
         UPDATE question
         SET view_number = view_number + 1
-        WHERE id = %s
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (question_id, ))
 
 
