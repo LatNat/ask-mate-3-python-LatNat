@@ -145,6 +145,16 @@ def delete_answer(cursor, answer_id):
     cursor.execute(query, (answer_id, ))
 
 
+@database_common.connection_handler
+def increment_views(cursor, question_id):
+    query = '''
+        UPDATE question
+        SET view_number = view_number + 1
+        WHERE id = %s
+        '''
+    cursor.execute(query, (question_id, ))
+
+
 def delete_pictures(question_id, folder):
     all_answers = data_import(DATA_FILE_PATH_ANSWER)
     to_delete = list(filter(lambda x: x['question_id'] == question_id, all_answers))
