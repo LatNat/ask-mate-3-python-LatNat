@@ -2,6 +2,7 @@ import csv
 import os
 import database_common
 import datetime as dt
+from psycopg2 import sql
 
 
 def round_seconds(obj: dt.datetime) -> dt.datetime:
@@ -11,10 +12,11 @@ def round_seconds(obj: dt.datetime) -> dt.datetime:
 
 
 @database_common.connection_handler
-def import_all_questions(cursor):
-    query = '''
-        SELECT * FROM question;'''
-    cursor.execute(query)
+def import_all_questions(cursor, order):
+    query = sql.SQL('''
+        SELECT * FROM question
+        ORDER BY {order_by};''')
+    cursor.execute(query.format(order_by=sql.Identifier(order)))
     return cursor.fetchall()
 
 
@@ -45,8 +47,7 @@ def add_question(cursor, data):
         data["image"] = ""
     query = '''
             INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
-            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s)
-        '''
+            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
     cursor.execute(query, {
         "subtime": timestamp,
         "view": 0,
@@ -70,7 +71,7 @@ def update_question(cursor, question_data):
     query = '''
             UPDATE question
             SET title = %(title)s, message = %(message)s
-            WHERE id = %(id)s'''
+            WHERE id = %(id)s;'''
     cursor.execute(query, {"title": question_data["title"],
                            "message": question_data["message"],
                            "id": question_data["id"]})
@@ -99,8 +100,7 @@ def vote_for_answer(cursor, answer_id, vote):
     query = '''
         UPDATE answer
         SET vote_number = vote_number + CAST(%s AS int)
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (vote_change, answer_id))
 
 
@@ -110,8 +110,7 @@ def vote_for_question(cursor, question_id, vote):
     query = '''
         UPDATE question
         SET vote_number = vote_number + CAST(%s AS int)
-        WHERE id = %s;
-        '''
+        WHERE id = %s;'''
     cursor.execute(query, (vote_change, question_id))
 
 
@@ -120,7 +119,7 @@ def get_related_question(cursor, answer_id):
     query = '''
         SELECT question_id
         FROM answer
-        WHERE id = %s'''
+        WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
 
@@ -134,6 +133,8 @@ def delete_pictures(question_id, folder):
             os.remove(os.path.join(folder, file))
         except FileNotFoundError:
             pass
+
+
 
 
 if __name__ == "__main__":
