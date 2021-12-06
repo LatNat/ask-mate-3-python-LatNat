@@ -29,16 +29,10 @@ def list_index():
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
+    if 'view' not in request.args:
+        data_handler.increment_views(question_id)
     question = data_handler.get_question_by_id(question_id)
     relevant_answers = data_handler.get_answers_by_question_id(question_id)
-    # question = next((q for q in all_questions if q["id"] == question_id), None)
-    # question_index = all_questions.index(question)
-    # if 'view' not in request.args:
-    #     question["view_number"] = int(question["view_number"]) + 1
-    # relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
-    # relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
-    # all_questions[question_index] = question
-    # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
     return render_template("question.html", question=question, answers=relevant_answers)
 
 
@@ -128,12 +122,16 @@ def update_answer(question_id, answer_id):
 
 @app.route("/answer/delete/<question_id>/<answer_id>", methods=["GET", "POST"])
 def delete_answer(question_id, answer_id):
-    #if answers[index]["image"] != "":
-    #    try:
-    #        os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
-    #    except FileNotFoundError:
-    #        pass
     data_handler.delete_answer(answer_id)
+    # answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    # index = data_handler.get_list_index(answers, answer_id)
+    # if answers[index]["image"] != "":
+    #     try:
+    #         os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
+    #     except FileNotFoundError:
+    #         pass
+    # del answers[index]
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id, view="f"))
 
 

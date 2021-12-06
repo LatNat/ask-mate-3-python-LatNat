@@ -156,9 +156,29 @@ def get_related_question(cursor, answer_id):
     query = '''
         SELECT question_id
         FROM answer
-        WHERE id = %s'''
+        WHERE id = %s;
+        '''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = '''
+        DELETE FROM answer
+        WHERE id = %s;
+        '''
+    cursor.execute(query, (answer_id, ))
+
+
+@database_common.connection_handler
+def increment_views(cursor, question_id):
+    query = '''
+        UPDATE question
+        SET view_number = view_number + 1
+        WHERE id = %s
+        '''
+    cursor.execute(query, (question_id, ))
 
 
 def delete_pictures(question_id, folder):
