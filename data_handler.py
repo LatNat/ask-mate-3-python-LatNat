@@ -2,6 +2,7 @@ import csv
 import os
 import database_common
 import datetime as dt
+from psycopg2 import sql
 
 
 def round_seconds(obj: dt.datetime) -> dt.datetime:
@@ -11,10 +12,11 @@ def round_seconds(obj: dt.datetime) -> dt.datetime:
 
 
 @database_common.connection_handler
-def import_all_questions(cursor):
-    query = '''
-        SELECT * FROM question;'''
-    cursor.execute(query)
+def import_all_questions(cursor, order):
+    query = sql.SQL('''
+        SELECT * FROM question
+        ORDER BY {order_by};''')
+    cursor.execute(query.format(order_by=sql.Identifier(order)))
     return cursor.fetchall()
 
 
@@ -45,8 +47,7 @@ def add_question(cursor, data):
         data["image"] = ""
     query = '''
             INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
-            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s)
-        '''
+            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
     cursor.execute(query, {
         "subtime": timestamp,
         "view": 0,
@@ -101,6 +102,32 @@ def add_answer(cursor, answer_dict):
         INSERT INTO answer (%s)
         VALUES (%s);''' % (columns, placeholder)
     cursor.execute(query, list(answer_dict.values()))
+
+
+@database_common.connection_handler
+def update_answer(cursor, new_message, answer_id):
+    query = '''
+        UPDATE answer
+        SET message = %s
+        WHERE id = %s'''
+    cursor.execute(query, (new_message, answer_id))
+
+
+@database_common.connection_handler
+def get_answer_message(cursor, answer_id):
+    query = '''
+        SELECT message FROM answer
+        WHERE id = %s'''
+    cursor.execute(query, answer_id)
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = '''
+        DELETE FROM answer
+        WHERE id = %s'''
+    cursor.execute(query, answer_id)
 
 
 @database_common.connection_handler
@@ -159,6 +186,8 @@ def delete_pictures(question_id, folder):
             os.remove(os.path.join(folder, file))
         except FileNotFoundError:
             pass
+
+
 
 
 if __name__ == "__main__":
