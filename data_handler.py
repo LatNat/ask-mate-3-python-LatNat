@@ -1,7 +1,7 @@
 import csv
 import os
 import database_common
-
+from datetime import datetime
 
 @database_common.connection_handler
 def import_all_questions(cursor):
@@ -13,12 +13,28 @@ def import_all_questions(cursor):
 
 
 @database_common.connection_handler
+<<<<<<< HEAD
 def get_question_by_id(cursor, question_id):
     query = '''
         SELECT * FROM question
         WHERE id = %s'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
+=======
+def add_question(cursor, data):
+    timestamp = datetime.now()
+    query = '''
+            INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
+            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s)
+        '''
+    cursor.execute(query, {
+        "subtime": timestamp,
+        "view": 0,
+        "vote": 0,
+        "title": data["title"],
+        "message": data["message"],
+        "image": data["image"]})
+>>>>>>> 354c8eb157612bb7bccd5e47d5b12aead6b45434
 
 
 def data_export(filename, dict_data, header):
