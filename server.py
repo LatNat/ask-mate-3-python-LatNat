@@ -82,16 +82,13 @@ def add_question():
 
 @app.route('/question/<question_id>/<vote>')
 def vote_question(question_id, vote):
-    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    index = data_handler.get_list_index(all_questions, question_id)
-    all_questions = data_handler.voting(all_questions, index, vote)
-    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    data_handler.vote_for_question(question_id, vote)
     return redirect(url_for('list_index'))
 
 
 @app.route('/answer/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
-    data_handler.voting(answer_id, vote)
+    data_handler.vote_for_answer(answer_id, vote)
     question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 

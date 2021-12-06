@@ -83,17 +83,25 @@ def delete_relevant_answers(cursor, question_id):
 
 
 @database_common.connection_handler
-def voting(cursor, answer_id, vote):
+def vote_for_answer(cursor, answer_id, vote):
     vote_change = 1 if vote == 'up' else -1
     query = '''
         UPDATE answer
         SET vote_number = vote_number + CAST(%s AS int)
-        WHERE id = %s;'''
+        WHERE id = %s;
+        '''
     cursor.execute(query, (vote_change, answer_id))
-    # vote_number = int(database[data_index]['vote_number'])
-    # vote_number += 1 if vote == 'up' else (-1 if vote == 'down' else 0)
-    # database[data_index]['vote_number'] = vote_number
-    # return database
+
+
+@database_common.connection_handler
+def vote_for_question(cursor, question_id, vote):
+    vote_change = 1 if vote == 'up' else -1
+    query = '''
+        UPDATE question
+        SET vote_number = vote_number + CAST(%s AS int)
+        WHERE id = %s;
+        '''
+    cursor.execute(query, (vote_change, question_id))
 
 
 @database_common.connection_handler
