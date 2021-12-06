@@ -61,20 +61,22 @@ def add_question():
     if request.method == "GET":
         return render_template("addquestion.html")
     if request.method == "POST":
-        data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-        new_id = int(data[-1]["id"])+1
-        filename = ""
-        if request.files:
-            file = request.files["file"]
-            filename = secure_filename(file.filename)
-            if filename != "":
-                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
-                        "view_number": 0, "vote_number": 0,
-                        "title": (request.form["title"]), "message": (request.form["message"]),
-                        "image": (filename if filename != "" else "")}
-        data.append(new_question)
-        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
+        add_question_data = request.form.to_dict()
+        data_handler.add_question(add_question_data)
+        # data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+        # new_id = int(data[-1]["id"])+1
+        # filename = ""
+        # if request.files:
+        #     file = request.files["file"]
+        #     filename = secure_filename(file.filename)
+        #     if filename != "":
+        #         file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        # new_question = {"id": new_id, "submission_time": int((datetime.now()).timestamp()),
+        #                 "view_number": 0, "vote_number": 0,
+        #                 "title": (request.form["title"]), "message": (request.form["message"]),
+        #                 "image": (filename if filename != "" else "")}
+        # data.append(new_question)
+        # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, data, data_handler.DATA_HEADER_QUESTION)
         return redirect(url_for("list_index"))
 
 

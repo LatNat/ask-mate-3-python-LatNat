@@ -12,6 +12,21 @@ def import_all_questions(cursor):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
+def add_question(cursor, data):
+    query = '''
+            INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
+            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s)
+        '''
+    cursor.execute(query, {
+        "subtime": data["submission_time"],
+        "view": data["view_number"],
+        "vote": data["vote_number"],
+        "title": data["title"],
+        "message": data["message"],
+        "image": data["image"]})
+
+
 def data_export(filename, dict_data, header):
     with open(filename, "w", encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
