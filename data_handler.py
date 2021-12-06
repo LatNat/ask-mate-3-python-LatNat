@@ -67,24 +67,15 @@ def data_export(filename, dict_data, header):
             writer.writerow(data)
 
 
-def get_list_index(dict_list, id):
-    i = 0
-    for line in dict_list:
-        if line["id"] == id:
-            return i
-        i += 1
-    return -1
-
-
-def sort_data(data, key="submission_time", reverse=False):
-    if not data:
-        return data
-    elif data[0][key].isnumeric():
-        return sorted(data, key=lambda x: int(x[key]), reverse=reverse)
-    else:
-        return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
-=======
->>>>>>> 03aa3e73aebe2987dbe965bb2bb4bf5a1aea91d1
+@database_common.connection_handler
+def update_question(cursor, question_data):
+    query = '''
+            UPDATE question
+            SET title = %(title)s, message = %(message)s
+            WHERE id = %(id)s'''
+    cursor.execute(query, {"title": question_data["title"],
+                           "message": question_data["message"],
+                           "id": question_data["id"]})
 
 
 def voting(database, data_index, vote):
