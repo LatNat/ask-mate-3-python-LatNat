@@ -14,17 +14,17 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 @app.route("/list", methods=['GET', 'POST'])
 @app.route("/", methods=["GET", "POST"])
 def list_index():
-    data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    if request.method == "POST":
-        checked = False
-        if "reverse" in request.form.keys():
-            checked = True
-        data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=not checked)
-        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
-    else:
-        data = data_handler.sort_data(data)
-        path = os.path.join(app.config['UPLOAD_FOLDER'])
-        return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
+    data = data_handler.data_import()
+    # if request.method == "POST":
+    #     checked = False
+    #     if "reverse" in request.form.keys():
+    #         checked = True
+    #     data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=not checked)
+    #     return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
+    # else:
+    #     data = data_handler.sort_data(data)
+    path = os.path.join(app.config['UPLOAD_FOLDER'])
+    return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])

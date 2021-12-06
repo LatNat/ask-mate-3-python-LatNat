@@ -1,18 +1,15 @@
 import csv
 import os
-import codecs
-
-DATA_FILE_PATH_ANSWER = os.getenv('DATA_FILE_PATH_ANSWER') if 'DATA_FILE_PATH_ANSWER' in os.environ else 'answer.csv'
-DATA_FILE_PATH_QUESTION = os.getenv('DATA_FILE_PATH_QUESTION') if 'DATA_FILE_PATH_QUESTION' in os.environ else 'question.csv'
-DATA_HEADER_ANSWER = ["id", "submission_time", "vote_number", "question_id", "message", "image"]
-DATA_HEADER_QUESTION = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+import database_common
 
 
-def data_import(file_name):
-    with open(file_name, encoding='utf-8') as file:
-        lines = csv.DictReader(file)
-        data = [x for x in lines]
-    return data
+@database_common.connection_handler
+def data_import(cursor):
+    query = '''
+        SELECT * FROM question
+    '''
+    cursor.execute(query)
+    return cursor.fetchall()
 
 
 def data_export(filename, dict_data, header):
