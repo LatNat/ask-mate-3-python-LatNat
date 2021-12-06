@@ -3,6 +3,7 @@ import os
 import database_common
 from datetime import datetime
 
+
 @database_common.connection_handler
 def import_all_questions(cursor):
     query = '''
@@ -13,14 +14,24 @@ def import_all_questions(cursor):
 
 
 @database_common.connection_handler
-<<<<<<< HEAD
+def get_answers_by_question_id(cursor, question_id):
+    query = '''
+        SELECT * FROM answer
+        WHERE question_id = %s'''
+    cursor.execute(query, (question_id, ))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     query = '''
         SELECT * FROM question
         WHERE id = %s'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
-=======
+
+
+@database_common.connection_handler
 def add_question(cursor, data):
     timestamp = datetime.now()
     query = '''
@@ -34,7 +45,6 @@ def add_question(cursor, data):
         "title": data["title"],
         "message": data["message"],
         "image": data["image"]})
->>>>>>> 354c8eb157612bb7bccd5e47d5b12aead6b45434
 
 
 def data_export(filename, dict_data, header):
