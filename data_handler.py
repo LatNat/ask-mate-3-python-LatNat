@@ -10,7 +10,6 @@ def round_seconds(obj: dt.datetime) -> dt.datetime:
     return obj.replace(microsecond=0)
 
 
-
 @database_common.connection_handler
 def import_all_questions(cursor):
     query = '''
@@ -67,24 +66,22 @@ def data_export(filename, dict_data, header):
             writer.writerow(data)
 
 
-def get_list_index(dict_list, id):
-    i = 0
-    for line in dict_list:
-        if line["id"] == id:
-            return i
-        i += 1
-    return -1
+@database_common.connection_handler
+def delete_question(cursor, question_id):
+    query = '''
+        DELETE FROM question
+        WHERE id = %s'''
+    cursor.execute(query, (question_id, ))
+    delete_relevant_answers(question_id)
 
 
-def sort_data(data, key="submission_time", reverse=False):
-    if not data:
-        return data
-    elif data[0][key].isnumeric():
-        return sorted(data, key=lambda x: int(x[key]), reverse=reverse)
-    else:
-        return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
-=======
->>>>>>> 03aa3e73aebe2987dbe965bb2bb4bf5a1aea91d1
+@database_common.connection_handler
+def delete_relevant_answers(cursor, question_id):
+    query = '''
+        DELETE FROM answer
+        WHERE question_id = %s'''
+    cursor.execute(query, (question_id, ))
+
 
 
 def voting(database, data_index, vote):
