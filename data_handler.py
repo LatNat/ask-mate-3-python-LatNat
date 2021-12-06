@@ -83,6 +83,15 @@ def delete_relevant_answers(cursor, question_id):
     cursor.execute(query, (question_id, ))
 
 
+@database_common.connection_handler
+def add_answer(cursor, answer_dict):
+    placeholder = ', '.join(['%s'] * len(answer_dict))
+    columns = ', '.join(answer_dict.keys())
+    query = '''
+        INSERT INTO answer (%s)
+        VALUES (%s)''' % (columns, placeholder)
+    cursor.execute(query, list(answer_dict.values()))
+
 
 def voting(database, data_index, vote):
     vote_number = int(database[data_index]['vote_number'])
