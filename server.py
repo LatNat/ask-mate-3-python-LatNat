@@ -132,15 +132,16 @@ def update_answer(question_id, answer_id):
 
 @app.route("/answer/delete/<question_id>/<answer_id>", methods=["GET", "POST"])
 def delete_answer(question_id, answer_id):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    if answers[index]["image"] != "":
-        try:
-            os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
-        except FileNotFoundError:
-            pass
-    del answers[index]
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    data_handler.delete_answer(answer_id)
+    # answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    # index = data_handler.get_list_index(answers, answer_id)
+    # if answers[index]["image"] != "":
+    #     try:
+    #         os.remove(os.path.join(UPLOAD_FOLDER, answers[index]["image"]))
+    #     except FileNotFoundError:
+    #         pass
+    # del answers[index]
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("display_question", question_id=question_id, view="f"))
 
 
