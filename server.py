@@ -44,16 +44,23 @@ def display_question(question_id):
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
-    all_lines = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     if request.method == "GET":
-        line = next((q for q in all_lines if q["id"] == question_id), None)
+        line = data_handler.get_question_by_id(question_id)
         return render_template("addquestion.html", data=line, edit="edit")
     if request.method == "POST":
-        line_index = data_handler.get_list_index(all_lines, question_id)
-        all_lines[line_index]["message"] = (request.form["message"])
-        all_lines[line_index]["title"] = (request.form["title"])
-        data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_lines, data_handler.DATA_HEADER_QUESTION)
+        update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
+        data_handler.update_question(update_data)
         return redirect(url_for("list_index"))
+    # all_lines = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    # if request.method == "GET":
+    #     line = next((q for q in all_lines if q["id"] == question_id), None)
+    #     return render_template("addquestion.html", data=line, edit="edit")
+    # if request.method == "POST":
+    #     line_index = data_handler.get_list_index(all_lines, question_id)
+    #     all_lines[line_index]["message"] = (request.form["message"])
+    #     all_lines[line_index]["title"] = (request.form["title"])
+    #     data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_lines, data_handler.DATA_HEADER_QUESTION)
+    #     return redirect(url_for("list_index"))
 
 
 @app.route("/addquestion", methods=["GET", "POST"])
@@ -82,20 +89,14 @@ def add_question():
 
 @app.route('/question/<question_id>/<vote>')
 def vote_question(question_id, vote):
-    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    index = data_handler.get_list_index(all_questions, question_id)
-    all_questions = data_handler.voting(all_questions, index, vote)
-    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    data_handler.vote_for_question(question_id, vote)
     return redirect(url_for('list_index'))
 
 
 @app.route('/answer/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
-    answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    index = data_handler.get_list_index(answers, answer_id)
-    answers = data_handler.voting(answers, index, vote)
-    question_id = answers[index]['question_id']
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, answers, data_handler.DATA_HEADER_ANSWER)
+    data_handler.vote_for_answer(answer_id, vote)
+    question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
