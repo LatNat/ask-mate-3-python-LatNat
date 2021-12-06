@@ -30,6 +30,7 @@ def list_index():
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
     question = data_handler.get_question_by_id(question_id)
+    relevant_answers = data_handler.get_answers_by_question_id(question_id)
     # question = next((q for q in all_questions if q["id"] == question_id), None)
     # question_index = all_questions.index(question)
     # if 'view' not in request.args:
@@ -38,7 +39,7 @@ def display_question(question_id):
     # relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
     # all_questions[question_index] = question
     # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
-    return render_template("question.html", question=question) # answers=relevant_answers) //
+    return render_template("question.html", question=question, answers=relevant_answers)
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
@@ -98,11 +99,6 @@ def vote_answer(answer_id, vote):
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 
 
-@app.template_filter("convert_timestamp")
-def convert_timestamp(timestamp):
-    return datetime.fromtimestamp(int(timestamp))
-
-
 @app.route("/answer/<question_id>", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == "POST":
@@ -149,19 +145,19 @@ def delete_answer(question_id, answer_id):
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
-    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    question_index = data_handler.get_list_index(all_questions, question_id)
-    if all_questions[question_index]["image"] != "":
-        try:
-            os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
-        except FileNotFoundError:
-            pass
-    del all_questions[question_index]
-    data_handler.delete_pictures(question_id, UPLOAD_FOLDER)
-    all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
-    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
-    data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, to_export, data_handler.DATA_HEADER_ANSWER)
+    # all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    # question_index = data_handler.get_list_index(all_questions, question_id)
+    # if all_questions[question_index]["image"] != "":
+    #     try:
+    #         os.remove(os.path.join(UPLOAD_FOLDER, all_questions[question_index]["image"]))
+    #     except FileNotFoundError:
+    #         pass
+    # del all_questions[question_index]
+    # data_handler.delete_pictures(question_id, UPLOAD_FOLDER)
+    # all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
+    # to_export = list(filter(lambda x: x['question_id'] != question_id, all_answers))
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_ANSWER, to_export, data_handler.DATA_HEADER_ANSWER)
     return redirect(url_for("list_index"))
 
 

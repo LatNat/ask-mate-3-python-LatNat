@@ -10,12 +10,24 @@ def round_seconds(obj: dt.datetime) -> dt.datetime:
     return obj.replace(microsecond=0)
 
 
+
 @database_common.connection_handler
 def import_all_questions(cursor):
     query = '''
         SELECT * FROM question
     '''
     cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_answers_by_question_id(cursor, question_id):
+    query = '''
+        SELECT * FROM answer
+        WHERE question_id = %s
+        ORDER BY vote_number DESC'''
+    # needs sorting
+    cursor.execute(query, (question_id, ))
     return cursor.fetchall()
 
 
@@ -71,6 +83,8 @@ def sort_data(data, key="submission_time", reverse=False):
         return sorted(data, key=lambda x: int(x[key]), reverse=reverse)
     else:
         return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
+=======
+>>>>>>> 03aa3e73aebe2987dbe965bb2bb4bf5a1aea91d1
 
 
 def voting(database, data_index, vote):
