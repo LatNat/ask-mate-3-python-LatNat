@@ -100,7 +100,7 @@ def add_answer(cursor, answer_dict):
     columns = ', '.join(answer_dict.keys())
     query = '''
         INSERT INTO answer (%s)
-        VALUES (%s)''' % (columns, placeholder)
+        VALUES (%s);''' % (columns, placeholder)
     cursor.execute(query, list(answer_dict.values()))
 
 
