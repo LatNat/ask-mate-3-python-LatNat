@@ -4,7 +4,7 @@ import database_common
 
 
 @database_common.connection_handler
-def data_import(cursor):
+def import_all_questions(cursor):
     query = '''
         SELECT * FROM question
     '''
