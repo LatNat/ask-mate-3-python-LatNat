@@ -66,6 +66,17 @@ def data_export(filename, dict_data, header):
 
 
 @database_common.connection_handler
+def update_question(cursor, question_data):
+    query = '''
+            UPDATE question
+            SET title = %(title)s, message = %(message)s
+            WHERE id = %(id)s'''
+    cursor.execute(query, {"title": question_data["title"],
+                           "message": question_data["message"],
+                           "id": question_data["id"]})
+
+
+@database_common.connection_handler
 def delete_question(cursor, question_id):
     query = '''
         DELETE FROM question
