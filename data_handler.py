@@ -188,7 +188,5 @@ def delete_pictures(question_id, folder):
             pass
 
 
-
-
 if __name__ == "__main__":
     pass
