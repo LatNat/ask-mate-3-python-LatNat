@@ -1,6 +1,6 @@
-* {
-    box-sizing: border-box;
-}
+/*table td {*/
+/*    border: 1px solid black;*/
+/*}*/
 
 .centered {
     margin: auto;
@@ -9,11 +9,9 @@
 
 .voting {
     text-align: center;
-    vertical-align: top;
-    width: 50px;
+    width: 7%;
     font-weight: bold;
-    margin-right: 100px;
-    padding-right: 1em;
+    vertical-align: top;
 }
 
 .answers {

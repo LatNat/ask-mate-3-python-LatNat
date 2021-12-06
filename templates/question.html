@@ -12,15 +12,12 @@
                 <h3>{{ question["title"] }}</h3>
             </td>
             <td style="text-align: right">
-                <a href="{{ url_for('edit_question', question_id=question['id']) }}" id="myButton">Edit</a><br>
-                <a href="{{ url_for('delete_question', question_id=question['id']) }}" id="myButton">Delete</a>
-            </td>
-            <td>
-
+                <p><a href="{{ url_for('edit_question', question_id=question['id']) }}" id="myButton">Edit</a></p>
+                <p><a href="{{ url_for('delete_question', question_id=question['id']) }}" id="myButton">Delete</a></p>
             </td>
         </tr>
         <tr>
-            <td rowspan="2" class="voting question">
+            <td class="voting question">
                 <strong>
                     <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">/\</a>
                     <br>{{ question["vote_number"] }}<br>
@@ -29,13 +26,22 @@
             </td>
             <td colspan="3" class="question">
                 <p class="linebreak">{{ question["message"] }}</p><br><br>
-                <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
+                {% if question["image"] %}
+                    <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
+                {% endif %}
             </td>
         </tr>
+        <tr>
+            <td>Tags:</td>
+            {% for tag in tags %}
+                <td>{{ tag.name }}</td>
+            {% endfor %}
+        </tr>
         <tr class="stats">
-            <td class="submit_time">submitted: {{ question["submission_time"] }}</td>
+            <td class="submit_time" colspan="2">submitted: {{ question["submission_time"] }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
+
     </table>
 </div>
 <div class="answers" id="answer">
@@ -51,6 +57,9 @@
         </td>
         <td colspan="3">
             <p class="linebreak">{{ answer["message"] }}</p><br>
+            {% if question["image"] %}
+                    <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
+            {% endif %}
         </td>
     </tr>
     <tr class="left_text stats">

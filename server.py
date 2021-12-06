@@ -37,9 +37,10 @@ def list_index():
 def display_question(question_id):
     if 'view' not in request.args:
         data_handler.increment_views(question_id)
+    tags = data_handler.get_tags(question_id)
     question = data_handler.get_question_by_id(question_id)
     relevant_answers = data_handler.get_answers_by_question_id(question_id)
-    return render_template("question.html", question=question, answers=relevant_answers)
+    return render_template("question.html", question=question, tags=tags, answers=relevant_answers)
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])

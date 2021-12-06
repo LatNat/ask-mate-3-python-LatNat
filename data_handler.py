@@ -177,6 +177,17 @@ def increment_views(cursor, question_id):
     cursor.execute(query, (question_id, ))
 
 
+@database_common.connection_handler
+def get_tags(cursor, question_id):
+    query = '''
+        SELECT name FROM tag
+        LEFT JOIN question_tag
+            ON tag.id = question_tag.tag_id
+        WHERE question_id = %s;'''
+    cursor.execute(query, (question_id, ))
+    return cursor.fetchall()
+
+
 def delete_pictures(question_id, folder):
     all_answers = data_import(DATA_FILE_PATH_ANSWER)
     to_delete = list(filter(lambda x: x['question_id'] == question_id, all_answers))
