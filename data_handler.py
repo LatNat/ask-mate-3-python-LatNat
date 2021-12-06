@@ -17,7 +17,9 @@ def import_all_questions(cursor):
 def get_answers_by_question_id(cursor, question_id):
     query = '''
         SELECT * FROM answer
-        WHERE question_id = %s'''
+        WHERE question_id = %s
+        ORDER BY vote_number DESC'''
+    # needs sorting
     cursor.execute(query, (question_id, ))
     return cursor.fetchall()
 
@@ -45,32 +47,6 @@ def add_question(cursor, data):
         "title": data["title"],
         "message": data["message"],
         "image": data["image"]})
-
-
-def data_export(filename, dict_data, header):
-    with open(filename, "w", encoding='utf-8') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=header)
-        writer.writeheader()
-        for data in dict_data:
-            writer.writerow(data)
-
-
-def get_list_index(dict_list, id):
-    i = 0
-    for line in dict_list:
-        if line["id"] == id:
-            return i
-        i += 1
-    return -1
-
-
-def sort_data(data, key="submission_time", reverse=False):
-    if not data:
-        return data
-    elif data[0][key].isnumeric():
-        return sorted(data, key=lambda x: int(x[key]), reverse=reverse)
-    else:
-        return sorted(data, key=lambda x: x[key].lower(), reverse=reverse)
 
 
 def voting(database, data_index, vote):
