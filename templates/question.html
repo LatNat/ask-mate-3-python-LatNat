@@ -29,11 +29,10 @@
             </td>
             <td colspan="3" class="question">
                 <p class="linebreak">{{ question["message"] }}</p><br><br>
-                <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
             </td>
         </tr>
         <tr class="stats">
-            <td class="submit_time">submitted: {{ question["submission_time"] | convert_timestamp }}</td>
+            <td class="submit_time">submitted: {{ question["submission_time"] }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
     </table>
@@ -51,11 +50,10 @@
         </td>
         <td colspan="3">
             <p class="linebreak">{{ answer["message"] }}</p><br>
-            <img src="{{ url_for("static", filename="images/"+answer["image"]) }}" alt="" width="500">
         </td>
     </tr>
     <tr class="left_text stats">
-        <td class="submit_time">submitted: {{ answer["submission_time"] | convert_timestamp }}</td>
+        <td class="submit_time">submitted: {{ answer["submission_time"] }}</td>
         <td class="edit-delete">
         <a href="{{ url_for('update_answer', question_id=answer['question_id'], answer_id=answer['id']) }}" id="myButton">Edit</a>
         </td>

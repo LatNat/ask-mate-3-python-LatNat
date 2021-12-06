@@ -29,17 +29,16 @@ def list_index():
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
-    all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    question = next((q for q in all_questions if q["id"] == question_id), None)
-    question_index = all_questions.index(question)
-    all_answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
-    if 'view' not in request.args:
-        question["view_number"] = int(question["view_number"]) + 1
-    relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
-    relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
-    all_questions[question_index] = question
-    data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
-    return render_template("question.html", question=question, answers=relevant_answers)
+    question = data_handler.get_question_by_id(question_id)
+    # question = next((q for q in all_questions if q["id"] == question_id), None)
+    # question_index = all_questions.index(question)
+    # if 'view' not in request.args:
+    #     question["view_number"] = int(question["view_number"]) + 1
+    # relevant_answers = [a for a in all_answers if a['question_id'] == str(question_id)]
+    # relevant_answers = sorted(relevant_answers, key=lambda x: int(x["vote_number"]), reverse=True)
+    # all_questions[question_index] = question
+    # data_handler.data_export(data_handler.DATA_FILE_PATH_QUESTION, all_questions, data_handler.DATA_HEADER_QUESTION)
+    return render_template("question.html", question=question) # answers=relevant_answers) //
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])

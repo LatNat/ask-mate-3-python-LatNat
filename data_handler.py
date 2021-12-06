@@ -12,6 +12,15 @@ def import_all_questions(cursor):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
+def get_question_by_id(cursor, question_id):
+    query = '''
+        SELECT * FROM question
+        WHERE id = %s'''
+    cursor.execute(query, (question_id, ))
+    return cursor.fetchone()
+
+
 def data_export(filename, dict_data, header):
     with open(filename, "w", encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
