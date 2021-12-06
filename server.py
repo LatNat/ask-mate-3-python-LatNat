@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
+@app.route("/list", methods=['GET', 'POST'])
 @app.route("/", methods=["GET", "POST"])
 def list_index():
     data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
