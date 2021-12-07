@@ -10,8 +10,21 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
-@app.route("/list", methods=['GET', 'POST'])
 @app.route("/", methods=["GET", "POST"])
+def first_page():
+    path = os.path.join(app.config['UPLOAD_FOLDER'])
+    if request.method == "GET":
+        data = data_handler.get_first_five("submission_time", False)
+        return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
+    if request.method == "POST":
+        checked = False
+        if "reverse" in request.form.keys():
+            checked = True
+        data = data_handler.get_first_five(request.form["sort_key"], checked)
+        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked, path=path)
+
+
+@app.route("/list", methods=['GET', 'POST'])
 def list_index():
     data = []
     if request.method == "GET":
