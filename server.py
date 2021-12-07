@@ -23,14 +23,6 @@ def list_index():
         data = data_handler.import_all_questions(request.form["sort_key"], checked)
         path = os.path.join(app.config['UPLOAD_FOLDER'])
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked, path=path)
-    # if request.method == "POST":
-    #     checked = False
-    #     if "reverse" in request.form.keys():
-    #         checked = True
-    #     data = data_handler.sort_data(data, key=request.form["sort_key"], reverse=not checked)
-    #     return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
-    # else:
-    #     data = data_handler.sort_data(data)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
 
@@ -49,7 +41,8 @@ def display_question(question_id):
 def edit_question(question_id):
     if request.method == "GET":
         line = data_handler.get_question_by_id(question_id)
-        return render_template("addquestion.html", data=line, edit="edit")
+        tags = data_handler.get_tags(question_id)
+        return render_template("addquestion.html", data=line, tags=tags, edit="edit")
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
@@ -79,6 +72,18 @@ def add_question():
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = filename
         data_handler.add_question(add_question_data)
+        question_id = data_handler.get_latest_id()["max"]
+        user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
+        all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
+        converted_tags = []
+        for name in user_tags:
+            if name not in all_tags:
+                data_handler.create_new_tag(name)
+                converted_tags.append((data_handler.convert_tag(name)['id']))
+            else:
+                converted_tags.append((data_handler.convert_tag(name)['id']))
+        for tag in converted_tags:
+            data_handler.add_tag_to_question(question_id, tag)
         # data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
         # new_id = int(data[-1]["id"])+1
         # filename = ""
@@ -142,6 +147,7 @@ def delete_answer(question_id, answer_id):
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     data_handler.delete_pictures_by_question_id(question_id, UPLOAD_FOLDER)
+    data_handler.delete_relevant_tags(question_id)
     data_handler.delete_question(question_id)
     # all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     # question_index = data_handler.get_list_index(all_questions, question_id)
@@ -159,21 +165,29 @@ def delete_question(question_id):
     return redirect(url_for("list_index"))
 
 
-@app.route("/result", methods=["GET","POST"])
+@app.route("/result", methods=["GET", "POST"])
 def search():
-    all_question = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
-    search_term = request.args["search"].upper()
-    relevant_questions = [q for q in all_question if search_term in q["title"].upper() or search_term in q["message"].upper()]
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    relevant_questions = data_handler.sort_data(relevant_questions, key="vote_number", reverse=True)
     if request.method == "POST":
         checked = False
         if "reverse" in request.form.keys():
             checked = True
-        data = data_handler.sort_data(relevant_questions, key=request.form["sort_key"], reverse=checked)
+        data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
-    return render_template("index.html", data=relevant_questions, default_sort="vote_number", checked=False, path=path)
-
+    search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
+    return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
+    # all_question = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
+    # search_term = request.args["search"].upper()
+    # relevant_questions = [q for q in all_question if search_term in q["title"].upper() or search_term in q["message"].upper()]
+    # path = os.path.join(app.config['UPLOAD_FOLDER'])
+    # relevant_questions = data_handler.sort_data(relevant_questions, key="vote_number", reverse=True)
+    # if request.method == "POST":
+    #     checked = False
+    #     if "reverse" in request.form.keys():
+    #         checked = True
+    #     data = data_handler.sort_data(relevant_questions, key=request.form["sort_key"], reverse=checked)
+    #     return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
+    # return render_template("index.html", data=relevant_questions, default_sort="vote_number", checked=False, path=path)
 
 @app.route("/answer/<answer_id>/comment", methods=["GET", "POST"])
 def add_comment_to_answer(answer_id):
