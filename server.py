@@ -140,8 +140,8 @@ def delete_answer(question_id, answer_id):
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
+    data_handler.delete_pictures_by_question_id(question_id, UPLOAD_FOLDER)
     data_handler.delete_question(question_id)
-    data_handler.delete_relevant_answers(question_id)
     # all_questions = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
     # question_index = data_handler.get_list_index(all_questions, question_id)
     # if all_questions[question_index]["image"] != "":
