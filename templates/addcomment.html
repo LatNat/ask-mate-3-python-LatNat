@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title%} | Post answer{% endblock %}
+{% block buttons %}
+<a href="{{ url_for('display_question', question_id=question_id, view='f') }}" id="myButton">Back to question</a>
+{% endblock %}
+{% block content %}
+<div class="centered">
+<h1>Post your comment</h1>
+<form method="post" enctype="multipart/form-data">
+    <label for="message">Your comment:</label><br>
+    <textarea name="message" required="required">{% block message %}{% endblock %}</textarea><br><br>
+    <button type="submit" name="post answer">Post comment</button>
+</form>
+</div>
+{% endblock %}

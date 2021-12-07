@@ -175,5 +175,14 @@ def search():
     return render_template("index.html", data=relevant_questions, default_sort="vote_number", checked=False, path=path)
 
 
+@app.route("/answer/<answer_id>/comment", methods=["GET", "POST"])
+def add_comment_to_answer(answer_id):
+    question_id = data_handler.get_related_question(answer_id)["question_id"]
+    if request.method == "POST":
+        data_handler.add_comment("answer_id", answer_id, request.form["message"])
+        return redirect(url_for("display_question", question_id=question_id))
+    return render_template("addcomment.html", question_id=question_id)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

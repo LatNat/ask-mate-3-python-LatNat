@@ -72,6 +72,11 @@
         <a href="{{ url_for('delete_answer', question_id=answer['question_id'], answer_id=answer['id']) }}" id="myButton">Delete</a>
         </td>
     </tr>
+    <tr>
+        <td>
+            <a href="{{ url_for('add_comment_to_answer', answer_id=answer['id']) }}" id="myButton">Add comment</a>
+        </td>
+    </tr>
 </table>
 <br>
 {% endfor %}

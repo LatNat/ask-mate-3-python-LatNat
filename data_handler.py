@@ -224,5 +224,17 @@ def delete_picture(filename, folder):
         os.remove(os.path.join(folder, filename))
 
 
+@database_common.connection_handler
+def add_comment(cursor, id_type, id_number, message):
+    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time)
+                VALUES ({id_number}, {message}, {submission_time});''')
+    cursor.execute(query.format(
+        id_type=sql.Identifier(id_type),
+        id_number=sql.Literal(id_number),
+        message=sql.Literal(message),
+        submission_time=sql.Literal(round_seconds(dt.datetime.now()))
+    ))
+
+
 if __name__ == "__main__":
     pass
