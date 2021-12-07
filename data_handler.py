@@ -287,7 +287,11 @@ def search_in_questions(cursor, search_term, order, asc_desc):
         asc_desc = "desc"
     query = sql.SQL('''
                 SELECT * FROM question
-                WHERE title ~* {search_term} OR message ~* {search_term}
+                JOIN
+                    (SELECT question_id, name as tag_name FROM tag
+                    JOIN question_tag qt on tag.id = qt.tag_id) as tags
+                        ON tags.question_id = question.id
+                WHERE title ~* {search_term} OR message ~* {search_term} OR tag_name ~* {search_term}
                 ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
                                 order_by=sql.Identifier(order),
@@ -337,6 +341,33 @@ def delete_relevant_tags(cursor, question_id):
         WHERE question_id = %s;
         '''
     cursor.execute(query, (question_id, ))
+
+
+@database_common.connection_handler
+def get_first_five(cursor, order, asc_desc):
+    asc_desc = "desc" if asc_desc else "asc"
+    query = sql.SQL('''
+            SELECT * FROM question
+            ORDER BY {order_by} {asc_desc}
+            LIMIT 5;''')
+    cursor.execute(query.format(
+        order_by=sql.Identifier(order),
+        asc_desc=sql.SQL(asc_desc)))
+
+
+@database_common.connection_handler
+def get_questions_by_tag(cursor, tag):
+    query = '''
+        SELECT * FROM question
+        JOIN
+            (SELECT question_id FROM question_tag
+            JOIN tag
+                ON question_tag.tag_id = tag.id
+            WHERE tag.name = %s ) AS relevant_question_ids
+            ON question.id = relevant_question_ids.question_id
+        '''
+    cursor.execute(query, (tag, ))
+    return cursor.fetchall()
 
 
 if __name__ == "__main__":
