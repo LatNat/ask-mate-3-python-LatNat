@@ -132,7 +132,7 @@ def get_answer_message(cursor, answer_id):
     query = '''
         SELECT message FROM answer
         WHERE id = %s'''
-    cursor.execute(query, answer_id)
+    cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
 
 
@@ -141,7 +141,7 @@ def delete_answer(cursor, answer_id):
     query = '''
         DELETE FROM answer
         WHERE id = %s'''
-    cursor.execute(query, answer_id)
+    cursor.execute(query, (answer_id, ))
 
 
 @database_common.connection_handler
@@ -253,6 +253,41 @@ def add_comment(cursor, id_type, id_number, message):
 
 
 @database_common.connection_handler
+def get_related_comments(cursor, id_type, id_number):
+    query = sql.SQL('''SELECT * FROM comment
+                    WHERE {id_type}={id_number};''')
+    cursor.execute(query.format(
+        id_type=sql.Identifier(id_type),
+        id_number=sql.Literal(id_number),
+    ))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def delete_comment_by_id(cursor, comment_id):
+    query = sql.SQL('''DELETE FROM comment
+                        WHERE id={comment_id};''')
+    cursor.execute(query.format(comment_id=sql.Literal(comment_id)))
+
+
+@database_common.connection_handler
+def update_comment(cursor, comment_id, message):
+    query = sql.SQL('''UPDATE comment
+                        SET message={message},
+                         edited_count=(CASE WHEN edited_count IS NULL THEN 1 ELSE edited_count+1 END)
+                        WHERE id={comment_id};''')
+    cursor.execute(query.format(message=sql.Literal(message), comment_id=sql.Literal(comment_id)))
+
+
+@database_common.connection_handler
+def get_comment_message(cursor, id_number):
+    query = sql.SQL('''SELECT * FROM comment
+                    WHERE id={id_number};''')
+    cursor.execute(query.format(id_number=sql.Literal(id_number)))
+    return cursor.fetchone()["message"]
+
+
+@database_common.connection_handler
 def search_in_questions(cursor, search_term, order, asc_desc):
     if asc_desc:
         asc_desc = "asc"
@@ -319,6 +354,7 @@ def delete_relevant_tags(cursor, question_id):
 @database_common.connection_handler
 def get_first_five(cursor, order, asc_desc):
     asc_desc = "desc" if asc_desc else "asc"
+    asd = order
     query = sql.SQL('''
             SELECT * FROM question
             ORDER BY {order_by} {asc_desc}
@@ -326,6 +362,7 @@ def get_first_five(cursor, order, asc_desc):
     cursor.execute(query.format(
         order_by=sql.Identifier(order),
         asc_desc=sql.SQL(asc_desc)))
+    return cursor.fetchall()
 
 
 @database_common.connection_handler
