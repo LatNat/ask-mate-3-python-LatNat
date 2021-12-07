@@ -15,7 +15,6 @@ def get_comments(id_type, id_number):
     return data_handler.get_related_comments(id_type, id_number)
 
 
-@app.route("/list", methods=['GET', 'POST'])
 @app.route("/", methods=["GET", "POST"])
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
