@@ -292,5 +292,20 @@ def delete_relevant_tags(cursor, question_id):
     cursor.execute(query, (question_id, ))
 
 
+@database_common.connection_handler
+def get_questions_by_tag(cursor, tag):
+    query = '''
+        SELECT * FROM question
+        INNER JOIN
+            (SELECT question_id FROM question_tag
+            JOIN tag
+                ON question_tag.tag_id = tag.id
+            WHERE tag.name = 'css') AS relevant_question_ids
+            ON question.id = relevant_question_ids.question_id
+        '''
+    cursor.execute(query, (tag, ))
+    return cursor.fetchall()
+
+
 if __name__ == "__main__":
     pass

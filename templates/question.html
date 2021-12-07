@@ -36,10 +36,10 @@
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
         <tr id="tag-row">
-            <td class="stats">Tags:</td>
+            <td class="vertical-center">Tags:</td>
             <td>
             {% for tag in tags %}
-                <a id="tag-box">{{ tag.name }}</a>
+                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
             {% endfor %}
             </td>
         </tr>
