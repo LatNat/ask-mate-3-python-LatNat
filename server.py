@@ -46,7 +46,8 @@ def display_question(question_id):
 def edit_question(question_id):
     if request.method == "GET":
         line = data_handler.get_question_by_id(question_id)
-        return render_template("addquestion.html", data=line, edit="edit")
+        tags = data_handler.get_tags(question_id)
+        return render_template("addquestion.html", data=line, tags=tags, edit="edit")
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
@@ -77,6 +78,8 @@ def add_question():
                 file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = (filename if filename != "" else "")
         data_handler.add_question(add_question_data)
+        tags = data_handler.iterate_tags(request.form["tags"].split(','))
+        print(tags)
         # data = data_handler.data_import(data_handler.DATA_FILE_PATH_QUESTION)
         # new_id = int(data[-1]["id"])+1
         # filename = ""

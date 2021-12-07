@@ -199,5 +199,26 @@ def delete_picture_by_answer_id(cursor, answer_id, folder):
         os.remove(os.path.join(folder, filename))
 
 
+@database_common.connection_handler
+def convert_tag(cursor, tag):
+    query = '''
+        SELECT id FROM tag
+        WHERE tag.name = %s'''
+    cursor.execute(query, (tag, ))
+
+@database_common.connection_handler
+def create_new_tag(cursor, tag):
+
+
+
+
+def iterate_tags(tags: list):
+    converted_tags = []
+    for tag in tags:
+        converted_tags.append(convert_tag(tag))
+    return converted_tags
+
+
+
 if __name__ == "__main__":
     pass
