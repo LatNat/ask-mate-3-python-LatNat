@@ -308,11 +308,11 @@ def delete_relevant_tags(cursor, question_id):
 def get_questions_by_tag(cursor, tag):
     query = '''
         SELECT * FROM question
-        INNER JOIN
+        JOIN
             (SELECT question_id FROM question_tag
             JOIN tag
                 ON question_tag.tag_id = tag.id
-            WHERE tag.name = 'css') AS relevant_question_ids
+            WHERE tag.name = %s ) AS relevant_question_ids
             ON question.id = relevant_question_ids.question_id
         '''
     cursor.execute(query, (tag, ))
