@@ -36,10 +36,10 @@
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
         <tr id="tag-row">
-            <td class="stats">Tags:</td>
+            <td class="vertical-center">Tags:</td>
             <td>
             {% for tag in tags %}
-                <a id="tag-box">{{ tag.name }}</a>
+                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
             {% endfor %}
             </td>
         </tr>
@@ -70,6 +70,11 @@
         </td>
         <td class="edit-delete">
         <a href="{{ url_for('delete_answer', question_id=answer['question_id'], answer_id=answer['id']) }}" id="myButton">Delete</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{{ url_for('add_comment_to_answer', answer_id=answer['id']) }}" id="myButton">Add comment</a>
         </td>
     </tr>
 </table>
