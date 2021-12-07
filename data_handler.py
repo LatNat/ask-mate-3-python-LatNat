@@ -188,5 +188,16 @@ def get_tags(cursor, question_id):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
+def delete_picture_by_answer_id(cursor, answer_id, folder):
+    query = '''
+            SELECT image FROM answer
+            WHERE id = %s;'''
+    cursor.execute(query, (answer_id,))
+    filename = cursor.fetchone()["image"]
+    if filename:
+        os.remove(os.path.join(folder, filename))
+
+
 if __name__ == "__main__":
     pass
