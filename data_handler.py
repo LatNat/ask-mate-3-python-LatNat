@@ -12,11 +12,17 @@ def round_seconds(obj: dt.datetime) -> dt.datetime:
 
 
 @database_common.connection_handler
-def import_all_questions(cursor, order):
+def import_all_questions(cursor, order, asc_desc=False):
+    if asc_desc:
+        asc_desc = "asc"
+    else:
+        asc_desc = "desc"
     query = sql.SQL('''
         SELECT * FROM question
-        ORDER BY {order_by};''')
-    cursor.execute(query.format(order_by=sql.Identifier(order)))
+        ORDER BY {order_by} {asc_desc};''')
+    cursor.execute(query.format(
+        order_by=sql.Identifier(order),
+        asc_desc=sql.SQL(asc_desc)))
     return cursor.fetchall()
 
 
@@ -215,6 +221,7 @@ def delete_picture(filename, folder):
         file_path = os.path.join(folder, filename)
         if os.path.exists(file_path):
             os.remove(file_path)
+        os.remove(os.path.join(folder, filename))
 
 
 if __name__ == "__main__":
