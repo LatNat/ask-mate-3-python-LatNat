@@ -65,13 +65,12 @@ def add_question():
         return render_template("addquestion.html")
     if request.method == "POST":
         add_question_data = request.form.to_dict()
-        filename = ""
-        if request.files:
+        filename = None
+        if request.files["file"]:
             file = request.files["file"]
             filename = secure_filename(file.filename)
-            if filename != "":
-                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        add_question_data["image"] = (filename if filename != "" else "")
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        add_question_data["image"] = filename
         data_handler.add_question(add_question_data)
         question_id = data_handler.get_latest_id()["max"]
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
