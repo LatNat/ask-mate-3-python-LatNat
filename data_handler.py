@@ -85,11 +85,11 @@ def update_question(cursor, question_data):
 
 @database_common.connection_handler
 def delete_question(cursor, question_id):
+    delete_relevant_answers(question_id)
     query = '''
         DELETE FROM question
         WHERE id = %s;'''
     cursor.execute(query, (question_id, ))
-    delete_relevant_answers(question_id)
 
 
 @database_common.connection_handler
@@ -200,8 +200,27 @@ def delete_picture_by_answer_id(cursor, answer_id, folder):
             SELECT image FROM answer
             WHERE id = %s;'''
     cursor.execute(query, (answer_id,))
-    filename = cursor.fetchone()["image"]
+    delete_picture(cursor.fetchone()["image"], folder)
+
+
+@database_common.connection_handler
+def delete_pictures_by_question_id(cursor, question_id, folder):
+    query = '''
+            SELECT answer.image as answer_image, question.image as question_image
+            FROM question
+            JOIN answer ON answer.question_id = question.id
+            WHERE question.id = %s;'''
+    cursor.execute(query, (question_id, ))
+    for row in cursor.fetchall():
+        delete_picture(row["answer_image"], folder)
+        delete_picture(row["question_image"], folder)
+
+
+def delete_picture(filename, folder):
     if filename:
+        file_path = os.path.join(folder, filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
         os.remove(os.path.join(folder, filename))
 
 
