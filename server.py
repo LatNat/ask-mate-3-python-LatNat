@@ -10,6 +10,11 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
+@app.template_filter()
+def get_comments(id_type, id_number):
+    return data_handler.get_related_comments(id_type, id_number)
+
+
 @app.route("/", methods=["GET", "POST"])
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
@@ -161,6 +166,7 @@ def get_tagged_questions(tag):
     return render_template("index.html", data=tagged_questions, default_sort="submission_time", checked=False, path=path)
 
 
+
 @app.route("/answer/<answer_id>/comment", methods=["GET", "POST"])
 def add_comment_to_answer(answer_id):
     question_id = data_handler.get_related_question(answer_id)["question_id"]
@@ -168,6 +174,21 @@ def add_comment_to_answer(answer_id):
         data_handler.add_comment("answer_id", answer_id, request.form["message"])
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("addcomment.html", question_id=question_id)
+
+
+@app.route("/answer/comment/delete/<comment_id>/<question_id>", methods=["GET", "POST"])
+def delete_comment(comment_id, question_id):
+    data_handler.delete_comment_by_id(comment_id)
+    return redirect(url_for("display_question", question_id=question_id))
+
+
+@app.route("/answer/comment/edit/<comment_id>/<question_id>", methods=["GET", "POST"])
+def update_comment(comment_id, question_id):
+    message = data_handler.get_comment_message(comment_id)
+    if request.method == "POST":
+        data_handler.update_comment(comment_id, request.form["message"])
+        return redirect(url_for("display_question", question_id=question_id))
+    return render_template("editcomment.html", question_id=question_id, message=message)
 
 
 if __name__ == "__main__":
