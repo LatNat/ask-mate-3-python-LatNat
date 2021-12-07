@@ -40,8 +40,16 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     query = '''
-        SELECT * FROM question
-        WHERE id = %s;'''
+        SELECT question.*, tags FROM question
+        JOIN (
+            SELECT question_id, STRING_AGG(name, ',') as tags
+            from question_tag
+                     JOIN tag
+                          ON question_tag.tag_id = tag.id
+            WHERE question_id = %s
+            GROUP BY question_id) as tag_info
+            on question.id = tag_info.question_id
+'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
 
@@ -333,6 +341,11 @@ def get_questions_by_tag(cursor, tag):
         '''
     cursor.execute(query, (tag, ))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def remove_tag_from_question(cursor, question_id, tag):
+    query = ''''''
 
 
 if __name__ == "__main__":

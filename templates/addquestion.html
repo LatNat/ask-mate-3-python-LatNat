@@ -14,15 +14,23 @@
         <input id="title" name="title" value="{{ data["title"] if edit else "" }}"><br><br>
         <label for="text">Please describe your problem:</label><br>
         <textarea id="text" name="message">{{ data["message"] if edit else "" }}</textarea><br><br>
-        <label for="tags">Add tags:</label><br>
-        <input id="tags" name="tags" type="text" value="{% for tag in tags %}{{ tag.name }}, {% endfor %}"><br><br>
-        {% if not edit %}
-            <label for="image">Add image:</label><br>
-            <input type="file" accept="image/*" id="image" name="file"><br><br>
-        {% else %}
-            <input type="hidden" name="file" value="">
-        {% endif %}
-        <button type="submit" class="myButton">Send question</button>
+        <div id="tag-row">
+            {% for tag in tags %}
+                <span id="tag-box" class="editable-tag">{{ tag }}<a class="hidden" href="">x</a></span>
+            {% endfor %}
+        </div>
+        <div>
+            <label for="tags">Add{{ ' new' if edit else ''}} tags:</label><br>
+            <input id="tags" name="tags" type="text"><br><br>
+            {% if not edit %}
+                <label for="image">Add image:</label><br>
+                <input type="file" accept="image/*" id="image" name="file"><br><br>
+            {% else %}
+                <input type="hidden" name="file" value="">
+            {% endif %}
+            <button type="submit" class="myButton">Send question</button>
+        </div>
+
     </form>
 </div>
 </body>

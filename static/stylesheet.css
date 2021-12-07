@@ -6,8 +6,8 @@
     background: lightskyblue;
     padding: .4em;
     font-size: small;
-    color: darkcyan !important;
-    font-style: normal !important;
+    color: floralwhite !important;
+    font-weight: lighter !important;
 }
 
 #tag-row {
@@ -15,6 +15,22 @@
     font-weight: bold;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 
+}
+
+.editable-tag {
+    position:relative;
+}
+
+.editable-tag:hover .hidden {
+    display: block;
+}
+.editable-tag a {
+    display: none;
+    position: absolute;
+    top: 1px;
+    right: 10%;
+    z-index: 100;
+    color: darkred !important;
 }
 
 .vertical-center {

@@ -44,22 +44,32 @@ def list_index():
 def display_question(question_id):
     if 'view' not in request.args:
         data_handler.increment_views(question_id)
-    tags = data_handler.get_tags(question_id)
     question = data_handler.get_question_by_id(question_id)
+    tags = question["tags"].split(',')
     relevant_answers = data_handler.get_answers_by_question_id(question_id)
     return render_template("question.html", question=question, tags=tags, answers=relevant_answers)
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
-    if request.method == "GET":
-        line = data_handler.get_question_by_id(question_id)
-        tags = data_handler.get_tags(question_id)
-        return render_template("addquestion.html", data=line, tags=tags, edit="edit")
+    question = data_handler.get_question_by_id(question_id)
+    tags = question["tags"].split(',')
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
+        old_tags = tags
+        updated_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
+        all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
+        converted_tags = []
+        for tag in updated_tags:
+            if tag not in set(old_tags + all_tags):
+                data_handler.create_new_tag(tag)
+                converted_tags.append((data_handler.convert_tag(tag)["id"]))
+        if converted_tags:
+            for tag in converted_tags:
+                data_handler.add_tag_to_question(question_id, tag)
         return redirect(url_for("list_index"))
+    return render_template("addquestion.html", data=question, tags=tags, edit="edit")
 
 
 @app.route("/addquestion", methods=["GET", "POST"])
@@ -85,8 +95,9 @@ def add_question():
                 converted_tags.append((data_handler.convert_tag(name)['id']))
             else:
                 converted_tags.append((data_handler.convert_tag(name)['id']))
-        for tag in converted_tags:
-            data_handler.add_tag_to_question(question_id, tag)
+        if converted_tags:
+            for tag in converted_tags:
+                data_handler.add_tag_to_question(question_id, tag)
         return redirect(url_for("list_index"))
 
 
