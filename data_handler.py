@@ -216,6 +216,14 @@ def delete_pictures_by_question_id(cursor, question_id, folder):
         delete_picture(row["question_image"], folder)
 
 
+@database_common.connection_handler
+def get_latest_id(cursor):
+    query = '''
+        SELECT MAX(id) FROM question'''
+    cursor.execute(query)
+    return cursor.fetchone()
+
+
 def delete_picture(filename, folder):
     if filename:
         file_path = os.path.join(folder, filename)
@@ -240,16 +248,47 @@ def search_in_questions(cursor, search_term, order, asc_desc):
     return cursor.fetchall()
 
 
-# @database_common.connection_handler
-# def search_in_questions(cursor, search_term):
-#     print(search_term)
-#     print("asd")
-#     print("% "+search_term.lower()+" %")
-#     query = '''
-#                 SELECT * FROM question
-#                 WHERE LOWER(title) LIKE %(term)s OR LOWER(message) LIKE %(term)s;'''
-#     cursor.execute(query, {"term": "% "+search_term.lower()+" %"})
-#     return cursor.fetchall()
+def convert_tag(cursor, tag_to_convert):
+    query = '''
+        SELECT id FROM tag
+        WHERE name = %s'''
+    cursor.execute(query, (tag_to_convert, ))
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def get_all_tags(cursor):
+    query = '''
+        SELECT DISTINCT name FROM tag'''
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def create_new_tag(cursor, tag):
+    query = '''
+        INSERT INTO tag(name)
+        VALUES (%s)
+    '''
+    cursor.execute(query, (tag, ))
+
+
+@database_common.connection_handler
+def add_tag_to_question(cursor, question_id, tag):
+    query = '''
+        INSERT INTO question_tag(question_id, tag_id) 
+        VALUES (%s, %s)
+        '''
+    cursor.execute(query, (question_id, tag))
+
+
+@database_common.connection_handler
+def delete_relevant_tags(cursor, question_id):
+    query = '''
+        DELETE FROM question_tag
+        WHERE question_id = %s;
+        '''
+    cursor.execute(query, (question_id, ))
 
 
 if __name__ == "__main__":
