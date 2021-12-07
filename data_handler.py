@@ -311,6 +311,7 @@ def delete_relevant_tags(cursor, question_id):
 @database_common.connection_handler
 def get_first_five(cursor, order, asc_desc):
     asc_desc = "desc" if asc_desc else "asc"
+    asd = order
     query = sql.SQL('''
             SELECT * FROM question
             ORDER BY {order_by} {asc_desc}
@@ -318,6 +319,7 @@ def get_first_five(cursor, order, asc_desc):
     cursor.execute(query.format(
         order_by=sql.Identifier(order),
         asc_desc=sql.SQL(asc_desc)))
+    return cursor.fetchall()
 
 
 @database_common.connection_handler
