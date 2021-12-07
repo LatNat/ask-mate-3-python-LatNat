@@ -31,17 +31,18 @@
                 {% endif %}
             </td>
         </tr>
-        <tr>
-            <td>Tags:</td>
-            {% for tag in tags %}
-                <td id="tag-box">{{ tag.name }}</td>
-            {% endfor %}
-        </tr>
         <tr class="stats">
             <td class="submit_time" colspan="2">submitted: {{ question["submission_time"] }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
-
+        <tr id="tag-row">
+            <td>Tags:</td>
+            <td>
+            {% for tag in tags %}
+                <a id="tag-box">{{ tag.name }}</a>
+            {% endfor %}
+            </td>
+        </tr>
     </table>
 </div>
 <div class="answers" id="answer">

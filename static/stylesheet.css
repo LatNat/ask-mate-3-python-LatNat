@@ -1,12 +1,24 @@
 /*table td {*/
 /*    border: 1px solid black;*/
 /*}*/
- #tag-box {
-  border-radius: 25px;
-  background: cornflowerblue;
-  padding: 5px;
-  width: 30px;
-  height: 10px;
+#tag-box {
+    border-radius: 5px;
+    background: lightskyblue;
+    padding: .4em;
+    width: 40px;
+    height: 12px;
+    font-size: small;
+    text-align: center;
+    color: darkcyan !important;
+    font-style: normal !important;
+}
+
+#tag-row {
+    height: 30px;
+    font-weight: bold;
+    font-style: oblique;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+
 }
 
 .centered {
