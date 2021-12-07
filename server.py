@@ -81,7 +81,6 @@ def add_question():
                 data_handler.create_new_tag(name)
                 converted_tags.append((data_handler.convert_tag(name)['id']))
             else:
-                print('hi')
                 converted_tags.append((data_handler.convert_tag(name)['id']))
         for tag in converted_tags:
             data_handler.add_tag_to_question(question_id, tag)
