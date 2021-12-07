@@ -205,5 +205,33 @@ def delete_picture_by_answer_id(cursor, answer_id, folder):
         os.remove(os.path.join(folder, filename))
 
 
+@database_common.connection_handler
+def search_in_questions(cursor, search_term, order, asc_desc):
+    if asc_desc:
+        asc_desc = "asc"
+    else:
+        asc_desc = "desc"
+    query = sql.SQL('''
+                SELECT * FROM question
+                WHERE title ~* {search_term} OR message ~* {search_term}
+                ORDER BY {order_by} {asc_desc};''')
+    cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
+                                order_by=sql.Identifier(order),
+                                asc_desc=sql.SQL(asc_desc)))
+    return cursor.fetchall()
+
+
+# @database_common.connection_handler
+# def search_in_questions(cursor, search_term):
+#     print(search_term)
+#     print("asd")
+#     print("% "+search_term.lower()+" %")
+#     query = '''
+#                 SELECT * FROM question
+#                 WHERE LOWER(title) LIKE %(term)s OR LOWER(message) LIKE %(term)s;'''
+#     cursor.execute(query, {"term": "% "+search_term.lower()+" %"})
+#     return cursor.fetchall()
+
+
 if __name__ == "__main__":
     pass
