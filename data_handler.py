@@ -248,6 +248,7 @@ def search_in_questions(cursor, search_term, order, asc_desc):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
 def convert_tag(cursor, tag_to_convert):
     query = '''
         SELECT id FROM tag
