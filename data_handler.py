@@ -252,7 +252,11 @@ def search_in_questions(cursor, search_term, order, asc_desc):
         asc_desc = "desc"
     query = sql.SQL('''
                 SELECT * FROM question
-                WHERE title ~* {search_term} OR message ~* {search_term}
+                JOIN
+                    (SELECT question_id, name as tag_name FROM tag
+                    JOIN question_tag qt on tag.id = qt.tag_id) as tags
+                        ON tags.question_id = question.id
+                WHERE title ~* {search_term} OR message ~* {search_term} OR tag_name ~* {search_term}
                 ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
                                 order_by=sql.Identifier(order),
