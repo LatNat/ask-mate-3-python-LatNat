@@ -111,15 +111,12 @@ def vote_answer(answer_id, vote):
 @app.route("/answer/<question_id>", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == "POST":
-        filename = ""
+        new_answer = {"submission_time": data_handler.round_seconds(dt.datetime.now()),
+                      "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"]}
         if request.files:
             file = request.files["image"]
-            filename = secure_filename(file.filename)
-        if filename != "":
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        new_answer = {"submission_time": data_handler.round_seconds(dt.datetime.now()),
-                      "vote_number": "0", "question_id": question_id, "message": request.form["answer_message"],
-                      "image": (filename if filename != "" else "")}
+            new_answer["image"] = secure_filename(file.filename)
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], new_answer["image"]))
         data_handler.add_answer(new_answer)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("addanswer.html", question_id=question_id)
@@ -136,6 +133,7 @@ def update_answer(question_id, answer_id):
 
 @app.route("/answer/delete/<question_id>/<answer_id>", methods=["GET", "POST"])
 def delete_answer(question_id, answer_id):
+    data_handler.delete_picture_by_answer_id(answer_id, UPLOAD_FOLDER)
     data_handler.delete_answer(answer_id)
     # answers = data_handler.data_import(data_handler.DATA_FILE_PATH_ANSWER)
     # index = data_handler.get_list_index(answers, answer_id)
