@@ -1,6 +1,13 @@
 /*table td {*/
 /*    border: 1px solid black;*/
 /*}*/
+ #tag-box {
+  border-radius: 25px;
+  background: cornflowerblue;
+  padding: 5px;
+  width: 30px;
+  height: 10px;
+}
 
 .centered {
     margin: auto;
