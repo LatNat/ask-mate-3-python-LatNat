@@ -233,6 +233,18 @@ def delete_picture(filename, folder):
 
 
 @database_common.connection_handler
+def add_comment(cursor, id_type, id_number, message):
+    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time)
+                VALUES ({id_number}, {message}, {submission_time});''')
+    cursor.execute(query.format(
+        id_type=sql.Identifier(id_type),
+        id_number=sql.Literal(id_number),
+        message=sql.Literal(message),
+        submission_time=sql.Literal(round_seconds(dt.datetime.now()))
+    ))
+
+
+@database_common.connection_handler
 def search_in_questions(cursor, search_term, order, asc_desc):
     if asc_desc:
         asc_desc = "asc"
