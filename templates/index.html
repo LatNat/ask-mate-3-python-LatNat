@@ -37,8 +37,8 @@
             </td>
             <td colspan="3">
                 <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
-                    {{ question["title"] }}</a></h3>
-                <p class="linebreak">{{ question["message"] }}</p>
+                    {{ question["title"] |safe}}</a></h3>
+                <p class="linebreak">{{ question["message"] |safe}}</p>
             </td>
         </tr>
         <tr class="separator left_text stats">
