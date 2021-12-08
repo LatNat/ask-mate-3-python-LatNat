@@ -130,6 +130,8 @@ def get_answer_message(cursor, answer_id):
 
 @database_common.connection_handler
 def delete_answer(cursor, answer_id):
+    for row in get_related_comments("answer_id", answer_id):
+        delete_comment_by_id(row['id'])
     query = '''
         DELETE FROM answer
         WHERE id = %s'''
@@ -164,14 +166,6 @@ def get_related_question(cursor, answer_id):
         WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
-
-
-@database_common.connection_handler
-def delete_answer(cursor, answer_id):
-    query = '''
-        DELETE FROM answer
-        WHERE id = %s;'''
-    cursor.execute(query, (answer_id, ))
 
 
 @database_common.connection_handler
@@ -395,7 +389,6 @@ def get_related_tags(cursor, question_id):
         Where question_id = %s;'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchall()
-
 
 
 if __name__ == "__main__":
