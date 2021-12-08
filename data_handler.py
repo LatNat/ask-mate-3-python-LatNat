@@ -94,10 +94,8 @@ def delete_question(cursor, question_id):
 
 @database_common.connection_handler
 def delete_relevant_answers(cursor, question_id):
-    query = '''
-        DELETE FROM answer
-        WHERE question_id = %s;'''
-    cursor.execute(query, (question_id, ))
+    for row in get_answers_by_question_id(question_id):
+        delete_answer(row['id'])
 
 
 @database_common.connection_handler
@@ -130,6 +128,8 @@ def get_answer_message(cursor, answer_id):
 
 @database_common.connection_handler
 def delete_answer(cursor, answer_id):
+    for row in get_related_comments("answer_id", answer_id):
+        delete_comment_by_id(row['id'])
     query = '''
         DELETE FROM answer
         WHERE id = %s'''
@@ -164,14 +164,6 @@ def get_related_question(cursor, answer_id):
         WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
-
-
-@database_common.connection_handler
-def delete_answer(cursor, answer_id):
-    query = '''
-        DELETE FROM answer
-        WHERE id = %s;'''
-    cursor.execute(query, (answer_id, ))
 
 
 @database_common.connection_handler
@@ -287,11 +279,7 @@ def search_in_questions(cursor, search_term, order, asc_desc):
         asc_desc = "desc"
     query = sql.SQL('''
                 SELECT * FROM question
-                JOIN
-                    (SELECT question_id, name as tag_name FROM tag
-                    JOIN question_tag qt on tag.id = qt.tag_id) as tags
-                        ON tags.question_id = question.id
-                WHERE title ~* {search_term} OR message ~* {search_term} OR tag_name ~* {search_term}
+                WHERE title ~* {search_term} OR message ~* {search_term}
                 ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
                                 order_by=sql.Identifier(order),
