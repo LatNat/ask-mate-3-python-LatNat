@@ -94,10 +94,8 @@ def delete_question(cursor, question_id):
 
 @database_common.connection_handler
 def delete_relevant_answers(cursor, question_id):
-    query = '''
-        DELETE FROM answer
-        WHERE question_id = %s;'''
-    cursor.execute(query, (question_id, ))
+    for row in get_answers_by_question_id(question_id):
+        delete_answer(row['id'])
 
 
 @database_common.connection_handler
