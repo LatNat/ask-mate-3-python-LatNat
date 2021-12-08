@@ -397,6 +397,5 @@ def get_related_tags(cursor, question_id):
     return cursor.fetchall()
 
 
-
 if __name__ == "__main__":
     pass

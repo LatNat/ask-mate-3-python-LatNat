@@ -33,6 +33,7 @@
 .editable-tag:hover .hidden {
     display: block;
 }
+
 .editable-tag a {
     display: none;
     position: absolute;
@@ -41,6 +42,13 @@
     z-index: 100;
     color: darkred !important;
 }
+
+
+table.centered {
+    border-radius: 8px 8px 8px 8px;
+    padding: 0 1em 1em 1em;
+}
+
 
 .vertical-center {
     text-align: center;
@@ -64,6 +72,7 @@
 
 .question {
     font-size: 25px;
+    background-color: yellow !important;
 }
 
 #answer {
@@ -197,4 +206,10 @@ a:visited {
 
 .search{
     align-self: flex-end;
+}
+
+mark {
+    color: black;
+    background: green;
+    padding: 5px;
 }

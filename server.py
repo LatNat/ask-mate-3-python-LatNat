@@ -71,7 +71,7 @@ def edit_question(question_id):
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
-        old_tags = question_tags
+        old_tags = [dict(row)['name'] for row in question_tags]
         new_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []

@@ -28,9 +28,9 @@
     </div>
     {% if data %}
     {% for question in data %}
-    <table class="centered table_background">
+    <table class="centered">
         <tr>
-            <td rowspan="2" class="voting question">
+            <td rowspan="2" class="voting">
                 <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
                     <br>{{ question["vote_number"] }}<br>
                     <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></strong>
