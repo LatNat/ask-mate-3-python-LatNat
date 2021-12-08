@@ -279,11 +279,12 @@ def search_in_questions(cursor, search_term, order, asc_desc):
         asc_desc = "desc"
     query = sql.SQL('''
                 SELECT * FROM question
-                RIGHT JOIN
-                    (SELECT question_id, name as tag_name FROM tag
-                    JOIN question_tag qt ON tag.id = qt.tag_id) as tags
+                LEFT JOIN
+                    (SELECT DISTINCT question_id, string_agg(name, ',') as tag_name FROM tag
+                    LEFT JOIN question_tag qt ON tag.id = qt.tag_id
+                        GROUP BY qt.question_id) as tags
                         ON tags.question_id = question.id
-                WHERE title ~* {search_term} OR message ~* {search_term}
+                WHERE title ~* {search_term} OR message ~* {search_term} OR (CASE WHEN tag_name IS NULL THEN False ELSE tag_name ~* {search_term} END)
                 ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
                                 order_by=sql.Identifier(order),
