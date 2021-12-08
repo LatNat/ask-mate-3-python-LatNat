@@ -86,6 +86,8 @@ def update_question(cursor, question_data):
 @database_common.connection_handler
 def delete_question(cursor, question_id):
     delete_relevant_answers(question_id)
+    for row in get_related_comments("question_id", question_id):
+        delete_comment_by_id(row['id'])
     query = '''
         DELETE FROM question
         WHERE id = %s;'''
