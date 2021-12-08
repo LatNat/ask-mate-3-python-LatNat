@@ -28,7 +28,7 @@
     </div>
     {% if data %}
     {% for question in data %}
-    <table class="centered">
+    <table class="centered post">
         <tr>
             <td rowspan="2" class="voting">
                 <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>

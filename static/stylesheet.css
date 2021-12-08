@@ -11,7 +11,7 @@
 }
 
 #tag-row {
-    height: 30px;
+    height: 35px;
     font-weight: bold;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 
@@ -21,7 +21,6 @@
     position:relative;
     user-select: none;
 }
-
 
 .editable-tag:hover, #tag-box:hover {
     margin-top: 0;
@@ -64,15 +63,19 @@ table.centered {
     width: 7%;
     font-weight: bold;
     vertical-align: top;
+    font-size: 30px;
 }
 
 .answers {
     margin-top: 50px;
 }
 
+.post {
+    background-color: ghostwhite !important;
+}
+
 .question {
-    font-size: 25px;
-    background-color: yellow !important;
+    background-color: ghostwhite !important;
 }
 
 #answer {
