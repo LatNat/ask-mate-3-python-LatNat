@@ -11,7 +11,7 @@
 }
 
 #tag-row {
-    height: 30px;
+    height: 35px;
     font-weight: bold;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 
@@ -21,7 +21,6 @@
     position:relative;
     user-select: none;
 }
-
 
 .editable-tag:hover, #tag-box:hover {
     margin-top: 0;
@@ -33,6 +32,7 @@
 .editable-tag:hover .hidden {
     display: block;
 }
+
 .editable-tag a {
     display: none;
     position: absolute;
@@ -41,6 +41,13 @@
     z-index: 100;
     color: darkred !important;
 }
+
+
+table.centered {
+    border-radius: 8px 8px 8px 8px;
+    padding: 0 1em 1em 1em;
+}
+
 
 .vertical-center {
     text-align: center;
@@ -56,14 +63,19 @@
     width: 7%;
     font-weight: bold;
     vertical-align: top;
+    font-size: 30px;
 }
 
 .answers {
     margin-top: 50px;
 }
 
+.post {
+    background-color: ghostwhite !important;
+}
+
 .question {
-    font-size: 25px;
+    background-color: ghostwhite !important;
 }
 
 #answer {
@@ -197,4 +209,10 @@ a:visited {
 
 .search{
     align-self: flex-end;
+}
+
+mark {
+    color: black;
+    background: green;
+    padding: 5px;
 }
