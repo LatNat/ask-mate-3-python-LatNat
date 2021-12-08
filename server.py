@@ -12,6 +12,13 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.secret_key = "any random string"
 
 
+@app.before_first_request
+def session_init():
+    session.clear()
+    session["sort"] = "submission_time"
+    session["check"] = False
+
+
 @app.template_filter()
 def get_comments(id_type, id_number):
     return data_handler.get_related_comments(id_type, id_number)
@@ -19,37 +26,33 @@ def get_comments(id_type, id_number):
 
 @app.route("/", methods=["GET", "POST"])
 def first_page():
-    session["default_sort"] = "submission_time"
-    session["default_check"] = False
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     if request.method == "GET":
-        data = data_handler.get_first_five(session["default_sort"], session["default_check"])
-        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["default_check"], path=path)
+        data = data_handler.get_first_five(session["sort"], session["check"])
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
-        session["checked"] = False
+        session["check"] = False
         if "reverse" in request.form.keys():
-            session["checked"] = True
-        data = data_handler.get_first_five(session["sort"], session["checked"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["checked"], path=path)
+            session["check"] = True
+        data = data_handler.get_first_five(session["sort"], session["check"])
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
 
 
 @app.route("/list", methods=['GET', 'POST'])
 def list_index():
-    session["default_sort"] = "submission_time"
-    session["default_check"] = False
     if request.method == "GET":
-        data = data_handler.import_all_questions(session["default_sort"], session["default_check"])
+        data = data_handler.import_all_questions(session["sort"], session["check"])
     elif request.method == "POST":
         session["sort"] = request.form["sort_key"]
-        session["checked"] = False
+        session["check"] = False
         if "reverse" in request.form.keys():
-            session["checked"] = True
+            session["check"] = True
         data = data_handler.import_all_questions(request.form["sort_key"], session["checked"])
         path = os.path.join(app.config['UPLOAD_FOLDER'])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["checked"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["default_check"], path=path)
+    return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
@@ -57,19 +60,19 @@ def display_question(question_id):
     if 'view' not in request.args:
         data_handler.increment_views(question_id)
     question = data_handler.get_question_by_id(question_id)
-    tags = question["tags"].split(',')
+    question_tags = data_handler.get_related_tags(question_id)
     relevant_answers = data_handler.get_answers_by_question_id(question_id)
-    return render_template("question.html", question=question, tags=tags, answers=relevant_answers)
+    return render_template("question.html", question=question, tags=question_tags, answers=relevant_answers)
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
     question = data_handler.get_question_by_id(question_id)
-    tags = question["tags"].split(',')
+    question_tags = data_handler.get_related_tags(question_id)
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
-        old_tags = tags
+        old_tags = question_tags
         new_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
@@ -83,7 +86,7 @@ def edit_question(question_id):
             for tag in converted_tags:
                 data_handler.add_tag_to_question(question_id, tag)
         return redirect(url_for("display_question", question_id=question_id))
-    return render_template("addquestion.html", data=question, tags=tags, edit="edit")
+    return render_template("addquestion.html", data=question, tags=question_tags, edit="edit")
 
 
 @app.route("/addquestion", methods=["GET", "POST"])
@@ -103,15 +106,16 @@ def add_question():
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
-        for name in user_tags:
-            if name not in all_tags:
-                data_handler.create_new_tag(name)
-                converted_tags.append((data_handler.convert_tag(name)['id']))
-            else:
-                converted_tags.append((data_handler.convert_tag(name)['id']))
-        if converted_tags:
-            for tag in converted_tags:
-                data_handler.add_tag_to_question(question_id, tag)
+        if not user_tags:
+            for name in user_tags:
+                if name not in all_tags:
+                    data_handler.create_new_tag(name)
+                    converted_tags.append((data_handler.convert_tag(name)['id']))
+                else:
+                    converted_tags.append((data_handler.convert_tag(name)['id']))
+            if converted_tags:
+                for tag in converted_tags:
+                    data_handler.add_tag_to_question(question_id, tag)
         return redirect(url_for("list_index"))
 
 
@@ -216,10 +220,12 @@ def update_comment(comment_id, question_id):
     return render_template("editcomment.html", question_id=question_id, message=message)
 
 
-@app.route("/question/<question_id>/<tag_name>/delete")
+@app.route("/question/<question_id>/delete/<tag_name>")
 def delete_tag(question_id, tag_name):
+    question_id = question_id
     tag_id = data_handler.convert_tag(tag_name)["id"]
     data_handler.remove_tag_from_question(tag_id, question_id)
+    data_handler.remove_unused_tags()
     return redirect(url_for('edit_question', question_id=question_id))
 
 

@@ -19,9 +19,9 @@
         <tr>
             <td class="voting question">
                 <strong>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">/\</a>
+                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
                     <br>{{ question["vote_number"] }}<br>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">\/</a>
+                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a>
                 </strong>
             </td>
             <td colspan="3" class="question">
@@ -35,12 +35,12 @@
             <td class="submit_time" colspan="2">submitted: {{ question["submission_time"] }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
-    {% if question["tags"] %}
+    {% if tags %}
         <tr id="tag-row">
             <td class="vertical-center">Tags:</td>
             <td>
             {% for tag in tags %}
-                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag) }}">{{ tag }}</a>
+                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
             {% endfor %}
             </td>
         </tr>
@@ -53,9 +53,9 @@
     <tr>
         <td rowspan="2" class="voting">
             <strong>
-                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">/\</a><br>
+                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a><br>
                 {{ answer["vote_number"] }}<br>
-                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">\/</a>
+                <a href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a>
             </strong>
         </td>
         <td colspan="3">

@@ -12,7 +12,8 @@
 {% block title_header %}
     <div class="header"><h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
     <br><br>
-    <a href="{{ url_for('list_index') }}" id="myButton">Back to main page</a>
+    <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
+    <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
         {% block buttons %}
         {% endblock %}
     </div>

@@ -31,9 +31,9 @@
     <table class="centered table_background">
         <tr>
             <td rowspan="2" class="voting question">
-                <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">/\</a>
+                <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
                     <br>{{ question["vote_number"] }}<br>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">\/</a></strong>
+                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></strong>
             </td>
             <td colspan="3">
                 <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">

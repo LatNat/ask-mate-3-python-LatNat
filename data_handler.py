@@ -40,16 +40,8 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     query = '''
-        SELECT question.*, tags FROM question
-        JOIN (
-            SELECT question_id, STRING_AGG(name, ',') as tags
-            from question_tag
-                     JOIN tag
-                          ON question_tag.tag_id = tag.id
-            WHERE question_id = %s
-            GROUP BY question_id) as tag_info
-            on question.id = tag_info.question_id
-'''
+        SELECT * FROM question
+        WHERE id = %s;'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
 
@@ -138,6 +130,8 @@ def get_answer_message(cursor, answer_id):
 
 @database_common.connection_handler
 def delete_answer(cursor, answer_id):
+    for row in get_related_comments("answer_id", answer_id):
+        delete_comment_by_id(row['id'])
     query = '''
         DELETE FROM answer
         WHERE id = %s'''
@@ -172,14 +166,6 @@ def get_related_question(cursor, answer_id):
         WHERE id = %s;'''
     cursor.execute(query, (answer_id, ))
     return cursor.fetchone()
-
-
-@database_common.connection_handler
-def delete_answer(cursor, answer_id):
-    query = '''
-        DELETE FROM answer
-        WHERE id = %s;'''
-    cursor.execute(query, (answer_id, ))
 
 
 @database_common.connection_handler
@@ -345,7 +331,6 @@ def add_tag_to_question(cursor, question_id, tag):
 @database_common.connection_handler
 def get_first_five(cursor, order, asc_desc):
     asc_desc = "asc" if asc_desc else "desc"
-    asd = order
     query = sql.SQL('''
             SELECT * FROM question
             ORDER BY {order_by} {asc_desc}
@@ -354,6 +339,15 @@ def get_first_five(cursor, order, asc_desc):
         order_by=sql.Identifier(order),
         asc_desc=sql.SQL(asc_desc)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def delete_relevant_tags(cursor, question_id):
+    query = '''
+        DELETE FROM question_tag
+        WHERE question_id = %s;
+        '''
+    cursor.execute(query, (question_id, ))
 
 
 @database_common.connection_handler
@@ -377,6 +371,24 @@ def remove_tag_from_question(cursor, tag, question_id):
         DELETE FROM question_tag
         WHERE tag_id = %s AND question_id = %s'''
     cursor.execute(query, (tag, question_id))
+
+
+@database_common.connection_handler
+def remove_unused_tags(cursor):
+    query = '''
+        DELETE FROM tag
+        WHERE id NOT IN (SELECT DISTINCT tag_id FROM question_tag)'''
+    cursor.execute(query)
+
+
+@database_common.connection_handler
+def get_related_tags(cursor, question_id):
+    query = '''
+        SELECT name from tag
+        JOIN question_tag qt on tag.id = qt.tag_id
+        Where question_id = %s;'''
+    cursor.execute(query, (question_id, ))
+    return cursor.fetchall()
 
 
 if __name__ == "__main__":
