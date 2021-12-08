@@ -14,6 +14,7 @@ app.secret_key = "any random string"
 
 @app.before_first_request
 def session_init():
+    session.clear()
     session["sort"] = "submission_time"
     session["check"] = False
 
