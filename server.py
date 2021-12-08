@@ -63,17 +63,19 @@ def edit_question(question_id):
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
         old_tags = tags
-        updated_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
+        new_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
-        for tag in updated_tags:
+        for tag in new_tags:
             if tag not in set(old_tags + all_tags):
                 data_handler.create_new_tag(tag)
+                converted_tags.append((data_handler.convert_tag(tag)["id"]))
+            else:
                 converted_tags.append((data_handler.convert_tag(tag)["id"]))
         if converted_tags:
             for tag in converted_tags:
                 data_handler.add_tag_to_question(question_id, tag)
-        return redirect(url_for("list_index"))
+        return redirect(url_for("display_question", question_id=question_id))
     return render_template("addquestion.html", data=question, tags=tags, edit="edit")
 
 
@@ -177,7 +179,6 @@ def get_tagged_questions(tag):
     return render_template("index.html", data=tagged_questions, default_sort="submission_time", checked=False, path=path)
 
 
-
 @app.route("/answer/<answer_id>/comment", methods=["GET", "POST"])
 def add_comment_to_answer(answer_id):
     question_id = data_handler.get_related_question(answer_id)["question_id"]
@@ -200,6 +201,13 @@ def update_comment(comment_id, question_id):
         data_handler.update_comment(comment_id, request.form["message"])
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("editcomment.html", question_id=question_id, message=message)
+
+
+@app.route("/question/<question_id>/<tag_name>/delete")
+def delete_tag(question_id, tag_name):
+    tag_id = data_handler.convert_tag(tag_name)["id"]
+    data_handler.remove_tag_from_question(tag_id, question_id)
+    return redirect(url_for('edit_question', question_id=question_id))
 
 
 if __name__ == "__main__":
