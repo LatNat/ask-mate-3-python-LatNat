@@ -19,34 +19,37 @@ def get_comments(id_type, id_number):
 
 @app.route("/", methods=["GET", "POST"])
 def first_page():
+    session["default_sort"] = "submission_time"
+    session["default_check"] = False
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     if request.method == "GET":
-        data = data_handler.get_first_five(session["default_sort"], session["checked"])
-        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
+        data = data_handler.get_first_five(session["default_sort"], session["default_check"])
+        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["default_check"], path=path)
     if request.method == "POST":
-        session["default_sort"] = request.form["sort_key"]
+        session["sort"] = request.form["sort_key"]
         session["checked"] = False
         if "reverse" in request.form.keys():
             session["checked"] = True
-        data = data_handler.get_first_five(session["default_sort"], session["checked"])
-        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
+        data = data_handler.get_first_five(session["sort"], session["checked"])
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["checked"], path=path)
 
 
 @app.route("/list", methods=['GET', 'POST'])
 def list_index():
-    data = []
+    session["default_sort"] = "submission_time"
+    session["default_check"] = False
     if request.method == "GET":
-        data = data_handler.import_all_questions(session["default_sort"], session["checked"])
+        data = data_handler.import_all_questions(session["default_sort"], session["default_check"])
     elif request.method == "POST":
-        session["default_sort"] = request.form["sort_key"]
+        session["sort"] = request.form["sort_key"]
         session["checked"] = False
         if "reverse" in request.form.keys():
             session["checked"] = True
         data = data_handler.import_all_questions(request.form["sort_key"], session["checked"])
         path = os.path.join(app.config['UPLOAD_FOLDER'])
-        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["checked"], path=path)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
+    return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["default_check"], path=path)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
@@ -115,7 +118,7 @@ def add_question():
 @app.route('/question/vote/<question_id>/<vote>')
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
-    return redirect(url_for('list_index'))
+    return redirect(url_for('first_page'))
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
@@ -173,6 +176,8 @@ def search():
         data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
+    # if request.args["search"] in search_result[0]["title"]:
+    #     search_result[0]["title"].replace(request.args["search"], '<span style="font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["title"].count(request.args["search"]))
     return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
 
 
