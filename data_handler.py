@@ -344,7 +344,7 @@ def add_tag_to_question(cursor, question_id, tag):
 
 @database_common.connection_handler
 def get_first_five(cursor, order, asc_desc):
-    asc_desc = "desc" if asc_desc else "asc"
+    asc_desc = "asc" if asc_desc else "desc"
     asd = order
     query = sql.SQL('''
             SELECT * FROM question

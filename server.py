@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, session
 import data_handler
 import datetime as dt
 import os
@@ -8,6 +8,8 @@ dirname = os.path.dirname(__file__)
 UPLOAD_FOLDER = os.path.join(dirname, "static", "images")
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+# cookies
+app.secret_key = "any random string"
 
 
 @app.template_filter()
@@ -19,30 +21,32 @@ def get_comments(id_type, id_number):
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     if request.method == "GET":
-        data = data_handler.get_first_five("submission_time", False)
-        return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
+        data = data_handler.get_first_five(session["default_sort"], session["checked"])
+        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
     if request.method == "POST":
-        checked = False
+        session["default_sort"] = request.form["sort_key"]
+        session["checked"] = False
         if "reverse" in request.form.keys():
-            checked = True
-        data = data_handler.get_first_five(request.form["sort_key"], checked)
-        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked, path=path)
+            session["checked"] = True
+        data = data_handler.get_first_five(session["default_sort"], session["checked"])
+        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
 
 
 @app.route("/list", methods=['GET', 'POST'])
 def list_index():
     data = []
     if request.method == "GET":
-        data = data_handler.import_all_questions("submission_time")
+        data = data_handler.import_all_questions(session["default_sort"], session["checked"])
     elif request.method == "POST":
-        checked = False
+        session["default_sort"] = request.form["sort_key"]
+        session["checked"] = False
         if "reverse" in request.form.keys():
-            checked = True
-        data = data_handler.import_all_questions(request.form["sort_key"], checked)
+            session["checked"] = True
+        data = data_handler.import_all_questions(request.form["sort_key"], session["checked"])
         path = os.path.join(app.config['UPLOAD_FOLDER'])
-        return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked, path=path)
+        return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    return render_template("index.html", data=data, default_sort="submission_time", checked=False, path=path)
+    return render_template("index.html", data=data, default_sort=session["default_sort"], checked=session["checked"], path=path)
 
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
