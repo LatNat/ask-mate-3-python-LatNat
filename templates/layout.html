@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
     <title>AskMate{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="/static/newcss.css">
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
 </head>
 {% endblock %}
@@ -19,7 +19,7 @@
     </div>
 {% endblock %}
 
-<div class="top-separator">{% block content %}{% endblock %}</div>
+<div id="content">{% block content %}{% endblock %}</div>
 {% block footer %}
     <div id="footer">
         <p>2021 flAskMate©®™</p>

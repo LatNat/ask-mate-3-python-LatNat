@@ -6,44 +6,41 @@
 {% endblock %}
 {% block content %}
 <div>
-    <table class="centered question">
-        <tr>
-            <td colspan="2" class="question">
+    <div class="post">
+        <div class="title">
                 <h3>{{ question["title"] }}</h3>
-            </td>
-            <td style="text-align: right">
-                <p><a href="{{ url_for('edit_question', question_id=question['id']) }}" id="myButton">Edit</a></p>
-                <p><a href="{{ url_for('delete_question', question_id=question['id']) }}" id="myButton">Delete</a></p>
-            </td>
-        </tr>
-        <tr>
-            <td class="voting question">
-                <strong>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
-                    <br>{{ question["vote_number"] }}<br>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a>
-                </strong>
-            </td>
-            <td colspan="3" class="question">
-                <p class="linebreak">{{ question["message"] }}</p><br><br>
-                {% if question["image"] %}
-                    <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
-                {% endif %}
-            </td>
-        </tr>
-        <tr class="stats">
-            <td class="submit_time" colspan="2">submitted: {{ question["submission_time"] }}</td>
-            <td style="text-align: right">views: {{ question["view_number"] }} </td>
-        </tr>
+        </div>
+        <div class="edit">
+            <a href="{{ url_for('edit_question', question_id=question['id']) }}" id="myButton">Edit</a>
+        </div>
+        <div class="delete">
+            <a href="{{ url_for('delete_question', question_id=question['id']) }}" id="myButton">Delete</a>
+        </div>
+        <div class="vote-bar">
+            <strong>
+                <a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
+                <br>{{ question["vote_number"] }}<br>
+                <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a>
+            </strong>
+        </div>
+        <div class="message">
+            <p>{{ question["message"] }}</p><br><br>
+            {% if question["image"] %}
+                <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="" width="500">
+            {% endif %}
+        </div>
+        <div class="post-footer">
+            <div class="stat-box">submitted:</div>
+            <div class="stat">{{ question["submission_time"] }}</div>
+            <div class="stat-box">views:</div>
+            <div class="stat-box">{{ question["view_number"] }}</div>
+        </div>
     {% if tags %}
-        <tr id="tag-row">
-            <td class="vertical-center">Tags:</td>
-            <td>
+        <div class="tags">
             {% for tag in tags %}
                 <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
             {% endfor %}
-            </td>
-        </tr>
+        </div>
     {% endif %}
     {% with full_route=url_for('add_comment_to_question', question_id=question['id']), to_comment=question, id_type="question_id" %}
         {% include "comment_table.html" %}

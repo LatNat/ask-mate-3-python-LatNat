@@ -2,7 +2,7 @@
 {% block buttons %}<a href="/addquestion" id="myButton">Add new question</a>{% endblock %}
 {% block content %}
     {% if data %}
-    <div class="nav_bar centered">
+    <div>
     <form method="post">
         <label for="sort_key">Sorted by:</label>
         <select name="sort_key" onchange="this.form.submit()">
@@ -28,29 +28,30 @@
     </div>
     {% if data %}
     {% for question in data %}
-    <table class="centered post">
-        <tr>
-            <td rowspan="2" class="voting">
-                <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
-                    <br>{{ question["vote_number"] }}<br>
-                    <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></strong>
-            </td>
-            <td colspan="3">
-                <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
-                    {{ question["title"] |safe}}</a></h3>
-                <p class="linebreak">{{ question["message"] |safe}}</p>
-            </td>
-        </tr>
-        <tr class="separator left_text stats">
-        <td class="submit_time">submitted: {{ question["submission_time"] }}</td>
-        <td class="right_text stat-box">views:</td>
-        <td class="right_text stat-box">{{ question["view_number"] }}</td>
-        </tr>
-    </table><br>
+    <div class="post">
+        <div class="title">
+            <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
+                {{ question["title"] |safe}}</a></h3>
+        </div>
+        <div class="vote-bar">
+            <strong><br><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a>
+            <br>{{ question["vote_number"] }}<br>
+            <a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></strong>
+        </div>
+        <div class="message">
+            <p>{{ question["message"] |safe}}</p>
+        </div>
+        <div class="post-footer">
+            <div class="stat-box">submitted:</div>
+            <div class="stat">{{ question["submission_time"] }}</div>
+            <div class="stat-box">views:</div>
+            <div class="stat-box">{{ question["view_number"] }}</div>
+        </div>
+    </div><br>
     {% endfor %}
     {% endif %}
     {% if not data %}
-        <div class="top-separator">
+        <div>
         <h1 class="centered">No result found</h1>
         </div>
     {% endif %}
