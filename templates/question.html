@@ -35,12 +35,12 @@
             <td class="submit_time" colspan="2">submitted: {{ question["submission_time"] }}</td>
             <td style="text-align: right">views: {{ question["view_number"] }} </td>
         </tr>
-    {% if question["tags"] %}
+    {% if tags %}
         <tr id="tag-row">
             <td class="vertical-center">Tags:</td>
             <td>
             {% for tag in tags %}
-                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag) }}">{{ tag }}</a>
+                <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
             {% endfor %}
             </td>
         </tr>

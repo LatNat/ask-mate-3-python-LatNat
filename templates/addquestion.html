@@ -14,11 +14,13 @@
         <input id="title" name="title" value="{{ data["title"] if edit else "" }}"><br><br>
         <label for="text">Please describe your problem:</label><br>
         <textarea id="text" name="message">{{ data["message"] if edit else "" }}</textarea><br><br>
+        {% if tags %}
         <div id="tag-row">
             {% for tag in tags %}
-                <span id="tag-box" class="editable-tag">{{ tag }}<a class="hidden" href="{{ url_for("delete_tag",question_id=data['id'],tag_name=tag) }}">x</a></span>
+                <span id="tag-box" class="editable-tag">{{ tag.name }}<a class="hidden" href="{{ url_for("delete_tag",question_id=data['id'],tag_name=tag.name) }}">x</a></span>
             {% endfor %}
         </div>
+        {% endif %}
         <div>
             <label for="tags">Add{{ ' new' if edit else ''}} tags:</label><br>
             <input id="tags" name="tags" type="text"><br><br>
