@@ -86,6 +86,8 @@ def update_question(cursor, question_data):
 @database_common.connection_handler
 def delete_question(cursor, question_id):
     delete_relevant_answers(question_id)
+    for row in get_related_comments("question_id", question_id):
+        delete_comment_by_id(row['id'])
     query = '''
         DELETE FROM question
         WHERE id = %s;'''
@@ -279,7 +281,12 @@ def search_in_questions(cursor, search_term, order, asc_desc):
         asc_desc = "desc"
     query = sql.SQL('''
                 SELECT * FROM question
-                WHERE title ~* {search_term} OR message ~* {search_term}
+                LEFT JOIN
+                    (SELECT DISTINCT question_id, string_agg(name, ',') as tag_name FROM tag
+                    LEFT JOIN question_tag qt ON tag.id = qt.tag_id
+                        GROUP BY qt.question_id) as tags
+                        ON tags.question_id = question.id
+                WHERE title ~* {search_term} OR message ~* {search_term} OR (CASE WHEN tag_name IS NULL THEN False ELSE tag_name ~* {search_term} END)
                 ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(search_term=sql.Literal("\y"+search_term.lower()+"\y"),
                                 order_by=sql.Identifier(order),

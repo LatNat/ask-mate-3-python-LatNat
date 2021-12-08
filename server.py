@@ -180,12 +180,13 @@ def search():
         data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
-    if request.args["search"].lower() in search_result[0]["title"].lower():
-        bolding = search_result[0]["title"].lower().replace(request.args["search"], '<span style="color:red">' + request.args["search"] + '</span>')
-        search_result[0]["title"] = bolding
-    # if request.args["search"] in search_result[0]["message"]:
-    #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
-    #     search_result[0]["message"] = bolding
+    # if search_result:
+    #     if request.args["search"].lower() in search_result[0]["title"].lower():
+    #         bolding = search_result[0]["title"].lower().replace(request.args["search"], '<span style="color:red">' + request.args["search"] + '</span>')
+    #         search_result[0]["title"] = bolding
+        # if request.args["search"] in search_result[0]["message"]:
+        #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
+        #     search_result[0]["message"] = bolding
     return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
 
 
@@ -205,13 +206,21 @@ def add_comment_to_answer(answer_id):
     return render_template("addcomment.html", question_id=question_id)
 
 
-@app.route("/answer/comment/delete/<comment_id>/<question_id>", methods=["GET", "POST"])
+@app.route("/question/<question_id>/comment", methods=["GET", "POST"])
+def add_comment_to_question(question_id):
+    if request.method == "POST":
+        data_handler.add_comment("question_id", question_id, request.form["message"])
+        return redirect(url_for("display_question", question_id=question_id))
+    return render_template("addcomment.html", question_id=question_id)
+
+
+@app.route("/comment/delete/<comment_id>/<question_id>", methods=["GET", "POST"])
 def delete_comment(comment_id, question_id):
     data_handler.delete_comment_by_id(comment_id)
     return redirect(url_for("display_question", question_id=question_id))
 
 
-@app.route("/answer/comment/edit/<comment_id>/<question_id>", methods=["GET", "POST"])
+@app.route("/comment/edit/<comment_id>/<question_id>", methods=["GET", "POST"])
 def update_comment(comment_id, question_id):
     message = data_handler.get_comment_message(comment_id)
     if request.method == "POST":
