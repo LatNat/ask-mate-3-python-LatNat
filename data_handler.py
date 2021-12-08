@@ -379,5 +379,13 @@ def remove_tag_from_question(cursor, tag, question_id):
     cursor.execute(query, (tag, question_id))
 
 
+@database_common.connection_handler
+def remove_unused_tags(cursor):
+    query = '''
+        DELETE FROM tag
+        WHERE id NOT IN (SELECT DISTINCT tag_id FROM question_tag)'''
+    cursor.execute(query)
+
+
 if __name__ == "__main__":
     pass
