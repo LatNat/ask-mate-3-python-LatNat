@@ -106,7 +106,7 @@ def add_question():
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
-        if not user_tags:
+        if user_tags:
             for name in user_tags:
                 if name not in all_tags:
                     data_handler.create_new_tag(name)
