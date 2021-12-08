@@ -19,6 +19,15 @@
 
 .editable-tag {
     position:relative;
+    user-select: none;
+}
+
+
+.editable-tag:hover, #tag-box:hover {
+    margin-top: 0;
+    -moz-box-shadow: 0 0 4px 1px grey;
+    -webkit-box-shadow: 0 0 4px 1px grey;
+    box-shadow: 0 0 4px 1px grey;
 }
 
 .editable-tag:hover .hidden {

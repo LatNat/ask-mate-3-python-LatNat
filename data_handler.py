@@ -343,17 +343,8 @@ def add_tag_to_question(cursor, question_id, tag):
 
 
 @database_common.connection_handler
-def delete_relevant_tags(cursor, question_id):
-    query = '''
-        DELETE FROM question_tag
-        WHERE question_id = %s;
-        '''
-    cursor.execute(query, (question_id, ))
-
-
-@database_common.connection_handler
 def get_first_five(cursor, order, asc_desc):
-    asc_desc = "desc" if asc_desc else "asc"
+    asc_desc = "asc" if asc_desc else "desc"
     asd = order
     query = sql.SQL('''
             SELECT * FROM question
@@ -381,8 +372,11 @@ def get_questions_by_tag(cursor, tag):
 
 
 @database_common.connection_handler
-def remove_tag_from_question(cursor, question_id, tag):
-    query = ''''''
+def remove_tag_from_question(cursor, tag, question_id):
+    query = '''
+        DELETE FROM question_tag
+        WHERE tag_id = %s AND question_id = %s'''
+    cursor.execute(query, (tag, question_id))
 
 
 if __name__ == "__main__":
