@@ -109,7 +109,7 @@ def add_question():
 @app.route('/question/vote/<question_id>/<vote>')
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
-    return redirect(url_for('list_index'))
+    return redirect(url_for('first_page'))
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
@@ -167,6 +167,8 @@ def search():
         data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
+    # if request.args["search"] in search_result[0]["title"]:
+    #     search_result[0]["title"].replace(request.args["search"], '<span style="font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["title"].count(request.args["search"]))
     return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
 
 
