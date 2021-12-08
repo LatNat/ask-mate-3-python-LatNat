@@ -211,6 +211,7 @@ def update_comment(comment_id, question_id):
 def delete_tag(question_id, tag_name):
     tag_id = data_handler.convert_tag(tag_name)["id"]
     data_handler.remove_tag_from_question(tag_id, question_id)
+    data_handler.remove_unused_tags()
     return redirect(url_for('edit_question', question_id=question_id))
 
 
