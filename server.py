@@ -72,7 +72,7 @@ def edit_question(question_id):
     if request.method == "POST":
         update_data = {"id": question_id, "message": request.form["message"], "title": request.form["title"]}
         data_handler.update_question(update_data)
-        old_tags = question_tags
+        old_tags = [dict(row)['name'] for row in question_tags]
         new_tags = [tag.strip() for tag in request.form["tags"].split(',') if tag.strip() != '']
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
@@ -180,12 +180,13 @@ def search():
         data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
-    if request.args["search"].lower() in search_result[0]["title"].lower():
-        bolding = search_result[0]["title"].lower().replace(request.args["search"], '<span style="color:red">' + request.args["search"] + '</span>')
-        search_result[0]["title"] = bolding
-    # if request.args["search"] in search_result[0]["message"]:
-    #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
-    #     search_result[0]["message"] = bolding
+    # if search_result:
+    #     if request.args["search"].lower() in search_result[0]["title"].lower():
+    #         bolding = search_result[0]["title"].lower().replace(request.args["search"], '<span style="color:red">' + request.args["search"] + '</span>')
+    #         search_result[0]["title"] = bolding
+        # if request.args["search"] in search_result[0]["message"]:
+        #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
+        #     search_result[0]["message"] = bolding
     return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
 
 
