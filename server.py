@@ -106,7 +106,7 @@ def add_question():
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
         all_tags = [dict(row)['name'] for row in data_handler.get_all_tags()]
         converted_tags = []
-        if not user_tags:
+        if user_tags:
             for name in user_tags:
                 if name not in all_tags:
                     data_handler.create_new_tag(name)
@@ -216,8 +216,6 @@ def update_comment(comment_id, question_id):
     message = data_handler.get_comment_message(comment_id)
     if request.method == "POST":
         data_handler.update_comment(comment_id, request.form["message"])
-        return redirect(url_for("display_question", question_id=question_id))
-    return render_template("editcomment.html", question_id=question_id, message=message)
 
 
 @app.route("/question/<question_id>/delete/<tag_name>")
