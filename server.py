@@ -29,14 +29,14 @@ def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     if request.method == "GET":
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
 
 
 @app.route("/list", methods=['GET', 'POST'])

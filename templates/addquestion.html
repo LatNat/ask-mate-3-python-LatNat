@@ -2,7 +2,7 @@
 {% block title %}{{ " | Edit Question" if edit else " | New Question" }}{% endblock %}
 {% block buttons %}
 {% if edit %}
-    <a href="{{ url_for('display_question', question_id=data['id'], view='f') }}" id="myButton">Back to question</a>
+    <a href="{{ url_for('display_question', question_id=data['id'], view='f') }}">Back to question</a>
 {% endif %}
 {% endblock %}
 {% block content %}
