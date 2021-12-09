@@ -216,3 +216,7 @@ mark {
     background: green;
     padding: 5px;
 }
+
+.highlight {
+  color: red;
+}

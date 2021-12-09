@@ -6,6 +6,7 @@
     <title>AskMate{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/stylesheet.css">
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
+    <script src="/static/script.js" type="text/javascript"></script>
 </head>
 {% endblock %}
 <body>
@@ -18,8 +19,7 @@
         {% endblock %}
     </div>
 {% endblock %}
-
-<div class="top-separator">{% block content %}{% endblock %}</div>
+<div class="top-separator" id="text">{% block content %}{% endblock %}</div>
 {% block footer %}
     <div id="footer">
         <p>2021 flAskMate©®™</p>

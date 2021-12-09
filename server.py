@@ -187,7 +187,7 @@ def search():
         # if request.args["search"] in search_result[0]["message"]:
         #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
         #     search_result[0]["message"] = bolding
-    return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
+    return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path, highlighter=True)
 
 
 @app.route("/tagged/<tag>")
