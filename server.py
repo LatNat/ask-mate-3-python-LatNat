@@ -17,11 +17,17 @@ def session_init():
     session.clear()
     session["sort"] = "submission_time"
     session["check"] = False
+    session["popup"] = True
 
 
 @app.template_filter()
 def get_comments(id_type, id_number):
     return data_handler.get_related_comments(id_type, id_number)
+
+
+@app.template_filter()
+def get_image_path(filename):
+    return os.path.join(UPLOAD_FOLDER, filename)
 
 
 @app.route("/", methods=["GET", "POST"])
