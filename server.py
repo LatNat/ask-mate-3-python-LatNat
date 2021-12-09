@@ -30,14 +30,14 @@ def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     if request.method == "GET":
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
 
 
 @app.route("/list", methods=['GET', 'POST'])
@@ -49,7 +49,7 @@ def list_index():
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
-        data = data_handler.import_all_questions(request.form["sort_key"], session["checked"])
+        data = data_handler.import_all_questions(request.form["sort_key"], session["check"])
         path = os.path.join(app.config['UPLOAD_FOLDER'])
         return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
@@ -98,8 +98,9 @@ def add_question():
         add_question_data = request.form.to_dict()
         filename = None
         if request.files["file"]:
+            get_image_number = int(max((data_handler.image_name_number_from_id()[0]).values()))+1
             file = request.files["file"]
-            filename = secure_filename(file.filename)
+            filename = "image"+str(get_image_number)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = filename
         data_handler.add_question(add_question_data)
@@ -188,7 +189,7 @@ def search():
         # if request.args["search"] in search_result[0]["message"]:
         #     bolding = search_result[0]["message"].replace(request.args["search"], '<span style="color:red;font-weight:bold">' + request.args["search"] + '</span>', search_result[0]["message"].count(request.args["search"]))
         #     search_result[0]["message"] = bolding
-    return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path)
+    return render_template("index.html", data=search_result, default_sort="vote_number", checked=False, path=path, highlighter=True)
 
 
 @app.route("/tagged/<tag>")

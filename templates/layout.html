@@ -6,6 +6,7 @@
     <title>AskMate{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/stylesheet.css">
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
+    <script src="/static/script.js" type="text/javascript"></script>
 </head>
 {% endblock %}
 <body>
@@ -13,14 +14,17 @@
 {% block title_header %}
     <div class="header"><h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
     <br><br>
-    <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
-    <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
+    <div class="topnav">
+        {% if not main_page %}
+        <a href="{{ url_for('first_page') }}" class="active">Back to start page</a>
+        {% endif %}
+        <a href="{{ url_for('list_index') }}">List all questions</a>
         {% block buttons %}
         {% endblock %}
     </div>
+    </div>
 {% endblock %}
-
-<div class="top-separator">{% block content %}{% endblock %}</div>
+<div class="top-separator" id="text">{% block content %}{% endblock %}</div>
 {% block footer %}
     <div id="footer">
         <p>2021 flAskMate©®™</p>

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block buttons %}<a href="/addquestion" id="myButton">Add new question</a>{% endblock %}
+{% block buttons %}<a href="/addquestion">Add new question</a>{% endblock %}
 {% block content %}
     {% if data %}
     <div class="nav_bar centered">
@@ -23,8 +23,9 @@
     </form>
     {% endif %}
     <form {% if data %} class="search" {% else %} class="centered" {% endif %} role="search" action="{{ url_for("search", search=search) }}">
-        Search: <input type="search" placeholder="Search on site..." name="search">
+        Search: <input type="search" placeholder="Search on site..." name="search" onload="search()">
     </form>
+
     </div>
     {% if data %}
     {% for question in data %}
@@ -54,4 +55,5 @@
         <h1 class="centered">No result found</h1>
         </div>
     {% endif %}
+<input type="hidden" value="{{ highlighter }}" id="search-bool">
 {% endblock %}
