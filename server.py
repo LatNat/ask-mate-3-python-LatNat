@@ -97,8 +97,9 @@ def add_question():
         add_question_data = request.form.to_dict()
         filename = None
         if request.files["file"]:
+            get_image_number = int(max((data_handler.image_name_number_from_id()[0]).values()))+1
             file = request.files["file"]
-            filename = secure_filename(file.filename)
+            filename = "image"+str(get_image_number)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = filename
         data_handler.add_question(add_question_data)
