@@ -17,6 +17,7 @@ def session_init():
     session.clear()
     session["sort"] = "submission_time"
     session["check"] = False
+    session["popup"] = True
 
 
 @app.template_filter()

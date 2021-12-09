@@ -205,7 +205,8 @@ def delete_pictures_by_question_id(cursor, question_id, folder):
             JOIN answer ON answer.question_id = question.id
             WHERE question.id = %s;'''
     cursor.execute(query, (question_id, ))
-    for row in cursor.fetchall():
+    a = cursor.fetchall()
+    for row in a:
         delete_picture(row["answer_image"], folder)
         delete_picture(row["question_image"], folder)
 
