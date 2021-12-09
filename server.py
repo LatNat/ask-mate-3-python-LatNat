@@ -48,7 +48,7 @@ def list_index():
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
-        data = data_handler.import_all_questions(request.form["sort_key"], session["checked"])
+        data = data_handler.import_all_questions(request.form["sort_key"], session["check"])
         path = os.path.join(app.config['UPLOAD_FOLDER'])
         return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path)
     path = os.path.join(app.config['UPLOAD_FOLDER'])
