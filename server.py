@@ -227,6 +227,8 @@ def update_comment(comment_id, question_id):
     message = data_handler.get_comment_message(comment_id)
     if request.method == "POST":
         data_handler.update_comment(comment_id, request.form["message"])
+        return redirect(url_for("display_question", question_id=question_id))
+    return render_template("editcomment.html", message=message)
 
 
 @app.route("/question/<question_id>/delete/<tag_name>")
