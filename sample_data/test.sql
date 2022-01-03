@@ -113,7 +113,7 @@ ALTER TABLE ONLY answer
     ADD CONSTRAINT fk_owner_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE ONLY question
-    ADD CONSTRAINT fk_owner_id FOREIGN KEY users(id);
+    ADD CONSTRAINT fk_owner_id FOREIGN KEY users(id) REFERENCES users(id);
     
 INSERT INTO users VALUES (0, 'test', 'password', '2016-01-01 07:00:00', 0);
 INSERT INTO users VALUES (1, 'first', 'password', '2016-01-02 08:00:00', 0);
