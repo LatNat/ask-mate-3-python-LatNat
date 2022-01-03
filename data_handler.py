@@ -401,5 +401,27 @@ def image_name_number_from_id(cursor):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
+def create_user(cursor, data):
+    query = '''
+                INSERT INTO users(name, pw, registered, email, reputation)
+                VALUES(%(name)s, %(pw)s, %(registered)s, %(email)s, %(reputation)s);'''
+    cursor.execute(query, {
+        "name": data["name"],
+        "pw": data["pw"],
+        "registered": data["registered"],
+        "email": data["email"],
+        "reputation": data["reputation"]})
+
+
+@database_common.connection_handler
+def login_user(cursor, data):
+    query = '''
+                SELECT * FROM users
+                WHERE email = %(username)s or name = %(username)s'''
+    cursor.execute(query, {"username": data})
+    return cursor.fetchone()
+
+
 if __name__ == "__main__":
     pass

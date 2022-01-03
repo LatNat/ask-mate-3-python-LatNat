@@ -3,6 +3,7 @@ import data_handler
 import datetime as dt
 import os
 from werkzeug.utils import secure_filename
+import user_manager
 
 dirname = os.path.dirname(__file__)
 UPLOAD_FOLDER = os.path.join(dirname, "static", "images")
@@ -248,6 +249,29 @@ def delete_tag(question_id, tag_name):
     data_handler.remove_tag_from_question(tag_id, question_id)
     data_handler.remove_unused_tags()
     return redirect(url_for('edit_question', question_id=question_id))
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register_user():
+    if request.method == "POST":
+        user_data = {"name": request.form["username"], "pw": user_manager.hash_password(request.form["password"]),
+                     "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
+                     "reputation": 0}
+        data_handler.create_user(user_data)
+        return redirect(url_for("first_page"))
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login_user():
+    if request.method == "POST":
+        user = data_handler.login_user(request.form["username"])
+        if not user:
+            return render_template("login.html", attempt=True)
+        if user_manager.verify_password(request.form["password"], user["pw"]):
+            session["username"] = user["name"]
+            return redirect(url_for("first_page"))
+    return render_template("login.html", attempt=False)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+{% block title %} Login{% endblock %}
+{% block buttons %}{% endblock %}
+{% block content %}
+    <form method="post" action="/login">
+        <label id ="username">Username or E-mail: </label>
+            <input type="username" name="username"><br>
+        <label id="password">Password:  </label>
+            <input type="password" name="password"><br><br>
+        <button type="sumbit">Login</button>
+    </form>
+{% endblock %}
+{% if attempt %}<script src="/static/login_alert.js"></script>{% endif %}

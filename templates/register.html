@@ -1,0 +1,13 @@
+{% block title %} Register{% endblock %}
+{% block buttons %}{% endblock %}
+{% block content %}
+    <form method="post" action="/register">
+        <label id ="username">Username: </label>
+            <input type="username" name="username"><br>
+        <label id="email">E-mail: </label>
+            <input type="email" name="email"><br>
+        <label id="password">Password:  </label>
+            <input type="password" name="password"><br><br>
+        <button type="sumbit">Register</button>
+    </form>
+{% endblock %}
