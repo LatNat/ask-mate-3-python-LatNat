@@ -75,7 +75,7 @@ CREATE TABLE tag (
 );
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT pk_user_id PRIMARY KEY (id);
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
@@ -137,7 +137,7 @@ INSERT INTO answer VALUES (2, 0, '2017-04-25 14:42:00', 35, 1, 'Look it up in th
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
 INSERT INTO comment VALUES (1, 1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
-INSERT INTO comment VALUES (2, 0, NULL, s1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
+INSERT INTO comment VALUES (2, 0, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
 SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
 INSERT INTO tag VALUES (1, 'python');
