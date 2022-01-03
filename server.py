@@ -23,9 +23,9 @@ def session_init():
 
 @app.before_request
 def check_user():
-    if request.path != url_for("login"):
-        if not session["username"]:
-            return redirect(url_for("login"))
+    if request.path != url_for("login_user"):
+        if "username" not in session:
+            return redirect(url_for("login_user"))
 
 
 @app.template_filter()
