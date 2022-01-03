@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
     id serial NOT NULL,
     name text,
-    pw text,
+    password text,
     registered timestamp without time zone,
     email text,
     reputation integer
@@ -93,28 +93,28 @@ ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
+    ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY answer
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
+    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY question_tag
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
+    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
+    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY question_tag
-    ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
+    ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY answer
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY question
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
     
 INSERT INTO users VALUES (0, 'test', 'password', '2016-01-01 07:00:00', 'no@none.no', 0);
 INSERT INTO users VALUES (1, 'first', 'password', '2016-01-02 08:00:00', 'email@address.com', 0);
