@@ -3,20 +3,20 @@
         <h3>{{ question["title"] }}</h3>
     </div>
     <div class="edit">
-        <a href="{{ url_for('edit_question', question_id=question['id']) }}">
-            <span class="material-icons button">edit_note</span>
+        <a class="link-light" href="{{ url_for('edit_question', question_id=question['id']) }}">
+            <span class="material-icons button-light">edit_note</span>
         </a>
     </div>
     <div class="delete">
-        <a href="{{ url_for('delete_question', question_id=question['id']) }}">
-            <span class="material-icons button">delete</span>
+        <a class="link-light" href="{{ url_for('delete_question', question_id=question['id']) }}">
+            <span class="material-icons button-light">delete</span>
         </a>
     </div>
     <div class="vote-bar">
         <table>
-            <tr><td class="vote-button"><a href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
+            <tr><td class="vote-button"><a class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
             <tr><td>{{ question["vote_number"] }}</td></tr>
-            <tr><td class="vote-button"><a href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
+            <tr><td class="vote-button"><a class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
         </table>
     </div>
     <div class="message">
@@ -39,5 +39,6 @@
     </div>
 {% endif %}
 {% with full_route=url_for('add_comment_to_question', question_id=question['id']), to_comment=question, id_type="question_id" %}
-    {% include "comment_table.html" %}
+    {% include "comment.html" %}
 {% endwith %}
+</div>
