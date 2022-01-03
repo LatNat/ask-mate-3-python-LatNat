@@ -23,6 +23,7 @@ CREATE TABLE users (
     name text,
     pw text,
     registered timestamp without time zone,
+    email text,
     reputation integer
 );
 
