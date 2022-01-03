@@ -21,6 +21,8 @@
         <div class="nav-bar">
             <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
             <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
+            <a href="{{ url_for('login_user') }}" id="myButton">Login</a>
+            <a href="{{ url_for('logout_user') }}" id="myButton">Logout</a>
             {% block buttons %}
             {% endblock %}
         </div>
