@@ -21,6 +21,13 @@ def session_init():
     session["popup"] = True
 
 
+@app.before_request
+def check_user():
+    if request.path != url_for("login"):
+        if not session["username"]:
+            return redirect(url_for("login"))
+
+
 @app.template_filter()
 def get_comments(id_type, id_number):
     return data_handler.get_related_comments(id_type, id_number)
