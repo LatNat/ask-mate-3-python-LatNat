@@ -202,10 +202,11 @@ def delete_pictures_by_question_id(cursor, question_id, folder):
     query = '''
             SELECT answer.image as answer_image, question.image as question_image
             FROM question
-            JOIN answer ON answer.question_id = question.id
+            LEFT JOIN answer ON answer.question_id = question.id
             WHERE question.id = %s;'''
     cursor.execute(query, (question_id, ))
-    for row in cursor.fetchall():
+    a = cursor.fetchall()
+    for row in a:
         delete_picture(row["answer_image"], folder)
         delete_picture(row["question_image"], folder)
 
@@ -223,7 +224,6 @@ def delete_picture(filename, folder):
         file_path = os.path.join(folder, filename)
         if os.path.exists(file_path):
             os.remove(file_path)
-        os.remove(os.path.join(folder, filename))
 
 
 @database_common.connection_handler
@@ -389,6 +389,15 @@ def get_related_tags(cursor, question_id):
         JOIN question_tag qt on tag.id = qt.tag_id
         Where question_id = %s;'''
     cursor.execute(query, (question_id, ))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def image_name_number_from_id(cursor):
+    query = '''
+            SELECT id from question
+            ORDER BY id desc;'''
+    cursor.execute(query)
     return cursor.fetchall()
 
 

@@ -150,7 +150,9 @@ table.centered {
 .header {
     width: auto;
     padding: 5% 10% 1em 10%;
-    background:linear-gradient(to bottom, lightblue 5%, white 100%);
+    background:linear-gradient(to bottom, lightskyblue 5%, white 90%);
+    border-radius: 0 0 85% 85% / 30%;
+    border-color: black;
     color: dimgray;
 }
 
@@ -164,7 +166,7 @@ body {
     min-height: 100vh;
     padding: 0;
     margin: 0;
-    background:linear-gradient(to bottom, white 50%, lightblue 100%);
+    background:linear-gradient(to bottom, white 50%, lightskyblue 100%);
 }
 
 textarea {
@@ -215,4 +217,43 @@ mark {
     color: black;
     background: green;
     padding: 5px;
+}
+
+.highlight {
+  color: orangered;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.topnav {
+  overflow: hidden;
+
+}
+
+.topnav a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #e6eff7;
+  color: lightslategrey;
+}
+
+.topnav a.active:hover {
+    background-color: lightskyblue;
 }

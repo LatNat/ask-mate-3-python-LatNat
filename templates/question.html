@@ -2,7 +2,7 @@
 
 {% block title %} | {{ question['title'] }}{% endblock %}
 {% block buttons %}
-<a href="{{ url_for('add_answer', question_id=question["id"]) }}" id="myButton">Add new answer</a>
+<a href="{{ url_for('add_answer', question_id=question["id"]) }}">Add new answer</a>
 {% endblock %}
 {% block content %}
 <div class="sidebar"></div>

@@ -17,9 +17,9 @@ window.onclick = function(event) {
   }
 }
 
-window.onload = (event) => {
+/*window.onload = (event) => {
   var popup = sessionStorage.getItem("popup");
-  if(popup != "False") {
+  if(popup !== "False") {
     modal.style.display = "block";
   }
-};
+};*/
