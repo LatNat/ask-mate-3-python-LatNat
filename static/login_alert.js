@@ -1,1 +1,1 @@
-window.alert("Invalid login credentials, please try again!")
+window.alert("Invalid login credentials, please try again!");
