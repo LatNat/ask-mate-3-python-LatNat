@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <title>AskMate{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/newcss.css">
+    <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+{% endblock %}
+<body class="bg-light">
+{#{% include "cookie_popup.html" %}#}
+{% block title_header %}
+    <div class="main-header">
+        <div class="page-title">
+            <h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
+        </div>
+        <div class="nav-bar">
+            <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
+            <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
+            {% block buttons %}
+            {% endblock %}
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block search_bar %}{% endblock %}
+<div class="page">{% block content %}{% endblock %}</div>
+{% block footer %}
+    <div class="page-footer">
+        <p>2021 flAskMate©®™</p>
+    </div>
+{% endblock %}
+</body>
+
+</html>

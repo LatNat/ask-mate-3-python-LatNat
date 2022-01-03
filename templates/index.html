@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block buttons %}<a href="/addquestion" id="myButton">Add new question</a>{% endblock %}
+    {% if data %}
+{% block search_bar %}
+    <div class="search-bar">
+    <form method="post">
+        <label for="sort_key">Sorted by:</label>
+        <select name="sort_key" onchange="this.form.submit()">
+            {% for key in data[0].keys() %}
+                {% if default_sort == key %}
+                    <option selected value={{ key }}>{{ key }}</option>
+                {% else %}
+                    <option value={{ key }}>{{ key }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        {% if checked %}
+            <input checked name="reverse" type="checkbox" onchange="this.form.submit()">
+        {% else %}
+            <input name="reverse" type="checkbox" onchange="this.form.submit()">
+        {% endif %}
+        <label for="reverse">Reversed</label>
+    </form>
+    <form {% if data %} class="search" {% else %} class="centered" {% endif %} role="search" action="{{ url_for("search", search=search) }}">
+        Search: <input type="search" placeholder="Search on site..." name="search" onload="search()">
+    </form>
+
+    </div>
+{% endblock %}
+        {% endif %}
+{% block content %}
+    <div class="sidebar"></div>
+    <div class="content">
+    {% if data %}
+    {% for question in data %}
+    <div class="post post-light">
+        <div class="title">
+            <h3><a href="{{ url_for('display_question', question_id=question["id"]) }}">
+                {{ question["title"] |safe}}</a></h3>
+        </div>
+        <div class="vote-bar">
+            <table>
+                <tr><td class="vote-button"><a class= "link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
+                <tr><td>{{ question["vote_number"] }}</td></tr>
+                <tr><td class="vote-button"><a class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
+            </table>
+        </div>
+        <div class="message">
+            <p>{{ question["message"] |safe}}</p>
+        </div>
+        <div class="post-footer">
+            <div class="stat-box"><i>submitted: {{ question["submission_time"] }}</i></div>
+            <div class="stat-box"><i>views: {{ question["view_number"] }}</i></div>
+        </div>
+    </div><br>
+    {% endfor %}
+    {% endif %}
+    {% if not data %}
+        <div>
+        <h1 class="centered">No result found</h1>
+        </div>
+    {% endif %}
+    </div>
+    <div class="sidebar"></div>
+{% endblock %}

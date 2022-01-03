@@ -1,0 +1,236 @@
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar {
+    padding-left: 5em;
+}
+
+.bg-light {
+    background: floralwhite;
+}
+
+.footer {
+    justify-self: flex-end;
+}
+
+.page {
+    display: flex;
+    padding-top: 3em;
+    justify-content: space-between;
+}
+
+.page-title {
+    padding-left: 3em;
+}
+
+.page-footer {
+    padding-left: 3em;
+    margin-top: 2em;
+}
+
+
+.sidebar {
+    width: 15%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-light {
+    background: floralwhite;
+    box-shadow: 0 5px 7px 0 #888888;
+}
+
+.replies {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer {
+    width: 45em;
+    padding: 1em;
+    margin-bottom: 2em;
+    border-radius: 5px 5px 50px 5px;
+    display: grid;
+    align-self: center;
+    grid-template-columns: 10% 80% 10%;
+    font-size: 14px;
+    gap: 0 0;
+    grid-template-areas:
+    "vote-bar edit delete"
+    "vote-bar message message"
+    "add-comments post-footer post-footer"
+    ". comments comments";
+}
+
+.post {
+    padding: 1em;
+    margin-bottom: 2em;
+    border-radius: 5px 5px 50px 5px;
+    display: grid;
+    grid-template-columns: 6em 34em 7em;
+    grid-template-rows: 2.5em 2.5em 1fr 4em;
+    font-size: 16px;
+    gap: 0 0;
+    grid-template-areas:
+    "vote-bar title edit"
+    "vote-bar title delete"
+    "vote-bar message message"
+    "add-comments post-footer post-footer"
+    ". tags tags"
+    ". comments comments";
+}
+
+.main-header {
+    justify-self: flex-start;
+    padding-bottom: 1em;
+    background: darkslateblue;
+}
+
+.title {
+    grid-area: title;
+    font-size: larger;
+}
+
+.edit {
+    display: inline-flex;
+    grid-area: edit;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.delete {
+    display: inline-flex;
+    grid-area: delete;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.message {
+    grid-area: message;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.tags { grid-area: tags; }
+.comments { grid-area: comments; }
+
+.add-comments {
+    display: flex;
+    grid-area: add-comments;
+    justify-content: center;
+}
+
+.vote-bar {
+    grid-area: vote-bar;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.post-footer {
+    grid-area: post-footer;
+    display: inline-flex;
+    font-size: small;
+    justify-content: flex-end;
+}
+
+.stat {
+    display: flex;
+    align-self: center;
+    justify-content: flex-end;
+}
+
+.stat-box {
+    display: flex;
+    align-self: center;
+    padding-right: 2em;
+}
+
+.search-bar {
+    display: flex;
+    padding-top: 1em;}
+
+.editable-tag {
+    position:relative;
+    user-select: none;
+}
+
+.editable-tag:hover, #tag-box:hover {
+    margin-top: 0;
+    -moz-box-shadow: 0 0 4px 1px grey;
+    -webkit-box-shadow: 0 0 4px 1px grey;
+    box-shadow: 0 0 4px 1px grey;
+}
+
+.editable-tag:hover .hidden {
+    display: block;
+}
+
+.editable-tag a {
+    display: none;
+    position: absolute;
+    top: 1px;
+    right: 10%;
+    z-index: 100;
+    color: darkred !important;
+}
+
+.vote-button-light {
+    text-align: center;
+}
+
+.button-light {
+    border-radius: 40%;
+    background: lightskyblue;
+    padding: 0.2em;
+    text-align: center;
+}
+.button-light::after {
+  border-radius: 50%;
+  left: -50%;
+  right: -50%;
+  top: -150%;
+  bottom: -150%;
+  line-height: 8.34em;
+  transform: scale(0, 0);
+}
+
+.button-light::after {
+    transform: scale(1, 1);
+}
+.button-light:hover {
+    background: darkslateblue;
+}
+
+a.link-light:link {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+a.link-light:visited {
+    color: cornflowerblue;
+}
+
+a.link-light:active {
+    color: white;
+}
+
+.button-light.wide {
+    width: 30px;
+}

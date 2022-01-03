@@ -1,0 +1,259 @@
+/*table td {*/
+/*    border: 1px solid black;*/
+/*}*/
+#tag-box {
+    border-radius: 5px;
+    background: lightskyblue;
+    padding: .4em;
+    font-size: small;
+    color: floralwhite !important;
+    font-weight: lighter !important;
+}
+
+#tag-row {
+    height: 35px;
+    font-weight: bold;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+
+}
+
+.editable-tag {
+    position:relative;
+    user-select: none;
+}
+
+.editable-tag:hover, #tag-box:hover {
+    margin-top: 0;
+    -moz-box-shadow: 0 0 4px 1px grey;
+    -webkit-box-shadow: 0 0 4px 1px grey;
+    box-shadow: 0 0 4px 1px grey;
+}
+
+.editable-tag:hover .hidden {
+    display: block;
+}
+
+.editable-tag a {
+    display: none;
+    position: absolute;
+    top: 1px;
+    right: 10%;
+    z-index: 100;
+    color: darkred !important;
+}
+
+
+table.centered {
+    border-radius: 8px 8px 8px 8px;
+    padding: 0 1em 1em 1em;
+}
+
+
+.vertical-center {
+    text-align: center;
+}
+
+.centered {
+    margin: auto;
+    width: 50%;
+}
+
+.voting {
+    text-align: center;
+    width: 7%;
+    font-weight: bold;
+    vertical-align: top;
+    font-size: 30px;
+}
+
+.answers {
+    margin-top: 50px;
+}
+
+.post {
+    background-color: ghostwhite !important;
+}
+
+.question {
+    background-color: ghostwhite !important;
+}
+
+#answer {
+    position: relative;
+    left: 40px;
+}
+
+.small_text {
+    font-size: 12px;
+}
+
+.title {
+    text-align: center;
+}
+
+.left_text {
+    text-align: left;
+}
+
+.right_text {
+    text-align: right;
+}
+
+.submit_time {
+    width: 70%;
+}
+
+.stat-box {
+    width: 7%;
+}
+
+.separator{
+    border-width: 50px 0 0 0;
+    font-size: 14px;
+}
+
+#myButton {
+	background:linear-gradient(to bottom, white 2%, powderblue 100%);
+	border-radius:3px;
+	border:1px solid lightcyan;
+	display:inline-block;
+	cursor:pointer;
+	color:dimgray;
+	font-family:Arial,monospace;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0 1px 0 white;
+}
+
+#myButton:hover {
+	background:linear-gradient(to bottom, lightcyan 5%, white 100%);
+    color: lightgray;
+}
+#myButton:focus {
+    background:linear-gradient(to bottom, skyblue 5%, white 100%);
+    color: dimgray;
+}
+#myButton:active {
+    position: relative;
+    top: 1px;
+}
+
+.stats {
+    font-weight: bold;
+    padding-top: 1em;
+    font-size: 13px;
+    font-style: oblique;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
+.header {
+    width: auto;
+    padding: 5% 10% 1em 10%;
+    background:linear-gradient(to bottom, lightskyblue 5%, white 90%);
+    border-radius: 0 0 85% 85% / 30%;
+    border-color: black;
+    color: dimgray;
+}
+
+.top-separator {
+    padding-top: 50px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background:linear-gradient(to bottom, white 50%, lightskyblue 100%);
+}
+
+textarea {
+    width: 40em;
+    height: 16em;
+}
+
+.edit-delete {
+    width: 15%;
+}
+
+a:link {
+  color: cornflowerblue;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+    color: cornflowerblue;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+#upvote {
+    color: black;
+}
+
+.linebreak {
+    white-space: pre-line;
+}
+
+#footer {
+    margin-top: auto;
+    height: 130px;
+    padding: 3em 0 0 5em;
+}
+
+.nav_bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search{
+    align-self: flex-end;
+}
+
+mark {
+    color: black;
+    background: green;
+    padding: 5px;
+}
+
+.highlight {
+  color: orangered;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.topnav {
+  overflow: hidden;
+
+}
+
+.topnav a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #e6eff7;
+  color: lightslategrey;
+}
+
+.topnav a.active:hover {
+    background-color: lightskyblue;
+}
