@@ -271,7 +271,15 @@ def login_user():
         if user_manager.verify_password(request.form["password"], user["pw"]):
             session["username"] = user["name"]
             return redirect(url_for("first_page"))
+    if "username" in session:
+        return redirect(url_for("first_page"))
     return render_template("login.html", attempt=False)
+
+
+@app.route("/logout")
+def logout_user():
+    session.pop("username", None)
+    return redirect(url_for("login_user"))
 
 
 if __name__ == "__main__":
