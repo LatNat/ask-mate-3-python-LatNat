@@ -52,9 +52,10 @@ def add_question(cursor, data):
     if "image" not in data.keys():
         data["image"] = ""
     query = '''
-            INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
-            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
+            INSERT INTO question(user_id, submission_time, view_number, vote_number, title, message, image)
+            VALUES(%(user_id)s, %(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
     cursor.execute(query, {
+        "user_id": data["user_id"],
         "subtime": timestamp,
         "view": 0,
         "vote": 0,
@@ -420,6 +421,15 @@ def login_user(cursor, data):
                 SELECT * FROM users
                 WHERE email = %(username)s or name = %(username)s'''
     cursor.execute(query, {"username": data})
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def get_user_id_by_username(cursor, username):
+    query = '''
+        SELECT * FROM users
+        WHERE name = %s;'''
+    cursor.execute(query, (username, ))
     return cursor.fetchone()
 
 

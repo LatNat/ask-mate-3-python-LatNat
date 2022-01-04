@@ -3,7 +3,7 @@ import data_handler
 import datetime as dt
 import os
 from werkzeug.utils import secure_filename
-import user_manager
+import user_manager, bonus_questions
 
 dirname = os.path.dirname(__file__)
 UPLOAD_FOLDER = os.path.join(dirname, "static", "images")
@@ -40,7 +40,7 @@ def get_image_path(filename):
 
 @app.route("/bonus-questions")
 def main():
-    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+    return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
 
     
 @app.route("/", methods=["GET", "POST"])
@@ -121,6 +121,7 @@ def add_question():
             filename = "image"+str(get_image_number)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = filename
+        add_question_data["user_id"] = data_handler.get_user_id_by_username(session["username"])["id"]
         data_handler.add_question(add_question_data)
         question_id = data_handler.get_latest_id()["max"]
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
