@@ -49,7 +49,7 @@
             <p>{{ question["message"] |safe}}</p>
         </div>
         <div class="post-footer">
-            <div class="stat-box"><i>submitted: {{ question["submission_time"] }}</i></div>
+            <div class="stat-box"><i>submitted: {{ question["name"] }} | {{ question["submission_time"] }}</i></div>
             <div class="stat-box"><i>views: {{ question["view_number"] }}</i></div>
         </div>
     </div><br>

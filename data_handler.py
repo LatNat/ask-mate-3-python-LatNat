@@ -18,7 +18,8 @@ def import_all_questions(cursor, order, asc_desc=False):
     else:
         asc_desc = "desc"
     query = sql.SQL('''
-        SELECT * FROM question
+        SELECT question.id, name, submission_time, view_number, vote_number, title, message, image FROM question
+        INNER JOIN users u on u.id = question.user_id
         ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(
         order_by=sql.Identifier(order),
@@ -29,7 +30,8 @@ def import_all_questions(cursor, order, asc_desc=False):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     query = '''
-        SELECT * FROM answer
+        SELECT answer.id, name, submission_time, vote_number, question_id, message, image, accepted FROM answer
+        INNER JOIN users u on answer.user_id = u.id
         WHERE question_id = %s
         ORDER BY vote_number DESC;'''
     # needs sorting
@@ -40,8 +42,9 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     query = '''
-        SELECT * FROM question
-        WHERE id = %s;'''
+        SELECT question.id, name, submission_time, view_number, vote_number, title, message, image FROM question
+        INNER JOIN users u on u.id = question.user_id
+        WHERE question.id = %s;'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
 
@@ -334,7 +337,8 @@ def add_tag_to_question(cursor, question_id, tag):
 def get_first_five(cursor, order, asc_desc):
     asc_desc = "asc" if asc_desc else "desc"
     query = sql.SQL('''
-            SELECT * FROM question
+            SELECT question.id, name, submission_time, view_number, vote_number, title, message, image FROM question
+            INNER JOIN users u on u.id = question.user_id
             ORDER BY {order_by} {asc_desc}
             LIMIT 5;''')
     cursor.execute(query.format(
@@ -421,6 +425,24 @@ def login_user(cursor, data):
                 SELECT * FROM users
                 WHERE email = %(username)s or name = %(username)s'''
     cursor.execute(query, {"username": data})
+    return cursor.fetchone()
+
+@database_common.connection_handler
+def check_user_used(cursor, username, email):
+    query = '''
+                SELECT * from users
+                WHERE email = %(email)s or name = %(username)s'''
+    cursor.execute(query, {"username": username, "email": email})
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_by_id(cursor, user_id):
+    query = '''
+        SELECT name FROM users
+        WHERE id = %s;
+        '''
+    cursor.execute(query, (user_id, ))
     return cursor.fetchone()
 
 

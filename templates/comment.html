@@ -5,21 +5,21 @@
 </div>
 <div class="comments">
     {% for comment in (id_type | get_comments(to_comment['id'])) %}
-    <div>
-        <div>
+    <div class="comment-container">
+        <div class="message">
             {{ comment["message"] }}
         </div>
+        <div class="edit">
+            <a class="link-light" href="{{ url_for('update_comment', comment_id=comment['id'], question_id=question['id']) }}">
+                <span class="material-icons button-light">edit_note</span>
+            </a>
+        </div>
+        <div class="delete">
+            <a class="link-light" href="{{ url_for('delete_comment', comment_id=comment['id'], question_id=question['id']) }}">
+                <span class="material-icons button-light">delete</span>
+            </a>
+        </div>
         <div class="post-footer">submitted: {{ comment["submission_time"] }}</div>
-        <div>
-        <a class="link-light" href="{{ url_for('update_comment', comment_id=comment['id'], question_id=question['id']) }}">
-            <span class="material-icons button-light">edit_note</span>
-        </a>
-        </div>
-        <div>
-        <a class="link-light" href="{{ url_for('delete_comment', comment_id=comment['id'], question_id=question['id']) }}">
-            <span class="material-icons button-light">delete</span>
-        </a>
-        </div>
     </div>
     {% endfor %}
 </div>
