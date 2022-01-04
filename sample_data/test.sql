@@ -15,6 +15,10 @@ ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS pk_ques
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_question_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.tag DROP CONSTRAINT IF EXISTS pk_tag_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_tag_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.question DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.comment DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.answer DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS pk_user_id CASCADE;
 
 
 DROP TABLE IF EXISTS public.users;
@@ -119,6 +123,9 @@ ALTER TABLE ONLY question
     
 INSERT INTO users VALUES (0, 'test', 'password', '2016-01-01 07:00:00', 'no@none.no', 0);
 INSERT INTO users VALUES (1, 'first', 'password', '2016-01-02 08:00:00', 'email@address.com', 0);
+INSERT INTO users VALUES (2, 'admin', '$2b$12$HTzHBUwXH81OwzvuBaLLj.0yO65Ipw18fbXGmJW.SOT3sWozx3deK', '2022-01-04 12:04:24',
+                          'admin@mail.com', 0
+);
 INSERT INTO question VALUES (0, 0, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
 INSERT INTO question VALUES (1, 1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
 

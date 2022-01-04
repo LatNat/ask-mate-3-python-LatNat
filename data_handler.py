@@ -55,9 +55,10 @@ def add_question(cursor, data):
     if "image" not in data.keys():
         data["image"] = ""
     query = '''
-            INSERT INTO question(submission_time, view_number, vote_number, title, message, image)
-            VALUES(%(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
+            INSERT INTO question(user_id, submission_time, view_number, vote_number, title, message, image)
+            VALUES(%(user_id)s, %(subtime)s, %(view)s, %(vote)s, %(title)s, %(message)s, %(image)s);'''
     cursor.execute(query, {
+        "user_id": data["user_id"],
         "subtime": timestamp,
         "view": 0,
         "vote": 0,
@@ -230,14 +231,15 @@ def delete_picture(filename, folder):
 
 
 @database_common.connection_handler
-def add_comment(cursor, id_type, id_number, message):
-    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time)
-                VALUES ({id_number}, {message}, {submission_time});''')
+def add_comment(cursor, id_type, id_number, message, user_id):
+    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time, user_id)
+                VALUES ({id_number}, {message}, {submission_time}, {user_id});''')
     cursor.execute(query.format(
         id_type=sql.Identifier(id_type),
         id_number=sql.Literal(id_number),
         message=sql.Literal(message),
-        submission_time=sql.Literal(round_seconds(dt.datetime.now()))
+        submission_time=sql.Literal(round_seconds(dt.datetime.now())),
+        user_id=sql.Literal(user_id)
     ))
 
 
@@ -459,6 +461,41 @@ def get_profile_data(cursor, user_id):
                 '''
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def get_user_id_by_username(cursor, username):
+    query = '''
+        SELECT * FROM users
+        WHERE name = %s;'''
+    cursor.execute(query, (username, ))
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def update_reputation(cursor, id_type, id_number, vote):
+    query = sql.SQL('''SELECT * FROM {id_type}
+                        WHERE id={id_number};''')
+    cursor.execute(query.format(
+        id_type=sql.Identifier(id_type),
+        id_number=sql.Literal(id_number),
+    ))
+    user_id = cursor.fetchone()["user_id"]
+    reward = 0
+    if vote == "down":
+        reward = -2
+    elif vote == "up" and id_type == "answer":
+        reward = 10
+    elif vote == "up" and id_type == "question":
+        reward = 5
+
+    query = sql.SQL('''UPDATE users
+                        SET reputation=reputation+{reward}
+                        WHERE id={user_id};''')
+    cursor.execute(query.format(
+        reward=sql.Literal(reward),
+        user_id=sql.Literal(user_id)
+    ))
 
 
 if __name__ == "__main__":

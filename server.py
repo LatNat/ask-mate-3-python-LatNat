@@ -3,7 +3,7 @@ import data_handler
 import datetime as dt
 import os
 from werkzeug.utils import secure_filename
-import user_manager
+import user_manager, bonus_questions
 
 dirname = os.path.dirname(__file__)
 UPLOAD_FOLDER = os.path.join(dirname, "static", "images")
@@ -40,7 +40,7 @@ def get_image_path(filename):
 
 @app.route("/bonus-questions")
 def main():
-    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+    return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
 
     
 @app.route("/", methods=["GET", "POST"])
@@ -126,6 +126,7 @@ def add_question():
             filename = "image"+str(get_image_number)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         add_question_data["image"] = filename
+        add_question_data["user_id"] = data_handler.get_user_id_by_username(session["username"])["id"]
         data_handler.add_question(add_question_data)
         question_id = data_handler.get_latest_id()["max"]
         user_tags = [tag.strip() for tag in request.form["tags"].split(',')]
@@ -147,12 +148,14 @@ def add_question():
 @app.route('/question/vote/<question_id>/<vote>')
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
+    data_handler.update_reputation("question", question_id, vote)
     return redirect(url_for('first_page'))
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
     data_handler.vote_for_answer(answer_id, vote)
+    data_handler.update_reputation("answer", answer_id, vote)
     question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 
@@ -166,6 +169,7 @@ def add_answer(question_id):
             file = request.files["image"]
             new_answer["image"] = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], new_answer["image"]))
+        new_answer["user_id"] = data_handler.get_user_id_by_username(session["username"])["id"]
         data_handler.add_answer(new_answer)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("addanswer.html", question_id=question_id)
@@ -226,7 +230,8 @@ def get_tagged_questions(tag):
 def add_comment_to_answer(answer_id):
     question_id = data_handler.get_related_question(answer_id)["question_id"]
     if request.method == "POST":
-        data_handler.add_comment("answer_id", answer_id, request.form["message"])
+        user_id = data_handler.get_user_id_by_username(session["username"])["id"]
+        data_handler.add_comment("answer_id", answer_id, request.form["message"], user_id)
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("addcomment.html", question_id=question_id)
 
@@ -234,7 +239,8 @@ def add_comment_to_answer(answer_id):
 @app.route("/question/<question_id>/comment", methods=["GET", "POST"])
 def add_comment_to_question(question_id):
     if request.method == "POST":
-        data_handler.add_comment("question_id", question_id, request.form["message"])
+        user_id = data_handler.get_user_id_by_username(session["username"])["id"]
+        data_handler.add_comment("question_id", question_id, request.form["message"], user_id)
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("addcomment.html", question_id=question_id)
 
