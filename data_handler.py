@@ -422,6 +422,14 @@ def login_user(cursor, data):
     cursor.execute(query, {"username": data})
     return cursor.fetchone()
 
+@database_common.connection_handler
+def check_user_used(cursor, username, email):
+    query = '''
+                SELECT * from users
+                WHERE email = %(email)s or name = %(username)s'''
+    cursor.execute(query, {"username": username, "email": email})
+    return cursor.fetchall()
+
 
 if __name__ == "__main__":
     pass
