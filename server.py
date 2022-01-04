@@ -146,12 +146,14 @@ def add_question():
 @app.route('/question/vote/<question_id>/<vote>')
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
+    data_handler.update_reputation("question", question_id, vote)
     return redirect(url_for('first_page'))
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
 def vote_answer(answer_id, vote):
     data_handler.vote_for_answer(answer_id, vote)
+    data_handler.update_reputation("answer", answer_id, vote)
     question_id = data_handler.get_related_question(answer_id)['question_id']
     return redirect(url_for('display_question', question_id=question_id, view='f'))
 

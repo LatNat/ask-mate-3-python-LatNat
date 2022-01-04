@@ -456,5 +456,31 @@ def get_user_id_by_username(cursor, username):
     return cursor.fetchone()
 
 
+@database_common.connection_handler
+def update_reputation(cursor, id_type, id_number, vote):
+    query = sql.SQL('''SELECT * FROM {id_type}
+                        WHERE id={id_number};''')
+    cursor.execute(query.format(
+        id_type=sql.Identifier(id_type),
+        id_number=sql.Literal(id_number),
+    ))
+    user_id = cursor.fetchone()["user_id"]
+    reward = 0
+    if vote == "down":
+        reward = -2
+    elif vote == "up" and id_type == "answer":
+        reward = 10
+    elif vote == "up" and id_type == "question":
+        reward = 5
+
+    query = sql.SQL('''UPDATE users
+                        SET reputation=reputation+{reward}
+                        WHERE id={user_id};''')
+    cursor.execute(query.format(
+        reward=sql.Literal(reward),
+        user_id=sql.Literal(user_id)
+    ))
+
+
 if __name__ == "__main__":
     pass
