@@ -42,25 +42,20 @@ def get_image_path(filename):
 def main():
     return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
 
-    
+
 @app.route("/", methods=["GET", "POST"])
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
-    logged_in = False
-    user_id = 0
-    if "username" in session:
-        logged_in = True
-        user_id = session["userid"]
     if request.method == "GET":
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in, userid=user_id)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in, userid=user_id)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
 
 
 @app.route("/list", methods=['GET', 'POST'])
