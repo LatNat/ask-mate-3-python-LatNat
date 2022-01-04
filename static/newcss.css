@@ -88,8 +88,8 @@ div.comment-container > div.message {
     gap: 0 0;
     grid-template-areas:
     "vote-bar message options"
-    "add-comments post-footer post-footer"
-    ". comments comments";
+    "vote-bar post-footer post-footer"
+    "add-comments comments comments";
 }
 
 .post {
@@ -104,9 +104,9 @@ div.comment-container > div.message {
     grid-template-areas:
     "vote-bar title options"
     "vote-bar message message"
-    "add-comments post-footer post-footer"
+    ". post-footer post-footer"
     ". tags tags"
-    ". comments comments";
+    "add-comments comments comments";
 }
 
 .main-header {
@@ -140,8 +140,7 @@ div.comment-container > div.message {
     display: flex;
     flex: 1 1 auto;
     grid-area: add-comments;
-    justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 
 .vote-bar {

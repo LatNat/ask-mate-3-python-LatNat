@@ -5,6 +5,11 @@
     </a>
 </div>
 <div class="comments">
+    {% if not (id_type | get_comments(to_comment['id'])) %}
+        <div class="comment-container">
+            <div class="message">No comments yet...</div>
+        </div>
+    {% endif %}
     {% for comment in (id_type | get_comments(to_comment['id'])) %}
     <div class="comment-container">
         <div class="message">
