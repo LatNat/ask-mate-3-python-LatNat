@@ -21,11 +21,11 @@ def session_init():
     session["popup"] = True
 
 
-@app.before_request
-def check_user():
-    if request.path != url_for("login_user"):
-        if "username" not in session:
-            return redirect(url_for("login_user"))
+# @app.before_request
+# def check_user():
+#     if request.path != url_for("login_user"):
+#         if "username" not in session:
+#             return redirect(url_for("login_user"))
 
 
 @app.template_filter()
@@ -46,16 +46,19 @@ def main():
 @app.route("/", methods=["GET", "POST"])
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
+    logged_in = False
+    if "username" in session:
+        logged_in = True
     if request.method == "GET":
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in)
 
 
 @app.route("/list", methods=['GET', 'POST'])
@@ -261,12 +264,15 @@ def delete_tag(question_id, tag_name):
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
     if request.method == "POST":
+        already_used = data_handler.check_user_used(request.form["username"], request.form["email"])
+        if already_used:
+            return render_template("register.html", used=True)
         user_data = {"name": request.form["username"], "password": user_manager.hash_password(request.form["password"]),
                      "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
                      "reputation": 0}
         data_handler.create_user(user_data)
         return redirect(url_for("first_page"))
-    return render_template("register.html")
+    return render_template("register.html", used=False)
 
 
 @app.route("/login", methods=["GET", "POST"])

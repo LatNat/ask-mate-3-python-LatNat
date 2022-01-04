@@ -1,0 +1,1 @@
+window.alert("Username or Email already in use, please try another!");
