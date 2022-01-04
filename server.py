@@ -47,18 +47,20 @@ def main():
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
     logged_in = False
+    user_id = 0
     if "username" in session:
         logged_in = True
+        user_id = session["userid"]
     if request.method == "GET":
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in, userid=user_id)
     if request.method == "POST":
         session["sort"] = request.form["sort_key"]
         session["check"] = False
         if "reverse" in request.form.keys():
             session["check"] = True
         data = data_handler.get_first_five(session["sort"], session["check"])
-        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in)
+        return render_template("index.html", data=data, default_sort=session["sort"], checked=session["check"], path=path, main_page=True, logged_in=logged_in, userid=user_id)
 
 
 @app.route("/list", methods=['GET', 'POST'])
@@ -283,6 +285,7 @@ def login_user():
             return render_template("login.html", attempt=True)
         if user_manager.verify_password(request.form["password"], user["password"]):
             session["username"] = user["name"]
+            session["userid"] = user["id"]
             return redirect(url_for("first_page"))
     if "username" in session:
         return redirect(url_for("first_page"))
@@ -293,6 +296,12 @@ def login_user():
 def logout_user():
     session.pop("username", None)
     return redirect(url_for("login_user"))
+
+
+@app.route("/user/<user_id>")
+def profile_page(user_id):
+    profile_data = data_handler.get_profile_data(user_id)
+    return render_template("profile.html", data=profile_data)
 
 
 if __name__ == "__main__":

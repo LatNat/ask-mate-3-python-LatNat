@@ -445,5 +445,21 @@ def get_user_by_id(cursor, user_id):
     return cursor.fetchone()
 
 
+@database_common.connection_handler
+def get_profile_data(cursor, user_id):
+    query = '''
+                SELECT users.id, name, registered, COALESCE(COUNT(q.user_id) filter (WHERE q.user_id = %(user_id)s), 0) as questions,
+                COALESCE(COUNT(a.user_id) filter (WHERE a.user_id = %(user_id)s), 0) as answers,
+                COALESCE(COUNT(c.user_id) filter (WHERE c.user_id = %(user_id)s), 0) as comments, reputation FROM users
+                LEFT OUTER JOIN question q on users.id = q.user_id
+                LEFT OUTER JOIN answer a on users.id = a.user_id
+                LEFT OUTER JOIN comment c on users.id = c.user_id
+                WHERE users.id = %(user_id)s
+                GROUP BY users.id, name, registered, reputation
+                '''
+    cursor.execute(query, {"user_id": user_id})
+    return cursor.fetchone()
+
+
 if __name__ == "__main__":
     pass

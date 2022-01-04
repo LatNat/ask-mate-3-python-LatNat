@@ -1,1 +1,3 @@
-window.alert("Invalid login credentials, please try again!");
+window.onload = function() {
+    window.alert("Invalid login credentials, please try again!");
+}
