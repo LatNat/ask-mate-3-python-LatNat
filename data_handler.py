@@ -231,14 +231,15 @@ def delete_picture(filename, folder):
 
 
 @database_common.connection_handler
-def add_comment(cursor, id_type, id_number, message):
-    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time)
-                VALUES ({id_number}, {message}, {submission_time});''')
+def add_comment(cursor, id_type, id_number, message, user_id):
+    query = sql.SQL('''INSERT INTO comment ({id_type}, message, submission_time, user_id)
+                VALUES ({id_number}, {message}, {submission_time}, {user_id});''')
     cursor.execute(query.format(
         id_type=sql.Identifier(id_type),
         id_number=sql.Literal(id_number),
         message=sql.Literal(message),
-        submission_time=sql.Literal(round_seconds(dt.datetime.now()))
+        submission_time=sql.Literal(round_seconds(dt.datetime.now())),
+        user_id=sql.Literal(user_id)
     ))
 
 

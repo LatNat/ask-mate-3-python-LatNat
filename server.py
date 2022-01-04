@@ -165,6 +165,7 @@ def add_answer(question_id):
             file = request.files["image"]
             new_answer["image"] = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], new_answer["image"]))
+        new_answer["user_id"] = data_handler.get_user_id_by_username(session["username"])["id"]
         data_handler.add_answer(new_answer)
         return redirect(url_for("display_question", question_id=question_id, view="f"))
     return render_template("addanswer.html", question_id=question_id)
@@ -225,7 +226,8 @@ def get_tagged_questions(tag):
 def add_comment_to_answer(answer_id):
     question_id = data_handler.get_related_question(answer_id)["question_id"]
     if request.method == "POST":
-        data_handler.add_comment("answer_id", answer_id, request.form["message"])
+        user_id = data_handler.get_user_id_by_username(session["username"])["id"]
+        data_handler.add_comment("answer_id", answer_id, request.form["message"], user_id)
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("addcomment.html", question_id=question_id)
 
@@ -233,7 +235,8 @@ def add_comment_to_answer(answer_id):
 @app.route("/question/<question_id>/comment", methods=["GET", "POST"])
 def add_comment_to_question(question_id):
     if request.method == "POST":
-        data_handler.add_comment("question_id", question_id, request.form["message"])
+        user_id = data_handler.get_user_id_by_username(session["username"])["id"]
+        data_handler.add_comment("question_id", question_id, request.form["message"], user_id)
         return redirect(url_for("display_question", question_id=question_id))
     return render_template("addcomment.html", question_id=question_id)
 
