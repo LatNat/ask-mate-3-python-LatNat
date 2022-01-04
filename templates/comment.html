@@ -1,25 +1,29 @@
 <div class="add-comments">
-    <a class="link-light" href="{{ full_route }}">
-        <span class="material-icons button-light wide">comment</span>
+    <a class="link-light button-light" href="{{ full_route }}">
+        <span class="material-icons">comment</span><br>
+        <small>Add comment</small>
     </a>
 </div>
 <div class="comments">
+    {% if not (id_type | get_comments(to_comment['id'])) %}
+        <div class="comment-container">
+            <div class="message">No comments yet...</div>
+        </div>
+    {% endif %}
     {% for comment in (id_type | get_comments(to_comment['id'])) %}
     <div class="comment-container">
         <div class="message">
             {{ comment["message"] }}
         </div>
-        <div class="edit">
+        <div class="buttons">
             <a class="link-light" href="{{ url_for('update_comment', comment_id=comment['id'], question_id=question['id']) }}">
                 <span class="material-icons button-light">edit_note</span>
             </a>
-        </div>
-        <div class="delete">
             <a class="link-light" href="{{ url_for('delete_comment', comment_id=comment['id'], question_id=question['id']) }}">
                 <span class="material-icons button-light">delete</span>
             </a>
         </div>
-        <div class="post-footer">submitted: {{ comment["submission_time"] }}</div>
+        <div class="post-footer"><i>submitted: {{ comment["name"] }} | {{ comment["submission_time"] }}</i></div>
     </div>
     {% endfor %}
 </div>

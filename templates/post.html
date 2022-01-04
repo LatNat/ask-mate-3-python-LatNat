@@ -2,12 +2,10 @@
     <div class="title">
         <h3>{{ question["title"] }}</h3>
     </div>
-    <div class="edit">
+    <div class="buttons">
         <a class="link-light" href="{{ url_for('edit_question', question_id=question['id']) }}">
             <span class="material-icons button-light">edit_note</span>
         </a>
-    </div>
-    <div class="delete">
         <a class="link-light" href="{{ url_for('delete_question', question_id=question['id']) }}">
             <span class="material-icons button-light">delete</span>
         </a>
@@ -34,7 +32,7 @@
 {% if tags %}
     <div class="tags">
         {% for tag in tags %}
-            <a id="tag-box" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
+            <a href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
         {% endfor %}
     </div>
 {% endif %}
