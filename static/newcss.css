@@ -240,3 +240,7 @@ a.link-light:visited {
 a.link-light:active {
     color: white;
 }
+
+.accepted {
+    background: #8fdab0 !important;
+}

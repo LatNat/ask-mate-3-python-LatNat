@@ -12,7 +12,15 @@
     </div>
 <div class="replies">
 {% for answer in answers %}
+    {% if answer['accepted'] %}
+    <div class="answer post-light accepted">
+        {% include "answer.html" %}
+    </div>
+    {% else %}
+    <div class="answer post-light">
     {% include "answer.html" %}
+    </div>
+    {% endif %}
 {% endfor %}
 </div>
 </div>

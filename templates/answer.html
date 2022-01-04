@@ -1,4 +1,4 @@
-<div class="answer post-light">
+
     <div class="buttons">
         <a class="link-light" href="{{ url_for('update_answer', question_id=answer['question_id'], answer_id=answer['id']) }}">
             <span class="material-icons button-light">edit_note</span>
@@ -26,4 +26,3 @@
     {% with full_route=url_for('add_comment_to_answer', answer_id=answer['id']), to_comment=answer, id_type="answer_id" %}
             {% include "comment.html" %}
     {% endwith %}
-</div>
