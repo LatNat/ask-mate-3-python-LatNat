@@ -21,12 +21,12 @@ def session_init():
     session["popup"] = True
 
 
-@app.before_request
-def check_user():
-    if request.path != url_for("login_user"):
-        if "username" not in session:
-            return redirect(url_for("login_user"))
-
+# @app.before_request
+# def check_user():
+#     if request.path != url_for("login_user"):
+#         if "username" not in session:
+#             return redirect(url_for("login_user"))
+#
 
 @app.template_filter()
 def get_comments(id_type, id_number):
@@ -261,7 +261,7 @@ def delete_tag(question_id, tag_name):
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
     if request.method == "POST":
-        user_data = {"name": request.form["username"], "pw": user_manager.hash_password(request.form["password"]),
+        user_data = {"name": request.form["username"], "password": user_manager.hash_password(request.form["password"]),
                      "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
                      "reputation": 0}
         data_handler.create_user(user_data)
@@ -275,7 +275,7 @@ def login_user():
         user = data_handler.login_user(request.form["username"])
         if not user:
             return render_template("login.html", attempt=True)
-        if user_manager.verify_password(request.form["password"], user["pw"]):
+        if user_manager.verify_password(request.form["password"], user["password"]):
             session["username"] = user["name"]
             return redirect(url_for("first_page"))
     if "username" in session:
