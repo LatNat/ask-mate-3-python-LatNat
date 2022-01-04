@@ -21,12 +21,12 @@ def session_init():
     session["popup"] = True
 
 
-# @app.before_request
-# def check_user():
-#     if request.path != url_for("login_user"):
-#         if "username" not in session:
-#             return redirect(url_for("login_user"))
-#
+@app.before_request
+def check_user():
+    if request.path != url_for("login_user"):
+        if "username" not in session:
+            return redirect(url_for("login_user"))
+
 
 @app.template_filter()
 def get_comments(id_type, id_number):
