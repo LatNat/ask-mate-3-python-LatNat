@@ -267,7 +267,7 @@ def register_user():
         already_used = data_handler.check_user_used(request.form["username"], request.form["email"])
         if already_used:
             return render_template("register.html", used=True)
-        user_data = {"name": request.form["username"], "pw": user_manager.hash_password(request.form["password"]),
+        user_data = {"name": request.form["username"], "password": user_manager.hash_password(request.form["password"]),
                      "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
                      "reputation": 0}
         data_handler.create_user(user_data)
@@ -281,7 +281,7 @@ def login_user():
         user = data_handler.login_user(request.form["username"])
         if not user:
             return render_template("login.html", attempt=True)
-        if user_manager.verify_password(request.form["password"], user["pw"]):
+        if user_manager.verify_password(request.form["password"], user["password"]):
             session["username"] = user["name"]
             return redirect(url_for("first_page"))
     if "username" in session:

@@ -404,11 +404,11 @@ def image_name_number_from_id(cursor):
 @database_common.connection_handler
 def create_user(cursor, data):
     query = '''
-                INSERT INTO users(name, pw, registered, email, reputation)
-                VALUES(%(name)s, %(pw)s, %(registered)s, %(email)s, %(reputation)s);'''
+                INSERT INTO users(name, password, registered, email, reputation)
+                VALUES(%(name)s, %(password)s, %(registered)s, %(email)s, %(reputation)s);'''
     cursor.execute(query, {
         "name": data["name"],
-        "pw": data["pw"],
+        "password": data["password"],
         "registered": data["registered"],
         "email": data["email"],
         "reputation": data["reputation"]})
