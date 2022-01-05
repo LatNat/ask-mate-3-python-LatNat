@@ -12,6 +12,7 @@ div.comment-container > div.message {
 .nav-bar {
     padding-left: 5em;
     display: flex;
+    justify-content: space-between;
 }
 
 .bg-light {
@@ -265,16 +266,16 @@ div.comment-container:last-child {
 }
 
 .theme-button {
-    margin-left: 70%;
-    align-self: flex-end;
     border-radius: 50px 10px 50px 10px;
     font-size: small;
     width: 150px;
     background: var(--secondary-color);
     color: var(--bg-color);
     padding: 0.2em;
+    margin-right: 3em;
     text-align: center;
     text-decoration: none;
+    align-self: flex-end;
 }
 
 .theme-button:hover {
