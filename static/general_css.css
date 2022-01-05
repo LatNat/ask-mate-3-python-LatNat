@@ -11,6 +11,7 @@ div.comment-container > div.message {
 }
 .nav-bar {
     padding-left: 5em;
+    display: flex;
 }
 
 .bg-light {
@@ -220,6 +221,7 @@ div.comment-container:last-child {
     text-align: center;
     text-decoration: none;
 }
+
 .button-light::after {
   border-radius: 50%;
   left: -50%;
@@ -260,4 +262,21 @@ div.comment-container:last-child {
 .users {
     display: flex;
     flex-wrap: wrap;
+}
+
+.theme-button {
+    margin-left: 70%;
+    align-self: flex-end;
+    border-radius: 50px 10px 50px 10px;
+    font-size: small;
+    width: 150px;
+    background: var(--secondary-color);
+    color: var(--bg-color);
+    padding: 0.2em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.theme-button:hover {
+    background: var(--font-color);
 }

@@ -2,7 +2,6 @@
 {% block buttons %}<a href="/addquestion" id="myButton"><li>Add new question</li></a>{% endblock %}
     {% if data %}
 {% block search_bar %}
-    <div class="search-bar">
     <form method="post">
         <label for="sort_key">Sorted by:</label>
         <select name="sort_key" onchange="this.form.submit()">
@@ -21,11 +20,6 @@
         {% endif %}
         <label for="reverse">Reversed</label>
     </form>
-    <form {% if data %} class="search" {% else %} class="centered" {% endif %} role="search" action="{{ url_for("search", search=search) }}">
-        Search: <input type="search" placeholder="Search on site..." name="search">
-    </form>
-
-    </div>
 {% endblock %}
         {% endif %}
 {% block content %}

@@ -32,7 +32,7 @@
 
 #menuToggle a:hover
 {
-  color: tomato;
+  color: var(--font-color);
 }
 
 
