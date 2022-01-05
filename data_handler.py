@@ -451,14 +451,14 @@ def get_user_by_id(cursor, user_id):
 @database_common.connection_handler
 def get_profile_data(cursor, user_id):
     query = '''
-                SELECT users.id, name, registered, COALESCE(COUNT(q.user_id) filter (WHERE q.user_id = %(user_id)s), 0) as questions,
-                COALESCE(COUNT(a.user_id) filter (WHERE a.user_id = %(user_id)s), 0) as answers,
-                COALESCE(COUNT(c.user_id) filter (WHERE c.user_id = %(user_id)s), 0) as comments, reputation FROM users
-                LEFT OUTER JOIN question q on users.id = q.user_id
-                LEFT OUTER JOIN answer a on users.id = a.user_id
-                LEFT OUTER JOIN comment c on users.id = c.user_id
+                SELECT users.id, name, registered, COALESCE(q.sum, 0) as questions,
+                COALESCE(a.sum, 0) as answers,
+                COALESCE(c.sum, 0) as comments, reputation FROM users
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM question WHERE user_id = %(user_id)s GROUP BY user_id) q on users.id = q.user_id
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM answer WHERE user_id = %(user_id)s GROUP BY user_id) a on users.id = a.user_id
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM comment WHERE user_id = %(user_id)s GROUP BY user_id) c on users.id = c.user_id
                 WHERE users.id = %(user_id)s
-                GROUP BY users.id, name, registered, reputation
+                ORDER BY users.id
                 '''
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchone()
@@ -513,13 +513,12 @@ def update_reputation(cursor, id_type, id_number, vote):
 @database_common.connection_handler
 def get_user_list(cursor):
     query = '''
-                SELECT users.id, name, registered, COALESCE(COUNT(q.user_id)) as questions,
-                COALESCE(COUNT(a.user_id)) as answers,
-                COALESCE(COUNT(c.user_id)) as comments, reputation FROM users
-                LEFT OUTER JOIN question q on users.id = q.user_id
-                LEFT OUTER JOIN answer a on users.id = a.user_id
-                LEFT OUTER JOIN comment c on users.id = c.user_id
-                GROUP BY users.id, name, registered, reputation
+                SELECT users.id, name, registered, COALESCE(q.sum, 0) as questions,
+                COALESCE(a.sum, 0) as answers,
+                COALESCE(c.sum, 0) as comments, reputation FROM users
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM question GROUP BY user_id) q on users.id = q.user_id
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM answer GROUP BY user_id) a on users.id = a.user_id
+                LEFT OUTER JOIN (SELECT user_id, COUNT(*) as sum FROM comment GROUP BY user_id) c on users.id = c.user_id
                 ORDER BY users.id
                 '''
     cursor.execute(query, )
