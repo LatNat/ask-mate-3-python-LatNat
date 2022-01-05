@@ -17,7 +17,7 @@
         {% if tags %}
         <div id="tag-row">
             {% for tag in tags %}
-                <span id="tag-box" class="editable-tag">{{ tag.name }}<a class="hidden" href="{{ url_for("delete_tag",question_id=data['id'],tag_name=tag.name) }}">x</a></span>
+                <span class="tag editable-tag">{{ tag.name }}<a class="hidden" href="{{ url_for("delete_tag",question_id=data['id'],tag_name=tag.name) }}">x</a></span>
             {% endfor %}
         </div>
         {% endif %}
