@@ -280,8 +280,9 @@ div.comment-container:last-child {
 
 .theme-button:hover {
     background: var(--font-color);
+}
 
-.login_table {
+.login-table {
     display:flex;
     flex-direction: column;
     align-items: center;
