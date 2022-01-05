@@ -30,6 +30,7 @@
             {% else %}
                 <a href="{{ url_for('logout_user') }}" id="myButton">Logout</a>
                 <a href="{{ url_for('profile_page',user_id = session["userid"]) }}" id="myButton">Profile</a>
+                <a href="{{ url_for('user_list') }}" id="myButton">All Users</a>
             {% endif %}
             {% block buttons %}
             {% endblock %}
