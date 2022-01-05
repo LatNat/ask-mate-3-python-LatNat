@@ -25,7 +25,7 @@
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
+  color: var(--bg-color);
 
   transition: color 0.3s ease;
 }
@@ -64,7 +64,7 @@
   margin-bottom: 5px;
   position: relative;
 
-  background: #cdcdcd;
+  background: var(--font-color);
   border-radius: 3px;
 
   z-index: 1;
@@ -94,7 +94,7 @@
 {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
-  background: #232323;
+  background: var(--bg-color);
 }
 
 /*
@@ -127,7 +127,7 @@
   padding: 50px;
   padding-top: 110px;
   border-radius: 0 30px 30px 0;
-  background: #ededed;
+  background: var(--primary-color);
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */

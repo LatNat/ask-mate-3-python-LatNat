@@ -64,16 +64,20 @@ div.comment-container > div.message {
 
 .comment-container {
     display: grid;
-    background: var(--utility-color);
-    border-radius: 5px 5px 50px 5px;
+    background: var(--primary-lighter-color);
+    border-radius: 5px 5px 5px 5px;
     padding: 5px;
     border-top: 2px solid;
-    border-color: var(--secondary-color);
+    border-color: var(--utility-color);
     grid-template-columns: 34em 4em;
     grid-template-rows: 2.5em 2em;
     grid-template-areas:
     "message options"
     "post-footer post-footer";
+}
+
+div.comment-container:last-child {
+    border-radius: 5px 5px 50px 5px;
 }
 
 .answer {
@@ -150,6 +154,7 @@ div.comment-container > div.message {
     justify-content: center;
     align-items: flex-start;
     font-size: 30px;
+    padding-right: 0.5em;
     font-weight: bolder;
     text-align: center;
 }
@@ -209,8 +214,11 @@ div.comment-container > div.message {
 .button-light {
     border-radius: 10%;
     background: var(--primary-color);
+    color: var(--secondary-color);
     padding: 0.2em;
+    margin-right: 15px;
     text-align: center;
+    text-decoration: none;
 }
 .button-light::after {
   border-radius: 50%;
@@ -227,23 +235,26 @@ div.comment-container > div.message {
 }
 .button-light:hover {
     background: var(--secondary-color);
+    color: var(--primary-color)
 }
 
-a.link-light:link {
+.link-light:link {
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
-a.link-light:visited {
-    color: var(--primary-color);
+.link-light:visited {
+    text-decoration: none;
+    color: var(--secondary-color);
 }
 
-a.link-light:active {
+.link-light:active {
+    text-decoration: none;
     color: var(--bg-color);
 }
 
 .accepted {
-    background: #8fdab0 !important;
+    background: var(--accepted-color);
 }
 
 .users {
