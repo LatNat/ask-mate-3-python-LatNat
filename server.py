@@ -320,7 +320,6 @@ def profile_page(user_id):
 @app.route("/user-list")
 def user_list():
     users = data_handler.get_user_list()
-    print(users)
     return render_template("user_list.html", users=users)
 
 
