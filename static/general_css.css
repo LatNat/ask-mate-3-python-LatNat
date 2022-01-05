@@ -53,7 +53,7 @@ div.comment-container > div.message {
 }
 
 .post-light {
-    background: var(--bg-color);
+    background: var(--post-bg-color);
     box-shadow: 0 5px 7px 0 var(--font-color);
 }
 
@@ -213,8 +213,8 @@ div.comment-container:last-child {
 
 .button-light {
     border-radius: 10%;
-    background: var(--primary-color);
-    color: var(--secondary-color);
+    background: var(--secondary-color);
+    color: var(--bg-color);
     padding: 0.2em;
     margin-right: 15px;
     text-align: center;
@@ -234,8 +234,8 @@ div.comment-container:last-child {
     transform: scale(1, 1);
 }
 .button-light:hover {
-    background: var(--secondary-color);
-    color: var(--primary-color)
+    background: var(--primary-color);
+    color: var(--primary-lighter-color);
 }
 
 .link-light:link {
