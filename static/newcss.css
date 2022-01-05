@@ -39,6 +39,7 @@ div.comment-container > div.message {
 
 .sidebar {
     width: 15%;
+    display: flex;
 }
 
 .content {

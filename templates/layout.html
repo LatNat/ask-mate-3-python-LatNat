@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AskMate{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/newcss.css">
+    <link rel="stylesheet" type="text/css" href="/static/menu_stylesheet.css">
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
@@ -22,15 +23,7 @@
             <h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
         </div>
         <div class="nav-bar">
-            <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
-            <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
-            {% if "username" not in session %}
-                <a href="{{ url_for('login_user') }}" id="myButton">Login</a>
-                <a href="{{ url_for('register_user') }}" id="myButton">Register</a>
-            {% else %}
-                <a href="{{ url_for('logout_user') }}" id="myButton">Logout</a>
                 <a href="{{ url_for('profile_page',user_id = session["userid"]) }}" id="myButton">Profile</a>
-            {% endif %}
             {% block buttons %}
             {% endblock %}
         </div>
@@ -38,7 +31,15 @@
     </div>
 {% endblock %}
 {% block search_bar %}{% endblock %}
-<div class="page">{% block content %}{% endblock %}</div>
+<div class="page">
+    <div class="sidebar">
+    {% include "sidebar_menu.html" %}
+    </div>
+    <div class="content">
+    {% block content %}{% endblock %}
+    </div>
+    <div class="sidebar"></div>
+</div>
 {% block footer %}
     <div class="page-footer">
         <p>2021 flAskMate©®™</p>

@@ -29,8 +29,6 @@
 {% endblock %}
         {% endif %}
 {% block content %}
-    <div class="sidebar"></div>
-    <div class="content">
     {% if data %}
     {% for question in data %}
     <div class="post post-light">
@@ -60,6 +58,4 @@
         <h1 class="centered">No result found</h1>
         </div>
     {% endif %}
-    </div>
-    <div class="sidebar"></div>
 {% endblock %}
