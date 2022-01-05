@@ -3,11 +3,13 @@
 {% block buttons %}{% endblock %}
 {% block content %}
     <form method="post" action="/login">
+    <div class="login_table">
         <label id ="username">Username or E-mail: </label>
-            <input type="username" name="username"><br>
+            <input type="username" name="username">
         <label id="password">Password:  </label>
-            <input type="password" name="password"><br><br>
+            <input type="password" name="password">
         <button type="sumbit">Login</button>
+    </div>
     </form>
     {% if attempt %}<script src="/static/login_alert.js" defer></script>{% endif %}
 {% endblock %}
