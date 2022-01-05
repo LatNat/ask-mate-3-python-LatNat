@@ -1,8 +1,10 @@
-    <div class="buttons" data-user-id="{{ question["user_id"] }}">
-        <a class="link-light" href="">
+{% if not answer["accepted"] %}
+<div class="buttons" data-user-id="{{ question["user_id"] }}">
+        <a class="link-light" href="{{ url_for('accept', answer_id=answer['id']) }}">
             <span class="material-icons button-light">done</span>
         </a>
     </div>
+{% endif %}
     <div class="buttons" data-user-id="{{ answer["user_id"] }}">
         <a class="link-light" href="{{ url_for('update_answer', question_id=answer['question_id'], answer_id=answer['id']) }}">
             <span class="material-icons button-light">edit_note</span>
