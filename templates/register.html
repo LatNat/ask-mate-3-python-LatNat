@@ -3,13 +3,15 @@
 {% block buttons %}{% endblock %}
 {% block content %}
     <form method="post" action="/register">
-        <label id ="username">Username: </label>
-            <input type="username" name="username"><br>
+        <div class="login_table">
+            <label id ="username">Username: </label>
+            <input type="username" name="username">
         <label id="email">E-mail: </label>
-            <input type="email" name="email"><br>
+            <input type="email" name="email">
         <label id="password">Password:  </label>
-            <input type="password" name="password"><br><br>
+            <input type="password" name="password">
         <button type="sumbit">Register</button>
+        </div>
     </form>
     {% if used %}<script src="/static/existing_user.js"></script>{% endif %}
 {% endblock %}
