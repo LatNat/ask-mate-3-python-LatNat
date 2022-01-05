@@ -433,7 +433,7 @@ def login_user(cursor, data):
 def check_user_used(cursor, username, email):
     query = '''
                 SELECT * from users
-                WHERE email = %(email)s or name = %(username)s'''
+                WHERE email = %(email)s or LOWER(name) = %(username)s'''
     cursor.execute(query, {"username": username, "email": email})
     return cursor.fetchall()
 

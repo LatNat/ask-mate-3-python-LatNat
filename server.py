@@ -271,8 +271,8 @@ def register_user():
         if already_used:
             return render_template("register.html", used=True)
         user_data = {"name": request.form["username"], "password": user_manager.hash_password(request.form["password"]),
-                     "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
-                     "reputation": 0}
+                     "registered": data_handler.round_seconds(dt.datetime.now()),
+                     "email": request.form["email"].lower(), "reputation": 0}
         data_handler.create_user(user_data)
         return redirect(url_for("first_page"))
     return render_template("register.html", used=False)
