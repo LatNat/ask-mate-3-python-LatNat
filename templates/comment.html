@@ -15,7 +15,7 @@
         <div class="message">
             {{ comment["message"] }}
         </div>
-        <div class="buttons">
+        <div class="buttons" data-user-id="{{ comment["user_id"] }}">
             <a class="link-light" href="{{ url_for('update_comment', comment_id=comment['id'], question_id=question['id']) }}">
                 <span class="material-icons button-light">edit_note</span>
             </a>

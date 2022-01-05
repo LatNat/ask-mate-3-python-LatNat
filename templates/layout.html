@@ -45,5 +45,6 @@
     </div>
 {% endblock %}
 </body>
-
+    <script src="/static/hide_buttons.js"></script>
+    <script>hide_relevant_buttons({{ session["username"] | get_user_id }});</script>
 </html>
