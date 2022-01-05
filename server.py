@@ -305,5 +305,11 @@ def profile_page(user_id):
     return render_template("profile.html", data=profile_data)
 
 
+@app.route("/user-list")
+def user_list():
+    users = data_handler.get_user_list()
+    return render_template("user_list.html", users=users)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

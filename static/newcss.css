@@ -244,3 +244,8 @@ a.link-light:active {
 .accepted {
     background: #8fdab0 !important;
 }
+
+.users {
+    display: flex;
+    flex-wrap: wrap;
+}
