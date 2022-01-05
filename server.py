@@ -328,7 +328,7 @@ def user_list():
 def accept(answer_id):
     data_handler.update_accepted_column(answer_id)
     data_handler.update_reputation("answer", answer_id, "accepted")
-    return render_template(request.referrer)
+    return render_template(request.referrer+"?view=f")
 
 
 if __name__ == "__main__":
