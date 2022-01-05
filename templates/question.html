@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 
 {% block title %} | {{ question['title'] }}{% endblock %}
-{% block buttons %}
-<a href="{{ url_for('add_answer', question_id=question["id"]) }}">Add new answer</a>
-{% endblock %}
 {% block content %}
 <div class="sidebar"></div>
 <div class="content">
