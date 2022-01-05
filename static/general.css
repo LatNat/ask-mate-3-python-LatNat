@@ -242,6 +242,7 @@ div.comment-container:last-child {
     transform: scale(1, 1);
 }
 .button-light:hover {
+    transition: 0.3s ease-in;
     background: var(--primary-color);
     color: var(--primary-lighter-color);
 }
@@ -284,6 +285,7 @@ div.comment-container:last-child {
 }
 
 .theme-button:hover {
+    transition: 0.3s ease-in;
     background: var(--font-color);
 }
 
