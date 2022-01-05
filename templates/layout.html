@@ -46,6 +46,7 @@
         {% else %}
         {% block buttons %}
         {% endblock %}
+        <a href="{{ url_for('user_list') }}"><li>User list</li></a>
         <a href="{{ url_for('profile_page',user_id = session["userid"]) }}"><li>My Profile</li></a>
         <a href="{{ url_for('logout_user') }}"><li>Logout</li></a>
         {% endif %}
