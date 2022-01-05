@@ -1,5 +1,4 @@
 function change_scrollbar() {
-    var documentScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     new_location = window.sessionStorage.getItem("location");
     if(new_location){
         console.log(new_location);
@@ -14,6 +13,6 @@ function store_scrollbar() {
     window.sessionStorage.setItem("location", new_location);
 }
 
-window.onload = (event) => {
+window.addEventListener("load", (event) => {
     change_scrollbar();
-}
+});

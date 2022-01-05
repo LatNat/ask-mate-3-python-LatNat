@@ -1,5 +1,8 @@
 
     <div class="buttons">
+        <a class="link-light" href="">
+            <span class="material-icons button-light">done</span>
+        </a>
         <a class="link-light" href="{{ url_for('update_answer', question_id=answer['question_id'], answer_id=answer['id']) }}">
             <span class="material-icons button-light">edit_note</span>
         </a>
@@ -9,9 +12,9 @@
     </div>
     <div class="vote-bar">
         <table>
-            <tr><td><a class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
+            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
             <tr><td>{{ answer["vote_number"] }}</td></tr>
-            <tr><td><a class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
+            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
         </table>
     </div>
     <div class="message">

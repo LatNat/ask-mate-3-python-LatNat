@@ -144,7 +144,7 @@ def add_question():
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
     data_handler.update_reputation("question", question_id, vote)
-    return redirect(url_for('first_page'))
+    return redirect(request.referrer+"?view=f")
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
