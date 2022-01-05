@@ -25,7 +25,7 @@
         {% endif %}
     </div>
     <div class="post-footer">
-        <div class="stat-box"><i>submitted: {{ answer["name"] }} | {{ answer["submission_time"] }}</i></div>
+        <div class="stat-box"><i>submitted: {{ answer["user_id"] | get_user_name }} | {{ answer["submission_time"] }}</i></div>
     </div>
     {% with full_route=url_for('add_comment_to_answer', answer_id=answer['id']), to_comment=answer, id_type="answer_id" %}
             {% include "comment.html" %}

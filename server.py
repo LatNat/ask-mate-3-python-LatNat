@@ -45,6 +45,11 @@ def get_user_id(username):
     return -1
 
 
+@app.template_filter()
+def get_user_name(user_id):
+    return data_handler.get_username_by_user_id(user_id)
+
+
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
