@@ -1,11 +1,12 @@
 :root {
     --bg-color: #f6e9e3;
+    --post-bg-color: floralwhite;
     --font-color: #171616;
-    --primary-color: #ffb171;
-    --secondary-color: #ff5757;
-    --accepted-color: #bdff93;
+    --primary-color: #ff4e2e;
+    --secondary-color: #ff9451;
+    --accepted-color: #ccf5ff;
     --utility-color: #732222;
-    --primary-lighter-color: #fdc5a0;
+    --primary-lighter-color: #ffe2b9;
 }
 
 
