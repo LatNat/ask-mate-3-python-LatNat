@@ -40,9 +40,9 @@
     <ul id="menu">
         <a href="{{ url_for('first_page') }}"><li>Home</li></a>
         <a href="{{ url_for('list_index') }}"><li>All questions</li></a>
+        {% if "username" not in session %}
         {% block buttons %}
         {% endblock %}
-        {% if "username" not in session %}
         <a href="{{ url_for('login_user') }}"><li>Login</li></a>
         <a href="{{ url_for('register_user') }}"><li>Register</li></a>
         {% else %}
