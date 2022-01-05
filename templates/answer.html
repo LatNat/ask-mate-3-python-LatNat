@@ -9,9 +9,9 @@
     </div>
     <div class="vote-bar">
         <table>
-            <tr><td><a class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
+            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
             <tr><td>{{ answer["vote_number"] }}</td></tr>
-            <tr><td><a class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
+            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
         </table>
     </div>
     <div class="message">
