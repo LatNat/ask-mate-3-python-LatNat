@@ -20,9 +20,15 @@
     </div>
     <div class="vote-bar">
         <table>
+            {% if "username" in session %}
             <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
             <tr><td>{{ question["vote_number"] }}</td></tr>
             <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
+            {% else %}
+            <tr><td><a class="link-light" href="{{ url_for('login_user') }}">▲</a></td></tr>
+            <tr><td>{{ question["vote_number"] }}</td></tr>
+            <tr><td><a class="link-light" href="{{ url_for('login_user') }}">▼</a></td></tr>
+            {% endif %}
         </table>
     </div>
     <div class="message">
