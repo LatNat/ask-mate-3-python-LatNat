@@ -19,7 +19,6 @@ def session_init():
     session["sort"] = "submission_time"
     session["check"] = False
     session["popup"] = True
-    session["username"] = "admin"
 
 
 # @app.before_request
@@ -41,7 +40,9 @@ def get_image_path(filename):
 
 @app.template_filter()
 def get_user_id(username):
-    return data_handler.get_user_id_by_username(username)["id"]
+    if username:
+        return data_handler.get_user_id_by_username(username)["id"]
+    return -1
 
 
 @app.route("/bonus-questions")
