@@ -23,7 +23,6 @@
             <h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
         </div>
         <div class="nav-bar">
-                <a href="{{ url_for('profile_page',user_id = session["userid"]) }}" id="myButton">Profile</a>
             {% block buttons %}
             {% endblock %}
         </div>
@@ -46,5 +45,6 @@
     </div>
 {% endblock %}
 </body>
-
+    <script src="/static/hide_buttons.js"></script>
+    <script>hide_relevant_buttons({{ session["username"] | get_user_id }});</script>
 </html>
