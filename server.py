@@ -323,5 +323,12 @@ def user_list():
     return render_template("user_list.html", users=users)
 
 
+@app.route("/accepted/<answer_id>")
+def accept(answer_id):
+    data_handler.update_accepted_column(answer_id)
+    data_handler.update_reputation("answer", answer_id, "accepted")
+    return render_template(request.referrer)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

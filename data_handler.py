@@ -498,6 +498,8 @@ def update_reputation(cursor, id_type, id_number, vote):
         reward = 10
     elif vote == "up" and id_type == "question":
         reward = 5
+    elif vote == "accepted":
+        reward = 15
 
     query = sql.SQL('''UPDATE users
                         SET reputation=reputation+{reward}
@@ -522,6 +524,15 @@ def get_user_list(cursor):
                 '''
     cursor.execute(query, )
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def update_accepted_column(cursor, answer_id):
+    query = '''
+        UPDATE answer
+        SET accepted=TRUE
+        WHERE id = %s;'''
+    cursor.execute(query, (answer_id, ))
 
 
 if __name__ == "__main__":

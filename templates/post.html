@@ -2,10 +2,14 @@
     <div class="title">
         <h3>{{ question["title"] }}</h3>
     </div>
-    <div class="buttons" data-user-id="{{ question['user_id'] }}">
+{% if (session["username"] | get_user_id) != question['user_id'] %}
+<div class="buttons" data-user-id="{{ session["username"] | get_user_id }}">
         <a href="{{ url_for('add_answer', question_id=question["id"]) }}">
             <span class="material-icons button-light">question_answer</span>
         </a>
+</div>
+{% endif %}
+    <div class="buttons" data-user-id="{{ question['user_id'] }}">
         <a class="link-light" href="{{ url_for('edit_question', question_id=question['id']) }}">
             <span class="material-icons button-light">edit_note</span>
         </a>
