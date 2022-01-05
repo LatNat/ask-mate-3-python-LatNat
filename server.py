@@ -38,6 +38,13 @@ def get_image_path(filename):
     return os.path.join(UPLOAD_FOLDER, filename)
 
 
+@app.template_filter()
+def get_user_id(username):
+    if username:
+        return data_handler.get_user_id_by_username(username)["id"]
+    return -1
+
+
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)

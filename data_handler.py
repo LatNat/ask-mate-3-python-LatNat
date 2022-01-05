@@ -18,8 +18,8 @@ def import_all_questions(cursor, order, asc_desc=False):
     else:
         asc_desc = "desc"
     query = sql.SQL('''
-        SELECT question.id, name, submission_time, view_number, vote_number, title, message, image FROM question
-        INNER JOIN users u on u.id = question.user_id
+        SELECT *
+        FROM question
         ORDER BY {order_by} {asc_desc};''')
     cursor.execute(query.format(
         order_by=sql.Identifier(order),
@@ -30,8 +30,8 @@ def import_all_questions(cursor, order, asc_desc=False):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     query = '''
-        SELECT answer.id, name, submission_time, vote_number, question_id, message, image, accepted FROM answer
-        INNER JOIN users u on answer.user_id = u.id
+        SELECT *
+        FROM answer
         WHERE question_id = %s
         ORDER BY vote_number DESC;'''
     # needs sorting
@@ -42,8 +42,8 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     query = '''
-        SELECT question.id, name, submission_time, view_number, vote_number, title, message, image FROM question
-        INNER JOIN users u on u.id = question.user_id
+        SELECT *
+        FROM question
         WHERE question.id = %s;'''
     cursor.execute(query, (question_id, ))
     return cursor.fetchone()
