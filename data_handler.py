@@ -433,7 +433,7 @@ def login_user(cursor, data):
 def check_user_used(cursor, username, email):
     query = '''
                 SELECT * from users
-                WHERE email = %(email)s or name = %(username)s'''
+                WHERE email = %(email)s or LOWER(name) = %(username)s'''
     cursor.execute(query, {"username": username, "email": email})
     return cursor.fetchall()
 
@@ -497,6 +497,22 @@ def update_reputation(cursor, id_type, id_number, vote):
         reward=sql.Literal(reward),
         user_id=sql.Literal(user_id)
     ))
+
+
+@database_common.connection_handler
+def get_user_list(cursor):
+    query = '''
+                SELECT users.id, name, registered, COALESCE(COUNT(q.user_id)) as questions,
+                COALESCE(COUNT(a.user_id)) as answers,
+                COALESCE(COUNT(c.user_id)) as comments, reputation FROM users
+                LEFT OUTER JOIN question q on users.id = q.user_id
+                LEFT OUTER JOIN answer a on users.id = a.user_id
+                LEFT OUTER JOIN comment c on users.id = c.user_id
+                GROUP BY users.id, name, registered, reputation
+                ORDER BY users.id
+                '''
+    cursor.execute(query, )
+    return cursor.fetchall()
 
 
 if __name__ == "__main__":

@@ -277,8 +277,8 @@ def register_user():
         if already_used:
             return render_template("register.html", used=True)
         user_data = {"name": request.form["username"], "password": user_manager.hash_password(request.form["password"]),
-                     "registered": data_handler.round_seconds(dt.datetime.now()), "email": request.form["email"],
-                     "reputation": 0}
+                     "registered": data_handler.round_seconds(dt.datetime.now()),
+                     "email": request.form["email"].lower(), "reputation": 0}
         data_handler.create_user(user_data)
         return redirect(url_for("first_page"))
     return render_template("register.html", used=False)
@@ -309,6 +309,12 @@ def logout_user():
 def profile_page(user_id):
     profile_data = data_handler.get_profile_data(user_id)
     return render_template("profile.html", data=profile_data)
+
+
+@app.route("/user-list")
+def user_list():
+    users = data_handler.get_user_list()
+    return render_template("user_list.html", users=users)
 
 
 if __name__ == "__main__":

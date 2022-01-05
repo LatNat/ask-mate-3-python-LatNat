@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}User list {% endblock %}
+{% block buttons %}{% endblock %}
+{% block content %}
+<div class="sidebar"></div>
+<div class="users">
+    {% for user in users %}
+        <div>
+       <p><a href="{{ url_for("profile_page",user_id=user["id"]) }}">{{ user["name"] }}</a></p> <ul>
+        {% for key,value in user.items() %}
+            {% if key != "name" and key != "id" %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        </div>
+        {% endfor %}
+</div>
+    <div class="sidebar"></div>
+{% endblock %}
+
