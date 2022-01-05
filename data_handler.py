@@ -245,8 +245,8 @@ def add_comment(cursor, id_type, id_number, message, user_id):
 
 @database_common.connection_handler
 def get_related_comments(cursor, id_type, id_number):
-    query = sql.SQL('''SELECT comment.id, name, question_id, answer_id, message, submission_time, edited_count FROM comment
-                    INNER JOIN users u on comment.user_id = u.id
+    query = sql.SQL('''SELECT *
+                    FROM comment
                     WHERE {id_type}={id_number};''')
     cursor.execute(query.format(
         id_type=sql.Identifier(id_type),
