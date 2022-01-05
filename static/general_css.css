@@ -214,7 +214,7 @@ div.comment-container:last-child {
 .button-light {
     border-radius: 10%;
     background: var(--secondary-color);
-    color: var(--font-color);
+    color: var(--bg-color);
     padding: 0.2em;
     margin-right: 15px;
     text-align: center;
