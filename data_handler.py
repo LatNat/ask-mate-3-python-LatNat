@@ -474,6 +474,15 @@ def get_user_id_by_username(cursor, username):
 
 
 @database_common.connection_handler
+def get_username_by_user_id(cursor, user_id):
+    query = '''
+        SELECT * FROM users
+        WHERE id = %s;'''
+    cursor.execute(query, (user_id, ))
+    return cursor.fetchone()["name"]
+
+
+@database_common.connection_handler
 def update_reputation(cursor, id_type, id_number, vote):
     query = sql.SQL('''SELECT * FROM {id_type}
                         WHERE id={id_number};''')

@@ -23,7 +23,7 @@
                 <span class="material-icons button-light">delete</span>
             </a>
         </div>
-        <div class="post-footer"><i>submitted: {{ comment["name"] }} | {{ comment["submission_time"] }}</i></div>
+        <div class="post-footer"><i>submitted: {{ comment["user_id"] | get_user_name }} | {{ comment["submission_time"] }}</i></div>
     </div>
     {% endfor %}
 </div>
