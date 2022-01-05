@@ -156,7 +156,7 @@ def add_question():
 def vote_question(question_id, vote):
     data_handler.vote_for_question(question_id, vote)
     data_handler.update_reputation("question", question_id, vote)
-    return redirect(request.referrer+"?view=f")
+    return redirect(request.referrer.split("?")[0]+"?view=f")
 
 
 @app.route('/answer/vote/<answer_id>/<vote>')
@@ -327,7 +327,7 @@ def user_list():
 def accept(answer_id):
     data_handler.update_accepted_column(answer_id)
     data_handler.update_reputation("answer", answer_id, "accepted")
-    return render_template(request.referrer+"?view=f")
+    return redirect(request.referrer.split("?")[0]+"?view=f")
 
 
 if __name__ == "__main__":
