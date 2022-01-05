@@ -53,7 +53,7 @@ div.comment-container > div.message {
 }
 
 .post-light {
-    background: var(--bg-color);
+    background: var(--post-bg-color);
     box-shadow: 0 5px 7px 0 var(--font-color);
 }
 
