@@ -6,6 +6,11 @@ body {
     padding: 0;
 }
 
+input {
+    border-radius: 5px;
+    border-style: 2px dashed var(--secondary-color);
+}
+
 div.comment-container > div.message {
     font-size: 12px;
 }
@@ -117,9 +122,9 @@ div.comment-container:last-child {
 }
 
 .main-header {
-    justify-self: flex-start;
-    padding-bottom: 1em;
+    height: 250px;
     background: var(--primary-color);
+    border-bottom: 5px ridge var(--primary-color);
 }
 
 .title {
@@ -145,7 +150,7 @@ div.comment-container:last-child {
 
 .add-comments {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 auto;earch:
     grid-area: add-comments;
     align-items: flex-start;
 }
@@ -280,8 +285,9 @@ div.comment-container:last-child {
 
 .theme-button:hover {
     background: var(--font-color);
+}
 
-.login_table {
+.login-table {
     display:flex;
     flex-direction: column;
     align-items: center;
