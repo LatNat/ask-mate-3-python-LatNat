@@ -2,7 +2,7 @@
     <div class="title">
         <h3>{{ question["title"] }}</h3>
     </div>
-{% if (session["username"] | get_user_id) != question['user_id'] %}
+{% if (session["username"] | get_user_id) != question['user_id'] and "username" in session %}
 <div class="buttons" data-user-id="{{ session["username"] | get_user_id }}">
         <a href="{{ url_for('add_answer', question_id=question["id"]) }}">
             <span class="material-icons button-light">question_answer</span>
