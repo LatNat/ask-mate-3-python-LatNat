@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/static/voting.js"></script>
 </head>
 {% endblock %}
 <body class="bg-light">
@@ -17,17 +18,18 @@
 {% block title_header %}
     <div class="main-header">
         <div class="page-title">
+            <p>Welcome home {{ session["username"] }}!</p>
             <h1>Welcome to AskMate!</h1><br><h5>"Don't lose faith, use AskMate!"</h5>
         </div>
         <div class="nav-bar">
             <a href="{{ url_for('first_page') }}" id="myButton">Back to start page</a>
             <a href="{{ url_for('list_index') }}" id="myButton">List all questions</a>
-            {% if not logged_in %}
-            <a href="{{ url_for('login_user') }}" id="myButton">Login</a>
-            <a href="{{ url_for('register_user') }}" id="myButton">Register</a>
+            {% if "username" not in session %}
+                <a href="{{ url_for('login_user') }}" id="myButton">Login</a>
+                <a href="{{ url_for('register_user') }}" id="myButton">Register</a>
             {% else %}
-            <a href="{{ url_for('logout_user') }}" id="myButton">Logout</a>
-            <a href="{{ url_for('profile_page',user_id = userid) }}" id="myButton">Profile</a>
+                <a href="{{ url_for('logout_user') }}" id="myButton">Logout</a>
+                <a href="{{ url_for('profile_page',user_id = session["userid"]) }}" id="myButton">Profile</a>
             {% endif %}
             {% block buttons %}
             {% endblock %}
