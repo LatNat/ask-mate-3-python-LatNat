@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Roboto Light", sans-serif;
+    color: var(--font-color);
 }
 
 input, textarea {
@@ -78,7 +79,7 @@ div.comment-container > div.message {
 
 .post-light {
     background: var(--post-bg-color);
-    box-shadow: 0 5px 7px 0 var(--font-color);
+    box-shadow: 5px 5px var(--title-color);
 }
 
 .replies {
@@ -88,6 +89,7 @@ div.comment-container > div.message {
 
 .comment-container {
     display: grid;
+    color: black;
     background: var(--primary-lighter-color);
     border-radius: 5px 5px 5px 5px;
     padding: 5px;
@@ -165,6 +167,16 @@ div.comment-container:last-child {
     font-size: larger;
     font-weight: bolder;
     padding-top: 5px;
+}
+
+.title > a {
+    color: var(--title-color);
+    text-decoration: none;
+}
+
+.title > a:visited {
+    color: var(--title-color);
+    text-decoration: none;
 }
 
 .buttons {
@@ -260,7 +272,7 @@ div.comment-container:last-child {
     background: var(--secondary-color);
     color: var(--bg-color);
     padding: 0.2em;
-    margin-right: 15px;
+    margin-right: 2px;
     text-align: center;
     text-decoration: none;
 }
@@ -382,4 +394,5 @@ img:hover {
 .text-middle {
     display: flex;
     justify-content: center
+    text-shadow: 4px 4px var(--title-color);
 }

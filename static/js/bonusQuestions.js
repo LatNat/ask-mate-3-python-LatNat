@@ -1,26 +1,25 @@
 // you receive an array of objects which you must sort in the by the key "sortField" in the "sortDirection"
 function getSortedItems(items, sortField, sortDirection) {
-    console.log(items)
-    console.log(sortField)
-    console.log(sortDirection)
+    let sorting;
 
-    // === SAMPLE CODE ===
-    // if you have not changed the original html uncomment the code below to have an idea of the
-    // effect this function has on the table
-    //
     if (sortDirection === "asc") {
-        const firstItem = items.shift()
-        if (firstItem) {
-            items.push(firstItem)
-        }
+        sorting = 1;
     } else {
-        const lastItem = items.pop()
-        if (lastItem) {
-            items.push(lastItem)
-        }
+        sorting = -1;
     }
 
-    return items
+    return items.sort(function(a, b){
+        if(+a){
+            return a*sorting - b*sorting;
+        }
+        if(a[sortField] > b[sortField]){
+            return 1*sorting;
+        }
+        else if(a[sortField] < b[sortField]){
+            return -1*sorting;
+        }
+        return 0;
+    });
 }
 
 // you receive an array of objects which you must filter by all it's keys to have a value matching "filterValue"
