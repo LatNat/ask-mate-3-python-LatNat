@@ -198,6 +198,7 @@ def delete_question(question_id):
     data_handler.delete_pictures_by_question_id(question_id, UPLOAD_FOLDER)
     data_handler.delete_relevant_tags(question_id)
     data_handler.delete_question(question_id)
+    data_handler.remove_unused_tags()
     return redirect(url_for("list_index"))
 
 
@@ -208,7 +209,7 @@ def search():
         checked = False
         if "reverse" in request.form.keys():
             checked = True
-        data = data_handler.import_all_questions(request.args["search"], request.form["sort_key"], checked)
+        data = data_handler.search_in_questions(request.args["search"], request.form["sort_key"], checked)
         return render_template("index.html", data=data, default_sort=request.form["sort_key"], checked=checked)
     search_result = data_handler.search_in_questions(request.args["search"], "submission_time", True)
     # if search_result:

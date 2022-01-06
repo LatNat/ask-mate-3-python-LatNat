@@ -5,6 +5,7 @@
     <form method="post">
         <label for="sort_key">Sorted by:</label>
         <select name="sort_key" onchange="this.form.submit()">
+            {% if data %}
             {% for key in data[0].keys() %}
                 {% if default_sort == key %}
                     <option selected value={{ key }}>{{ key }}</option>
@@ -12,6 +13,7 @@
                     <option value={{ key }}>{{ key }}</option>
                 {% endif %}
             {% endfor %}
+            {% endif %}
         </select>
         {% if checked %}
             <input checked name="reverse" type="checkbox" onchange="this.form.submit()">
