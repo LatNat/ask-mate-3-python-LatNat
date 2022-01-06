@@ -24,6 +24,8 @@
         <div class="page-title">
             {% if "username" in session %}
                 <p>You are logged in as: {{ session["username"] }}</p>
+            {% else %}
+                <p>Please login first!</p>
             {% endif %}
             <div class="askmate-title">Welcome to AskMate!</div><h5>"Don't lose faith, use AskMate!"</h5>
         </div>
