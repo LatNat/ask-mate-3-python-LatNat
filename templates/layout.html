@@ -9,12 +9,13 @@
     <link rel="stylesheet" type="text/css" href="/static/general.css">
     <link rel="stylesheet" type="text/css" href="/static/menu_stylesheet.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Righteous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ro</h3>boto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="shortcut icon" href="{{ url_for("static",filename="favicon.ico") }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/static/voting.js"></script>
+    <script src="/static/theme_switcher.js"></script>
 </head>
 {% endblock %}
 <body class="bg-light">
@@ -36,7 +37,7 @@
         <input type="search" placeholder="Search on site..." name="search">
             </form>
         </div>
-        <div class="theme-button"><a><span>dark theme</span></a>
+        <div class="theme-button" onclick="switchTheme()"><a><span>dark theme</span></a>
         </div>
         </div>
     </div>
