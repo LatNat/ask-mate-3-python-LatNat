@@ -330,5 +330,11 @@ def main():
     return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
 
 
+@app.route("/tag-list")
+def tag_list():
+    tags = data_handler.get_all_tags()
+    return render_template("tag_list.html", tags=tags)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

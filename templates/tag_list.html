@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Tags{% endblock %}
+{% block buttons%}{% endblock %}
+{% block content %}
+<h3>List of used tags:</h3>
+    <div style="display: flex;align-items: center;">
+    {% for tag in tags %}
+            <a class="tag" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
+    {% endfor %}
+    </div>
+{% endblock %}
