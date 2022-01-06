@@ -6,9 +6,17 @@ body {
     padding: 0;
 }
 
-input {
+input, textarea {
     border-radius: 5px;
-    border-style: 2px dotted var(--secondary-color);
+    border: 2px solid var(--secondary-color)
+}
+
+input[type=file] {
+    border: none;
+}
+
+input[name=title] {
+    width: 400px;
 }
 
 h1 {
@@ -234,7 +242,7 @@ div.comment-container:last-child {
     z-index: 100;
     text-decoration: none;
     font-family: sans-serif;
-    color: var(--primary-color);
+    color: var(--font-color);
 }
 
 .vote-button-light {
@@ -265,7 +273,7 @@ div.comment-container:last-child {
 .button-light::after {
     transform: scale(1, 1);
 }
-.button-light:hover, .tag:hover {
+.button-light:hover, .tag:hover, button:hover {
     transition: 0.3s ease;
     background: var(--primary-color);
     color: var(--primary-lighter-color);
@@ -295,7 +303,7 @@ div.comment-container:last-child {
     flex-wrap: wrap;
 }
 
-.theme-button {
+.theme-button, button {
     transition: 0.3s ease;
     border-radius: 50px 10px 50px 10px;
     font-size: small;
