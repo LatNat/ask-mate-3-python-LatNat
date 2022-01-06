@@ -5,7 +5,11 @@
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AskMate{% block title %}{% endblock %}</title>
+    {% if session["theme"] == "light" %}
     <link rel="stylesheet" type="text/css" href="/static/light_theme_colors.css">
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/static/dark_theme_colors.css">
+    {% endif %}
     <link rel="stylesheet" type="text/css" href="/static/general.css">
     <link rel="stylesheet" type="text/css" href="/static/menu_stylesheet.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Righteous">
@@ -14,8 +18,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/static/voting.js"></script>
-    <script src="/static/theme_switcher.js"></script>
+    <script src="/static/voting.js" defer></script>
+    <script src="/static/theme_switcher.js" defer></script>
 </head>
 {% endblock %}
 <body class="bg-light">

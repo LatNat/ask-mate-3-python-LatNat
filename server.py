@@ -19,6 +19,17 @@ def session_init():
     session["sort"] = "submission_time"
     session["check"] = False
     session["popup"] = True
+    session["theme"] = "light"
+
+
+@app.route("/theme-switch")
+def theme_switch():
+    if session["theme"] == "light":
+        session["theme"] = "dark"
+    else:
+        session["theme"] = "light"
+    print(session["theme"])
+    return redirect(url_for("first_page"))
 
 
 # @app.before_request
@@ -296,6 +307,8 @@ def login_user():
             session["username"] = user["name"]
             session["userid"] = user["id"]
             return redirect(url_for("first_page"))
+        else:
+            return render_template("login.html", attempt=True)
     if "username" in session:
         return redirect(url_for("first_page"))
     return render_template("login.html", attempt=False)
