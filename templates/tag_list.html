@@ -5,7 +5,9 @@
 <h3>List of used tags:</h3>
     <div style="display: flex;align-items: center;">
     {% for tag in tags %}
+        {% if tag["name"] != "" %}
             <a class="tag" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
+        {% endif %}
     {% endfor %}
     </div>
 {% endblock %}

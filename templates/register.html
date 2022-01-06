@@ -2,6 +2,7 @@
 {% block title %} Register{% endblock %}
 {% block buttons %}{% endblock %}
 {% block content %}
+    <div class="text-middle"><h3>Register page</h3></div>
     <form method="post" action="/register">
         <div class="login-table">
             <label id ="username">Username: </label>
@@ -10,8 +11,10 @@
                 <input type="email" name="email">
             <label id="password">Password:  </label>
                 <input type="password" name="password">
-        <button type="sumbit">Register</button>
+        <div class="text-middle"><button type="sumbit">Register</button></div>
+
         </div>
+    <br><a href="{{ url_for("login_user") }}">Already registered? Click here!</a>
     </form>
     {% if used %}<script src="/static/existing_user.js"></script>{% endif %}
 {% endblock %}

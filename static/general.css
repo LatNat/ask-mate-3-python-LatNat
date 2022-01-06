@@ -205,7 +205,7 @@ div.comment-container:last-child {
 
 .add-comments {
     display: flex;
-    flex: 1 1 auto;earch:
+    flex: 1 1 auto;
     grid-area: add-comments;
     align-items: flex-start;
 }
@@ -343,7 +343,7 @@ div.comment-container:last-child {
     background: var(--secondary-color);
     color: var(--font-color);
     padding: 0.2em;
-    margin-right: 3em;
+    /*margin-right: 3em;*/
     text-align: center;
     text-decoration: none;
     align-self: flex-end;
@@ -397,5 +397,10 @@ img:hover {
 .askmate-title {
     font-size: 60px;
     font-style: oblique;
-    text-shadow: 4px 4px var(--title-color);
+    text-shadow: 4px 4px var(--utility-color);
+}
+
+.text-middle {
+    display: flex;
+    justify-content: center;
 }
