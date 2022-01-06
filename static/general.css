@@ -393,6 +393,6 @@ img:hover {
 
 .text-middle {
     display: flex;
-    justify-content: center
+    justify-content: center;
     text-shadow: 4px 4px var(--title-color);
 }
