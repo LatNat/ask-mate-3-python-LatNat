@@ -1,0 +1,57 @@
+<div class="post post-light">
+    <div class="title">
+        <a href="{{ url_for('display_question', question_id=question["id"]) }}">
+            {{ question["title"] |safe}}
+        </a>
+    </div>
+{% if (session["username"] | get_user_id) != question['user_id'] and "username" in session %}
+<div class="buttons" data-user-id="{{ session["username"] | get_user_id }}">
+        <a href="{{ url_for('add_answer', question_id=question["id"]) }}">
+            <span class="material-icons button-light">question_answer</span>
+        </a>
+</div>
+{% endif %}
+    <div class="buttons" data-user-id="{{ question['user_id'] }}">
+        <a class="link-light" href="{{ url_for('edit_question', question_id=question['id']) }}">
+            <span class="material-icons button-light">edit_note</span>
+        </a>
+        <a class="link-light" href="{{ url_for('delete_question', question_id=question['id']) }}">
+            <span class="material-icons button-light">delete</span>
+        </a>
+
+    </div>
+    <div class="vote-bar">
+        <table>
+            {% if "username" in session %}
+            <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
+            <tr><td>{{ question["vote_number"] }}</td></tr>
+            <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
+            {% else %}
+            <tr><td><a class="link-light" href="{{ url_for('login_user') }}">▲</a></td></tr>
+            <tr><td>{{ question["vote_number"] }}</td></tr>
+            <tr><td><a class="link-light" href="{{ url_for('login_user') }}">▼</a></td></tr>
+            {% endif %}
+        </table>
+    </div>
+    <div class="message">
+        <div class="message-text">
+            <p>{{ question["message"] }}</p>
+        </div>
+        {% if question["image"] %}
+            <div>
+            <img src="{{ url_for("static", filename="images/"+question["image"]) }}" alt="">
+            </div>
+        {% endif %}
+    </div>
+    <div class="post-footer">
+        <div class="stat-box"><i>submitted: {{ question["user_id"] | get_user_name }} | {{ question["submission_time"] }}</i></div>
+        <div class="stat-box"><i>views: {{ question["view_number"] }}</i></div>
+    </div>
+{% if tags %}
+    <div class="tags">
+        {% for tag in tags %}
+            <a class="tag" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+</div>

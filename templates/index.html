@@ -25,27 +25,7 @@
 {% block content %}
     {% if data %}
     {% for question in data %}
-    <div class="post post-light">
-        <div class="title">
-            <a href="{{ url_for('display_question', question_id=question["id"]) }}">
-                {{ question["title"] |safe}}
-            </a>
-        </div>
-        <div class="vote-bar">
-            <table>
-                <tr><td class="vote-button"><a onclick="store_scrollbar()" class= "link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='up') }}">▲</a></td></tr>
-                <tr><td>{{ question["vote_number"] }}</td></tr>
-                <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_question', question_id=question['id'], vote='down') }}">▼</a></td></tr>
-            </table>
-        </div>
-        <div class="message">
-            <p>{{ question["message"] |safe}}</p>
-        </div>
-        <div class="post-footer">
-            <div class="stat-box"><i>submitted: {{ question["name"] }} | {{ question["submission_time"] }}</i></div>
-            <div class="stat-box"><i>views: {{ question["view_number"] }}</i></div>
-        </div>
-    </div><br>
+        {% include "index_post.html" %}
     {% endfor %}
     {% endif %}
     {% if not data %}
