@@ -1,6 +1,8 @@
 <div class="post post-light">
     <div class="title">
-        <h3>{{ question["title"] }}</h3>
+        <a href="{{ url_for('display_question', question_id=question["id"]) }}">
+            {{ question["title"] |safe}}
+        </a>
     </div>
 {% if (session["username"] | get_user_id) != question['user_id'] and "username" in session %}
 <div class="buttons" data-user-id="{{ session["username"] | get_user_id }}">
@@ -52,7 +54,4 @@
         {% endfor %}
     </div>
 {% endif %}
-{% with full_route=url_for('add_comment_to_question', question_id=question['id']), to_comment=question, id_type="question_id" %}
-    {% include "comment.html" %}
-{% endwith %}
 </div>
