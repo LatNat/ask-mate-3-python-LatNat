@@ -172,6 +172,7 @@ div.comment-container:last-child {
     grid-area: options;
     justify-content: flex-end;
     align-items: flex-start;
+    visibility: hidden;
 }
 
 .message {
