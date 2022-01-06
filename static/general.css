@@ -260,7 +260,7 @@ div.comment-container:last-child {
     background: var(--secondary-color);
     color: var(--bg-color);
     padding: 0.2em;
-    margin-right: 15px;
+    margin-right: 2px;
     text-align: center;
     text-decoration: none;
 }
