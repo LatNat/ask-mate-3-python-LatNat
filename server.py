@@ -330,5 +330,10 @@ def accept(answer_id):
     return redirect(request.referrer.split("?")[0]+"?view=f")
 
 
+@app.route("/bonus-question")
+def bonus_question():
+    return render_template("bonus_questions.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
