@@ -233,7 +233,9 @@ div.comment-container:last-child {
 
 .search-bar {
     display: flex;
-    padding-top: 1em;}
+    padding-top: 1em;
+    gap: 3em;
+}
 
 .editable-tag {
     position:relative;
