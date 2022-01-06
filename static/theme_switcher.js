@@ -21,10 +21,21 @@ function initListeners() {
         nextTheme.set('bg-light light-colors', 'bg-light dark-colors');
         nextTheme.set('bg-light dark-colors', 'bg-light light-colors');
         const actualTheme = getActualTheme();
+        switchButtonText();
         setTheme(nextTheme.get(actualTheme));
-});
+    });
 }
 
+function switchButtonText() {
+    let button = document.querySelector("div.theme-button a span");
+    let oldText = button.textContent;
+    if (oldText === 'light theme') {
+        button.textContent = 'dark theme';
+    } else {
+        button.textContent = 'light theme';
+    }
+
+}
 function init() {
   initTheme();
   initListeners();
