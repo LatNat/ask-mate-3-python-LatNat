@@ -4,6 +4,7 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    font-family: "Roboto Light", sans-serif;
 }
 
 input, textarea {
@@ -154,11 +155,16 @@ div.comment-container:last-child {
     height: 250px;
     background: var(--primary-color);
     border-bottom: 5px ridge var(--primary-color);
+    font-family: "Righteous", sans-serif;
+    color: var(--bg-color);
+    padding-bottom: 15px;
 }
 
 .title {
     grid-area: title;
-    font-size: large;
+    font-size: larger;
+    font-weight: bolder;
+    padding-top: 5px;
 }
 
 .buttons {
@@ -170,9 +176,6 @@ div.comment-container:last-child {
 
 .message {
     grid-area: message;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    word-break: break-word;
 }
 .tags { grid-area: tags; }
 .comments { grid-area: comments; }
@@ -200,6 +203,7 @@ div.comment-container:last-child {
     display: inline-flex;
     font-size: small;
     justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .stat {
@@ -344,4 +348,31 @@ div.comment-container:last-child {
     margin-right: 3px;
     text-align: center;
     text-decoration: none;
+}
+
+div > img {
+    border-radius: 10px;
+    border: 2px dashed var(--secondary-color);
+    display: block;
+    max-width:400px;
+    max-height:400px;
+    width: auto;
+    height: auto;
+    white-space: unset;
+}
+
+img:hover {
+    transition: 0.3s ease;
+    opacity: 0.5;
+}
+
+.message-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.askmate-title {
+    font-size: 60px;
+    font-style: oblique;
 }
