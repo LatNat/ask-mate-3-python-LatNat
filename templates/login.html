@@ -2,14 +2,16 @@
 {% block title %} Login{% endblock %}
 {% block buttons %}{% endblock %}
 {% block content %}
+    <div class="text-middle"><h3>Login page</h3></div>
     <form method="post" action="/login">
     <div class="login-table">
         <label id ="username">Username or E-mail: </label>
             <input type="username" name="username">
         <label id="password">Password:  </label>
             <input type="password" name="password">
-        <button type="sumbit">Login</button>
+        <div class="text-middle"><button type="sumbit">Login</button></div>
     </div>
+    <br><a href="{{ url_for("register_user") }}">Not registered? Click here!</a>
     </form>
     {% if attempt %}<script src="/static/login_alert.js" defer></script>{% endif %}
 {% endblock %}
