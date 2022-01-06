@@ -339,8 +339,8 @@ def add_tag_to_question(cursor, question_id, tag):
 def get_first_five(cursor, order, asc_desc):
     asc_desc = "asc" if asc_desc else "desc"
     query = sql.SQL('''
-            SELECT *
-            FROM question
+            SELECT * FROM question
+            INNER JOIN users u on u.id = question.user_id
             ORDER BY {order_by} {asc_desc}
             LIMIT 5;''')
     cursor.execute(query.format(

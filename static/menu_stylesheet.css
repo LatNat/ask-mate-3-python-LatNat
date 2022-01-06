@@ -63,8 +63,7 @@
   height: 4px;
   margin-bottom: 5px;
   position: relative;
-
-  background: var(--font-color);
+  background: var(--primary-color);
   border-radius: 3px;
 
   z-index: 1;

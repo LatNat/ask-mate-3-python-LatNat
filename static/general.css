@@ -172,6 +172,7 @@ div.comment-container:last-child {
     grid-area: options;
     justify-content: flex-end;
     align-items: flex-start;
+    visibility: hidden;
 }
 
 .message {
@@ -375,4 +376,5 @@ img:hover {
 .askmate-title {
     font-size: 60px;
     font-style: oblique;
+    text-shadow: 4px 4px var(--utility-color);
 }
