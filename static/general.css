@@ -336,7 +336,6 @@ div.comment-container:last-child {
 
 .button-light {
     cursor: pointer;
-    cursor: pointer;
     transition: 0.3s ease;
     border-radius: 10%;
     background: var(--secondary-color);
