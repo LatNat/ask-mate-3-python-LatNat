@@ -50,11 +50,6 @@ def get_user_name(user_id):
     return data_handler.get_username_by_user_id(user_id)
 
 
-@app.route("/bonus-questions")
-def main():
-    return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
-
-
 @app.route("/", methods=["GET", "POST"])
 def first_page():
     path = os.path.join(app.config['UPLOAD_FOLDER'])
@@ -330,9 +325,9 @@ def accept(answer_id):
     return redirect(request.referrer.split("?")[0]+"?view=f")
 
 
-@app.route("/bonus-question")
-def bonus_question():
-    return render_template("bonus_questions.html")
+@app.route("/bonus-questions")
+def main():
+    return render_template('bonus_questions.html', questions=bonus_questions.SAMPLE_QUESTIONS)
 
 
 if __name__ == "__main__":
