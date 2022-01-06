@@ -362,7 +362,7 @@ div.comment-container:last-child {
 }
 .button-light:hover, .tag:hover, button:hover {
     transition: 0.3s ease;
-    transform: scale(1.2, 1.2);
+    transform: scale(1.05, 1.05);
     background: var(--primary-color);
     color: var(--primary-lighter-color);
 }
@@ -414,7 +414,7 @@ div.comment-container:last-child {
 
 .theme-button:hover {
     transition: 0.3s ease;
-    transform: scale(1.2, 1.2);
+    transform: scale(1.05, 1.05);
     background: var(--font-color);
     border-color: var(--bg-color);
     color: var(--bg-color);

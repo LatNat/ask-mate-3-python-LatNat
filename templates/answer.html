@@ -16,9 +16,9 @@
     <div class="vote-bar">
         <table>
             {% if "username" in session %}
-            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
+            <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='up') }}">▲</a></td></tr>
             <tr><td>{{ answer["vote_number"] }}</td></tr>
-            <tr><td><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
+            <tr><td class="vote-button"><a onclick="store_scrollbar()" class="link-light" href="{{ url_for('vote_answer', answer_id=answer['id'], vote='down') }}">▼</a></td></tr>
             {% else %}
             <tr><td><a class="link-light" href="{{ url_for('login_user') }}">▲</a></td></tr>
             <tr><td>{{ answer["vote_number"] }}</td></tr>
