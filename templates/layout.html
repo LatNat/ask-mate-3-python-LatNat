@@ -22,7 +22,9 @@
 {% block title_header %}
     <div class="main-header">
         <div class="page-title">
-            <p>Welcome home {{ session["username"] }}!</p>
+            {% if "username" in session %}
+                <p>You are logged in as: {{ session["username"] }}</p>
+            {% endif %}
             <div class="askmate-title">Welcome to AskMate!</div><h5>"Don't lose faith, use AskMate!"</h5>
         </div>
         <div class="nav-bar">
@@ -49,6 +51,7 @@
     <ul id="menu">
         <a href="{{ url_for('first_page') }}"><li>Home</li></a>
         <a href="{{ url_for('list_index') }}"><li>All questions</li></a>
+        <a href="{{ url_for('tag_list') }}"><li>Tag list</li></a>
         {% if "username" not in session %}
         <a href="{{ url_for('login_user') }}"><li>Login</li></a>
         <a href="{{ url_for('register_user') }}"><li>Register</li></a>
