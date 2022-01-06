@@ -1,3 +1,28 @@
+.dark-colors {
+    --bg-color: #171616;
+    --post-bg-color: #2c2b2b;
+    --font-color: #f6e9e3;
+    --title-color: #ffeec3;
+    --primary-color: #ff9451;
+    --secondary-color: #ff4e2e;
+    --accepted-color: #2a5759;
+    --utility-color: #732222;
+    --primary-lighter-color: #ffe2b9;
+}
+
+.light-colors {
+    --bg-color: #f6e9e3;
+    --post-bg-color: floralwhite;
+    --font-color: #171616;
+    --title-color: #1e1a1a;
+    --primary-color: #ff4e2e;
+    --secondary-color: #ff9451;
+    --accepted-color: #ccf5ff;
+    --utility-color: #732222;
+    --primary-lighter-color: #ffe2b9;
+}
+
+
 body {
     display: flex;
     justify-content: center;
@@ -32,6 +57,12 @@ h5 {
 div.comment-container > div.message {
     font-size: 12px;
 }
+
+form > a, form > a:visited {
+    color: var(--title-color);
+    text-decoration: none;
+}
+
 .nav-bar {
     padding-left: 5em;
     display: flex;
@@ -158,6 +189,7 @@ div.comment-container:last-child {
     background-color: var(--primary-color);
     background-image: linear-gradient(to top, var(--primary-color), var(--secondary-color));
     border-bottom: 5px ridge var(--primary-color);
+    border-radius: 0 0 20px 20px;
     font-family: "Righteous", sans-serif;
     color: var(--bg-color);
     padding-bottom: 15px;
@@ -229,7 +261,6 @@ div.comment-container:last-child {
     margin-top: 10px;
     margin-bottom: 10px;
     padding-right: 5%;
-}
 }
 
 .stat {
@@ -343,12 +374,15 @@ div.comment-container:last-child {
     background: var(--secondary-color);
     color: var(--font-color);
     padding: 0.2em;
-    /*margin-right: 3em;*/
     text-align: center;
     text-decoration: none;
     align-self: flex-end;
     border-style: none ridge ridge none;
     border-color: var(--secondary-color);
+}
+
+.theme-button.right-margin {
+    margin: 15px;
 }
 
 .theme-button:hover {

@@ -5,7 +5,6 @@
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AskMate{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/light_theme_colors.css">
     <link rel="stylesheet" type="text/css" href="/static/general.css">
     <link rel="stylesheet" type="text/css" href="/static/menu_stylesheet.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Righteous">
@@ -15,10 +14,10 @@
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/static/voting.js"></script>
-    <script src="/static/theme_switcher.js"></script>
+    <script src="/static/theme_switcher.js" defer></script>
 </head>
 {% endblock %}
-<body class="bg-light">
+<body class="bg-light light-colors">
 {#{% include "cookie_popup.html" %}#}
 {% block title_header %}
     <div class="main-header">
@@ -37,7 +36,7 @@
         <input type="search" placeholder="Search on site..." name="search">
             </form>
         </div>
-        <div class="theme-button" onclick="switchTheme()"><a><span>dark theme</span></a>
+        <div class="theme-button right-margin"><a><span>dark theme</span></a>
         </div>
         </div>
     </div>

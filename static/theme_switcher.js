@@ -1,23 +1,33 @@
-function switchTheme() {
-    let linkedFiles = document.getElementsByTagName("link");
-    let head = document.querySelector("head");
-    let button = document.querySelector("div.theme-button a span");
-    let oldScheme = button.textContent;
-    console.log(oldScheme);
-    let newScheme;
-    if (oldScheme.includes('light')) { newScheme = 'light'} else { newScheme = 'dark'}
-    let newTheme = '<link rel="stylesheet" type="text/css" href="/static/' + newScheme + '_theme_colors.css">'
-    console.log(head);
-    for (let link of linkedFiles) {
-        console.log(link);
-        if (link.href.includes("light")) {
-            link.remove();
-            head.insertAdjacentHTML("afterbegin", newTheme);
-            button.textContent = "light theme";
-        } else if (link.href.includes("dark")) {
-            link.remove();
-            head.insertAdjacentHTML("afterbegin", newTheme);
-            button.textContent = "dark theme";
-        }
-    }
+function initTheme() {
+  const body = document.body;
+  const theme = getActualTheme();
+  body.className = theme;
 }
+
+function getActualTheme() {
+  return window.sessionStorage.getItem('theme') || 'bg-light light-colors';
+}
+
+function setTheme(theme) {
+  const body = document.body;
+  body.className = theme;
+  window.sessionStorage.setItem('theme', theme);
+}
+
+function initListeners() {
+    let button = document.querySelector("div.theme-button a span");
+    button.addEventListener('click', (event) => {
+        const nextTheme = new Map();
+        nextTheme.set('bg-light light-colors', 'bg-light dark-colors');
+        nextTheme.set('bg-light dark-colors', 'bg-light light-colors');
+        const actualTheme = getActualTheme();
+        setTheme(nextTheme.get(actualTheme));
+});
+}
+
+function init() {
+  initTheme();
+  initListeners();
+}
+
+window.addEventListener('DOMContentLoaded', init);
