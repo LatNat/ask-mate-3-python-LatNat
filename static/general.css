@@ -321,6 +321,15 @@ div.comment-container:last-child {
     color: var(--font-color);
 }
 
+.vote-button {
+    -webkit-text-stroke: 2px var(--primary-color);
+}
+
+.vote-button:hover {
+    transition: 0.3s ease;
+    transform: scale(1.2, 1.2);
+}
+
 .vote-button-light {
     text-align: center;
 }
@@ -353,6 +362,7 @@ div.comment-container:last-child {
 }
 .button-light:hover, .tag:hover, button:hover {
     transition: 0.3s ease;
+    transform: scale(1.2, 1.2);
     background: var(--primary-color);
     color: var(--primary-lighter-color);
 }
@@ -404,6 +414,7 @@ div.comment-container:last-child {
 
 .theme-button:hover {
     transition: 0.3s ease;
+    transform: scale(1.2, 1.2);
     background: var(--font-color);
     border-color: var(--bg-color);
     color: var(--bg-color);
