@@ -198,6 +198,7 @@ def delete_question(question_id):
     data_handler.delete_pictures_by_question_id(question_id, UPLOAD_FOLDER)
     data_handler.delete_relevant_tags(question_id)
     data_handler.delete_question(question_id)
+    data_handler.remove_unused_tags()
     return redirect(url_for("list_index"))
 
 
