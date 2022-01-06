@@ -129,6 +129,19 @@ div.comment-container:last-child {
     "add-comments comments comments";
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--post-bg-color);
+    border-radius: 5px 5px 50px 5px;
+    padding: 15px;
+}
+
+.form-container textarea {
+    width: 500px;
+    height: 300px;
+}
+
 .main-header {
     height: 250px;
     background: var(--primary-color);
@@ -252,7 +265,7 @@ div.comment-container:last-child {
 .button-light::after {
     transform: scale(1, 1);
 }
-.button-light:hover {
+.button-light:hover, .tag:hover {
     transition: 0.3s ease;
     background: var(--primary-color);
     color: var(--primary-lighter-color);

@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
 <body>
-<div class="centered">
+<div class="form-container post-light">
     <h3>What is your question?</h3><br>
     <form action="{{ url_for("add_question") if not edit else url_for("edit_question",question_id=data['id'])  }}" method="post" enctype="multipart/form-data">
         <label for="title">Title:</label><br>
