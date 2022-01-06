@@ -15,7 +15,7 @@
     {% for comment in (id_type | get_comments(to_comment['id'])) %}
     <div class="comment-container">
         <div class="message">
-            {{ comment["message"] }}
+            <div class="message-text">{{ comment["message"] }}</div>
         </div>
         <div class="buttons" data-user-id="{{ comment["user_id"] }}">
             <a class="link-light" href="{{ url_for('update_comment', comment_id=comment['id'], question_id=question['id']) }}">
