@@ -375,4 +375,5 @@ img:hover {
 .askmate-title {
     font-size: 60px;
     font-style: oblique;
+    text-shadow: 4px 4px var(--utility-color);
 }
