@@ -1,6 +1,6 @@
 <div class="post post-light">
     <div class="title">
-        <h3>{{ question["title"] }}</h3>
+        {{ question["title"] }}
     </div>
 {% if (session["username"] | get_user_id) != question['user_id'] and "username" in session %}
 <div class="buttons" data-user-id="{{ session["username"] | get_user_id }}">
