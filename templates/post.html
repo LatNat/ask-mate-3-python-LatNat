@@ -46,7 +46,7 @@
 {% if tags %}
     <div class="tags">
         {% for tag in tags %}
-            <a href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
+            <a class="tag" href="{{ url_for('get_tagged_questions', tag=tag.name) }}">{{ tag.name }}</a>
         {% endfor %}
     </div>
 {% endif %}

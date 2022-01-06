@@ -4,7 +4,7 @@
 <li><a href="{{ url_for('display_question', question_id=question_id, view='f') }}">Back to question</a></li>
 {% endblock %}
 {% block content %}
-<div class="centered">
+<div class="form-container post-light">
 <h1>{% block header %}Post your comment{% endblock %}</h1>
 <form method="post" enctype="multipart/form-data">
     <label for="message">Your comment:</label><br>

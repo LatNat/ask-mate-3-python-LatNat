@@ -96,6 +96,9 @@
   transform: rotate(45deg) translate(-2px, -1px);
   background: var(--bg-color);
 }
+#menuToggle input:checked:hover ~ span {
+  background: var(--font-color);
+}
 
 /*
  * But let's hide the middle one.

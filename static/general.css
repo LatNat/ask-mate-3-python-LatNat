@@ -6,6 +6,19 @@ body {
     padding: 0;
 }
 
+input {
+    border-radius: 5px;
+    border-style: 2px dotted var(--secondary-color);
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h5 {
+    font-size: 20px;
+}
+
 div.comment-container > div.message {
     font-size: 12px;
 }
@@ -116,10 +129,23 @@ div.comment-container:last-child {
     "add-comments comments comments";
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--post-bg-color);
+    border-radius: 5px 5px 50px 5px;
+    padding: 15px;
+}
+
+.form-container textarea {
+    width: 500px;
+    height: 300px;
+}
+
 .main-header {
-    justify-self: flex-start;
-    padding-bottom: 1em;
+    height: 250px;
     background: var(--primary-color);
+    border-bottom: 5px ridge var(--primary-color);
 }
 
 .title {
@@ -145,7 +171,7 @@ div.comment-container:last-child {
 
 .add-comments {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 auto;earch:
     grid-area: add-comments;
     align-items: flex-start;
 }
@@ -203,10 +229,12 @@ div.comment-container:last-child {
 .editable-tag a {
     display: none;
     position: absolute;
-    top: 1px;
-    right: 10%;
+    top: -1px;
+    right: 7%;
     z-index: 100;
-    color: darkred !important;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: var(--primary-color);
 }
 
 .vote-button-light {
@@ -214,6 +242,7 @@ div.comment-container:last-child {
 }
 
 .button-light {
+    transition: 0.3s ease;
     border-radius: 10%;
     background: var(--secondary-color);
     color: var(--bg-color);
@@ -236,7 +265,8 @@ div.comment-container:last-child {
 .button-light::after {
     transform: scale(1, 1);
 }
-.button-light:hover {
+.button-light:hover, .tag:hover {
+    transition: 0.3s ease;
     background: var(--primary-color);
     color: var(--primary-lighter-color);
 }
@@ -266,20 +296,26 @@ div.comment-container:last-child {
 }
 
 .theme-button {
+    transition: 0.3s ease;
     border-radius: 50px 10px 50px 10px;
     font-size: small;
     width: 150px;
     background: var(--secondary-color);
-    color: var(--bg-color);
+    color: var(--font-color);
     padding: 0.2em;
     margin-right: 3em;
     text-align: center;
     text-decoration: none;
     align-self: flex-end;
+    border-style: none ridge ridge none;
+    border-color: var(--secondary-color);
 }
 
 .theme-button:hover {
+    transition: 0.3s ease;
     background: var(--font-color);
+    border-color: var(--bg-color);
+    color: var(--bg-color);
 }
 
 .login-table {
@@ -287,4 +323,17 @@ div.comment-container:last-child {
     flex-direction: column;
     align-items: center;
     gap: 10px
+}
+
+.tag {
+    transition: 0.3s ease;
+    border-radius: 4px;
+    font-size: 13px;
+    padding: 0 9px 0 9px;
+    font-weight: bold;
+    background: var(--secondary-color);
+    color: var(--bg-color);
+    margin-right: 3px;
+    text-align: center;
+    text-decoration: none;
 }
