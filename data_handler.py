@@ -534,5 +534,13 @@ def update_accepted_column(cursor, answer_id):
     cursor.execute(query, (answer_id, ))
 
 
+@database_common.connection_handler
+def get_all_tags(cursor):
+    query = '''
+            SELECT name FROM tag'''
+    cursor.execute(query, )
+    return cursor.fetchall()
+
+
 if __name__ == "__main__":
     pass
