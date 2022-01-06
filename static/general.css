@@ -221,6 +221,11 @@ div.comment-container:last-child {
     text-decoration: none;
 }
 
+.title > a:hover {
+    transition: 0.5s ease;
+    color: var(--primary-color);
+}
+
 .buttons {
     user-select: none;
     display: flex;
@@ -321,6 +326,7 @@ div.comment-container:last-child {
 }
 
 .button-light {
+    cursor: pointer;
     cursor: pointer;
     transition: 0.3s ease;
     border-radius: 10%;
