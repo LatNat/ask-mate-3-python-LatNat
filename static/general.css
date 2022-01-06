@@ -222,6 +222,7 @@ div.comment-container:last-child {
 }
 
 .buttons {
+    user-select: none;
     display: flex;
     grid-area: options;
     justify-content: flex-end;
@@ -320,6 +321,7 @@ div.comment-container:last-child {
 }
 
 .button-light {
+    cursor: pointer;
     transition: 0.3s ease;
     border-radius: 10%;
     background: var(--secondary-color);
@@ -374,6 +376,8 @@ div.comment-container:last-child {
 }
 
 .theme-button, button {
+    cursor: pointer;
+    user-select: none;
     transition: 0.3s ease;
     border-radius: 50px 10px 50px 10px;
     font-size: small;
