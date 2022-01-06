@@ -9,8 +9,8 @@ function getSortedItems(items, sortField, sortDirection) {
     }
 
     return items.sort(function(a, b){
-        if(+a){
-            return a*sorting - b*sorting;
+        if(+a[sortField]){
+            return +a[sortField]*sorting - +b[sortField]*sorting;
         }
         if(a[sortField] > b[sortField]){
             return 1*sorting;
@@ -48,13 +48,38 @@ function getFilteredItems(items, filterValue) {
 }
 
 function toggleTheme() {
-    console.log("toggle theme")
+    if(document.body.style.color !== "rgb(255, 255, 255)"){
+        document.body.style.background = "#000000"
+        document.body.style.color = "#FFFFFF"
+    }
+    else{
+        console.log("hello")
+        document.body.style.background = "#FFFFFF"
+        document.body.style.color = "#000000"
+    }
 }
 
 function increaseFont() {
-    console.log("increaseFont")
+    let tdElements = document.getElementsByTagName("td");
+    for(let i=0;i<tdElements.length;i++){
+        if(parseInt(tdElements[i].style.fontSize)){
+            tdElements[i].style.fontSize = parseInt(tdElements[i].style.fontSize)+1 + "px";
+        }
+        else {
+            tdElements[i].style.fontSize = "17px";
+        }
+        console.log(tdElements[i].style.fontSize)
+    }
 }
 
 function decreaseFont() {
-    console.log("decreaseFont")
+    let tdElements = document.getElementsByTagName("td");
+    for(let i=0;i<tdElements.length;i++){
+        if(parseInt(tdElements[i].style.fontSize)){
+            tdElements[i].style.fontSize = parseInt(tdElements[i].style.fontSize)-1 + "px";
+        }
+        else {
+            tdElements[i].style.fontSize = "15px";
+        }
+    }
 }

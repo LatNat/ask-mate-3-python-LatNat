@@ -27,7 +27,7 @@
         </table>
     </div>
     <div class="message">
-        <p>{{ answer["message"] }}</p>
+        <div class="message-text">{{ answer["message"] }}</div>
         {% if answer["image"] %}
                 <img src="{{ url_for("static", filename="images/"+answer["image"]) }}" alt="" width="500">
         {% endif %}

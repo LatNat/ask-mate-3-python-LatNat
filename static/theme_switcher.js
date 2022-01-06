@@ -1,0 +1,3 @@
+function switchTheme() {
+    document.getElementsByTagName()
+}
