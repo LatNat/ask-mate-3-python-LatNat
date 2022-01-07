@@ -98,6 +98,13 @@ form > a, form > a:visited {
     display: flex;
 }
 
+.ad-container {
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+    padding-right: 1em;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -214,7 +221,13 @@ div.comment-container:last-child {
     text-decoration: none;
 }
 
+.title > a:hover {
+    transition: 0.5s ease;
+    color: var(--primary-color);
+}
+
 .buttons {
+    user-select: none;
     display: flex;
     grid-area: options;
     justify-content: flex-end;
@@ -308,11 +321,21 @@ div.comment-container:last-child {
     color: var(--font-color);
 }
 
+.vote-button {
+    -webkit-text-stroke: 2px var(--primary-color);
+}
+
+.vote-button:hover {
+    transition: 0.3s ease;
+    transform: scale(1.2, 1.2);
+}
+
 .vote-button-light {
     text-align: center;
 }
 
 .button-light {
+    cursor: pointer;
     transition: 0.3s ease;
     border-radius: 10%;
     background: var(--secondary-color);
@@ -338,6 +361,7 @@ div.comment-container:last-child {
 }
 .button-light:hover, .tag:hover, button:hover {
     transition: 0.3s ease;
+    transform: scale(1.05, 1.05);
     background: var(--primary-color);
     color: var(--primary-lighter-color);
 }
@@ -367,6 +391,8 @@ div.comment-container:last-child {
 }
 
 .theme-button, button {
+    cursor: pointer;
+    user-select: none;
     transition: 0.3s ease;
     border-radius: 50px 10px 50px 10px;
     font-size: small;
@@ -387,6 +413,7 @@ div.comment-container:last-child {
 
 .theme-button:hover {
     transition: 0.3s ease;
+    transform: scale(1.05, 1.05);
     background: var(--font-color);
     border-color: var(--bg-color);
     color: var(--bg-color);
@@ -412,7 +439,7 @@ div.comment-container:last-child {
     text-decoration: none;
 }
 
-div > img {
+div > img.attached {
     border-radius: 10px;
     border: 2px dashed var(--secondary-color);
     display: block;
@@ -423,7 +450,7 @@ div > img {
     white-space: unset;
 }
 
-img:hover {
+img.attached:hover {
     transition: 0.3s ease;
     opacity: 0.5;
 }
@@ -437,4 +464,17 @@ img:hover {
 .text-middle {
     display: flex;
     justify-content: center;
+}
+
+img.ad {
+    max-width: 270px;
+    width: auto;
+    border-radius: 5px;
+    border-style: groove;
+    border-color: var(--primary-color);
+}
+
+img.ad:hover {
+    transition: 0.5s ease;
+    transform: scale(1.1, 1.1);
 }
