@@ -18,7 +18,6 @@
 </head>
 {% endblock %}
 <body class="bg-light light-colors">
-{#{% include "cookie_popup.html" %}#}
 {% block title_header %}
     <div class="main-header">
         <div class="page-title">
@@ -78,6 +77,8 @@
         <p>2021 flAskMate©®™</p>
     </div>
 {% endblock %}
+
+{% include "cookie_popup.html" %}
 </body>
     <script src="/static/hide_buttons.js"></script>
     <script>hide_relevant_buttons({{ session["username"] | get_user_id }});</script>
