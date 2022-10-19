@@ -1,0 +1,7 @@
+# ignore psql sample data script
+
+/sample_data
+
+# ignore readme file
+
+*.md
